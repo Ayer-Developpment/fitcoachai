@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitCoach AI — Feedback Bêta</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
+  background:#07070F;color:#E8E8F0;min-height:100vh;padding:40px 20px 80px}
+.container{max-width:680px;margin:0 auto}
+.header{text-align:center;margin-bottom:36px}
+.logo{font-size:22px;font-weight:900;background:linear-gradient(135deg,#6C63FF,#00D4A4);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.badge{display:inline-block;background:rgba(108,99,255,.12);border:1px solid rgba(108,99,255,.3);
+  color:#6C63FF;padding:6px 16px;border-radius:100px;font-size:12px;font-weight:700;margin-bottom:14px}
+.header h1{font-size:24px;font-weight:900;margin-bottom:6px}
+.header p{font-size:13px;color:#7878A0}
+.lang-bar{display:flex;justify-content:center;gap:8px;margin-bottom:28px;flex-wrap:wrap}
+.lang-btn{background:transparent;border:1px solid #1E1E32;border-radius:8px;
+  color:#7878A0;font-size:12px;font-weight:600;padding:6px 14px;cursor:pointer;
+  font-family:inherit;transition:all .2s}
+.lang-btn:hover{border-color:#6C63FF;color:#6C63FF}
+.lang-btn.active{background:rgba(108,99,255,.15);border-color:rgba(108,99,255,.4);color:#6C63FF;font-weight:700}
+.week-banner{background:linear-gradient(135deg,rgba(108,99,255,.1),rgba(0,212,164,.06));
+  border:1px solid rgba(108,99,255,.2);border-radius:14px;padding:14px 18px;
+  margin-bottom:24px;display:flex;align-items:center;justify-content:space-between}
+.week-banner span{font-size:13px;color:#9090B0}
+.week-num{font-size:15px;font-weight:800;color:#6C63FF}
+.card{background:#11111C;border:1px solid #1E1E32;border-radius:16px;padding:24px;margin-bottom:14px}
+.card-title{font-size:14px;font-weight:800;color:#6C63FF;margin-bottom:18px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:11px;font-weight:700;color:#7878A0;
+  text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px}
+.field input,.field textarea,.field select{width:100%;background:#0D0D1A;border:1px solid #1E1E32;
+  border-radius:10px;padding:12px 14px;color:#E8E8F0;font-size:14px;font-family:inherit;
+  outline:none;transition:border-color .2s;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:#6C63FF}
+.field input::placeholder,.field textarea::placeholder{color:#4A4A6A}
+.field textarea{min-height:80px}
+.stars{display:flex;gap:8px;margin-top:4px}
+.stars button{background:none;border:none;font-size:26px;cursor:pointer;transition:transform .15s;padding:2px;line-height:1}
+.stars button:hover{transform:scale(1.2)}
+.stars button.inactive{filter:grayscale(1) opacity(.35)}
+.star-label{font-size:12px;color:#7878A0;margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chip{background:#0D0D1A;border:1px solid #1E1E32;border-radius:8px;
+  padding:8px 14px;font-size:13px;color:#9090B0;cursor:pointer;transition:all .2s;user-select:none}
+.chip:hover{border-color:#6C63FF;color:#6C63FF}
+.chip.selected{background:rgba(108,99,255,.12);border-color:rgba(108,99,255,.5);color:#A09AF0;font-weight:600}
+.scale{display:flex;gap:5px;margin-top:4px;flex-wrap:wrap}
+.scale-btn{min-width:36px;background:#0D0D1A;border:1px solid #1E1E32;border-radius:8px;
+  padding:10px 4px;font-size:13px;font-weight:700;color:#7878A0;cursor:pointer;
+  transition:all .2s;text-align:center;font-family:inherit;flex:1}
+.scale-btn:hover{border-color:#6C63FF;color:#6C63FF}
+.scale-btn.sel{background:rgba(108,99,255,.15);border-color:#6C63FF;color:#A09AF0}
+.scale-labels{display:flex;justify-content:space-between;margin-top:5px}
+.scale-labels span{font-size:10px;color:#4A4A6A}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;
+  background:#0D0D1A;border:1px solid #1E1E32;border-radius:10px;padding:12px 14px;margin-top:4px}
+.toggle-row span{font-size:13px;color:#9090B0}
+.toggle-row input[type=checkbox]{width:18px;height:18px;accent-color:#6C63FF;cursor:pointer}
+.submit-btn{width:100%;padding:16px;border-radius:14px;border:none;
+  background:linear-gradient(135deg,#6C63FF,#00D4A4);color:#fff;font-size:16px;font-weight:800;
+  cursor:pointer;box-shadow:0 8px 24px rgba(108,99,255,.3);transition:transform .2s,box-shadow .2s;
+  display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(108,99,255,.4)}
+.submit-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.submit-note{text-align:center;font-size:11px;color:#4A4A6A;margin-top:10px}
+.success{display:none;text-align:center;padding:48px 20px}
+.success-icon{font-size:64px;margin-bottom:16px}
+.success h3{font-size:22px;font-weight:900;margin-bottom:8px;color:#00D4A4}
+.success p{color:#9090B0;font-size:14px;line-height:1.7;white-space:pre-line}
+.success-box{margin-top:20px;background:rgba(0,212,164,.06);border:1px solid rgba(0,212,164,.2);
+  border-radius:12px;padding:16px;font-size:13px;color:#00D4A4;line-height:1.6}
+.bta-badge{display:inline-block;background:rgba(0,212,164,.1);border:1px solid rgba(0,212,164,.3);
+  color:#00D4A4;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:700;
+  font-family:monospace;letter-spacing:1px}
+.sending{display:none;text-align:center;padding:40px;color:#7878A0;font-size:14px}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="logo">⚡ FitCoach AI</div>
+    <div class="badge" id="badge-txt">📋 Feedback Hebdomadaire</div>
+    <h1 id="main-title">Comment s'est passée ta semaine ?</h1>
+    <p id="main-sub">2 minutes · Confidentiel · Chaque lundi</p>
+  </div>
+
+  <div class="lang-bar">
+    <button class="lang-btn" id="btn-fr" onclick="setLang('fr')">🇫🇷 FR</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">🇬🇧 EN</button>
+    <button class="lang-btn" id="btn-de" onclick="setLang('de')">🇩🇪 DE</button>
+    <button class="lang-btn" id="btn-es" onclick="setLang('es')">🇪🇸 ES</button>
+    <button class="lang-btn" id="btn-it" onclick="setLang('it')">🇮🇹 IT</button>
+  </div>
+
+  <div class="week-banner">
+    <span id="week-label">Semaine en cours</span>
+    <span class="week-num" id="week-num">—</span>
+  </div>
+
+  <div id="formWrap">
+
+    <!-- IDENTITÉ -->
+    <div class="card">
+      <div class="card-title" id="s0-title">🪪 Ton identifiant</div>
+      <div class="field">
+        <label id="l-bta">Numéro bêta testeur *</label>
+        <input type="text" id="fBta" placeholder="BTA-0042" maxlength="10"
+          oninput="this.value=this.value.toUpperCase();checkForm()">
+      </div>
+      <div class="field">
+        <label id="l-name">Prénom (optionnel)</label>
+        <input type="text" id="fName" placeholder="Lucas">
+      </div>
+    </div>
+
+    <!-- UTILISATION -->
+    <div class="card">
+      <div class="card-title" id="s1-title">📱 Utilisation cette semaine</div>
+      <div class="field">
+        <label id="l-days">Combien de jours as-tu utilisé l'app ?</label>
+        <div class="scale" id="scale-days">
+          <button class="scale-btn" onclick="pickScale('days',0)">0</button>
+          <button class="scale-btn" onclick="pickScale('days',1)">1</button>
+          <button class="scale-btn" onclick="pickScale('days',2)">2</button>
+          <button class="scale-btn" onclick="pickScale('days',3)">3</button>
+          <button class="scale-btn" onclick="pickScale('days',4)">4</button>
+          <button class="scale-btn" onclick="pickScale('days',5)">5</button>
+          <button class="scale-btn" onclick="pickScale('days',6)">6</button>
+          <button class="scale-btn" onclick="pickScale('days',7)">7</button>
+        </div>
+      </div>
+      <div class="field">
+        <label id="l-features">Fonctionnalités utilisées</label>
+        <div class="chips" id="chips-features">
+          <div class="chip" onclick="toggleChip(this,'features')">🤖 Coach IA</div>
+          <div class="chip" onclick="toggleChip(this,'features')">🍽️ Repas tendance</div>
+          <div class="chip" onclick="toggleChip(this,'features')">📷 Scanner repas</div>
+          <div class="chip" onclick="toggleChip(this,'features')">💪 Séances</div>
+          <div class="chip" onclick="toggleChip(this,'features')">📊 Stats</div>
+          <div class="chip" onclick="toggleChip(this,'features')">🔥 Streak</div>
+          <div class="chip" onclick="toggleChip(this,'features')">⚙️ Réglages</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SATISFACTION -->
+    <div class="card">
+      <div class="card-title" id="s2-title">⭐ Satisfaction générale</div>
+      <div class="field">
+        <label id="l-overall">Note globale de l'app cette semaine *</label>
+        <div class="stars" id="stars-overall">
+          <button onclick="pickStar('overall',1)">⭐</button>
+          <button onclick="pickStar('overall',2)">⭐</button>
+          <button onclick="pickStar('overall',3)">⭐</button>
+          <button onclick="pickStar('overall',4)">⭐</button>
+          <button onclick="pickStar('overall',5)">⭐</button>
+        </div>
+        <div class="star-label" id="star-overall-label">—</div>
+      </div>
+      <div class="field">
+        <label id="l-recommend">La recommanderais-tu ? (0 = non · 10 = absolument)</label>
+        <div class="scale" id="scale-nps">
+          <button class="scale-btn" onclick="pickScale('nps',0)">0</button>
+          <button class="scale-btn" onclick="pickScale('nps',1)">1</button>
+          <button class="scale-btn" onclick="pickScale('nps',2)">2</button>
+          <button class="scale-btn" onclick="pickScale('nps',3)">3</button>
+          <button class="scale-btn" onclick="pickScale('nps',4)">4</button>
+          <button class="scale-btn" onclick="pickScale('nps',5)">5</button>
+          <button class="scale-btn" onclick="pickScale('nps',6)">6</button>
+          <button class="scale-btn" onclick="pickScale('nps',7)">7</button>
+          <button class="scale-btn" onclick="pickScale('nps',8)">8</button>
+          <button class="scale-btn" onclick="pickScale('nps',9)">9</button>
+          <button class="scale-btn" onclick="pickScale('nps',10)">10</button>
+        </div>
+        <div class="scale-labels">
+          <span id="nps-low">Pas du tout</span>
+          <span id="nps-high">Absolument</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUGS -->
+    <div class="card">
+      <div class="card-title" id="s3-title">🐛 Bugs & problèmes</div>
+      <div class="field">
+        <label id="l-crash">As-tu eu des bugs ou crashes ?</label>
+        <div class="chips" id="chips-crash">
+          <div class="chip" id="crash-none"  onclick="pickOne('crash',this)">✅ Aucun</div>
+          <div class="chip" id="crash-minor" onclick="pickOne('crash',this)">⚠️ Mineurs</div>
+          <div class="chip" id="crash-major" onclick="pickOne('crash',this)">🔴 Bloquants</div>
+        </div>
+      </div>
+      <div class="field" id="field-bug-desc" style="display:none">
+        <label id="l-bug-desc">Décris le(s) bug(s)</label>
+        <textarea id="fBugDesc" placeholder="Ex : freeze sur l'écran Scanner, iPhone 15 Pro, iOS 18"></textarea>
+      </div>
+      <div class="field">
+        <label id="l-lang-ok">La langue de l'app était-elle correcte ?</label>
+        <div class="toggle-row">
+          <span id="lang-ok-label">Oui, tout était dans ma langue</span>
+          <input type="checkbox" id="fLangOk" checked onchange="toggleLangIssue()">
+        </div>
+      </div>
+      <div class="field" id="field-lang-issue" style="display:none">
+        <label id="l-lang-issue">Qu'est-ce qui n'était pas traduit ?</label>
+        <textarea id="fLangIssue" placeholder="Ex : l'écran Streak était en français"></textarea>
+      </div>
+    </div>
+
+    <!-- RETOURS -->
+    <div class="card">
+      <div class="card-title" id="s4-title">💡 Ce qui t'a marqué</div>
+      <div class="field">
+        <label id="l-best">Ce que tu as le plus aimé</label>
+        <textarea id="fBest" placeholder="Ex : le coach IA est très pertinent sur les repas"></textarea>
+      </div>
+      <div class="field">
+        <label id="l-worst">Ce qui t'a frustré ou manqué</label>
+        <textarea id="fWorst" placeholder="Ex : impossible de modifier mes macros manuellement"></textarea>
+      </div>
+      <div class="field">
+        <label id="l-feature">Une fonctionnalité souhaitée</label>
+        <textarea id="fFeature" placeholder="Ex : export PDF des stats de la semaine"></textarea>
+      </div>
+    </div>
+
+    <!-- COACH IA -->
+    <div class="card">
+      <div class="card-title" id="s5-title">🤖 Le Coach IA</div>
+      <div class="field">
+        <label id="l-ai-quality">Qualité des réponses du coach IA</label>
+        <div class="stars" id="stars-ai">
+          <button onclick="pickStar('ai',1)">⭐</button>
+          <button onclick="pickStar('ai',2)">⭐</button>
+          <button onclick="pickStar('ai',3)">⭐</button>
+          <button onclick="pickStar('ai',4)">⭐</button>
+          <button onclick="pickStar('ai',5)">⭐</button>
+        </div>
+        <div class="star-label" id="star-ai-label">—</div>
+      </div>
+      <div class="field">
+        <label id="l-ai-comment">Commentaire sur le coach IA</label>
+        <textarea id="fAiComment" placeholder="Ex : les suggestions de repas sont trop caloriques"></textarea>
+      </div>
+    </div>
+
+    <div style="margin-top:8px">
+      <button class="submit-btn" id="submitBtn" disabled onclick="submitForm()">
+        📤 <span id="submit-label">Envoyer mon feedback</span>
+      </button>
+      <p class="submit-note" id="submit-note">🔒 Envoyé directement par email · Confidentiel</p>
+    </div>
+
+  </div><!-- /formWrap -->
+
+  <div class="sending" id="sendingMsg">
+    ⏳ <span id="sending-label">Envoi en cours…</span>
+  </div>
+
+  <div class="success" id="successMsg">
+    <div class="success-icon">🎉</div>
+    <h3 id="success-h">Merci pour ton feedback !</h3>
+    <p id="success-p">Tes retours nous aident directement à améliorer FitCoach AI.
+
+À la semaine prochaine ! ⚡</p>
+    <div class="success-box">
+      ✅ Feedback enregistré · <span class="bta-badge" id="success-bta"></span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── CONFIG — remplace par ton endpoint Formspree ──────────────────
+// 1. Va sur https://formspree.io → créer un compte gratuit
+// 2. New Form → mets ton email → copie le endpoint ex: https://formspree.io/f/xpwzabcd
+// 3. Remplace la ligne ci-dessous
+var FORMSPREE_URL = 'https://formspree.io/f/mgojkobn';
+// ─────────────────────────────────────────────────────────────────
+
+var state = { lang:'fr', days:null, nps:null, overall:null, ai:null, crash:null, features:[] };
+
+// Semaine auto
+(function(){
+  var d = new Date();
+  var j1 = new Date(d.getFullYear(),0,1);
+  var w = Math.ceil(((d-j1)/86400000 + j1.getDay()+1)/7);
+  document.getElementById('week-num').textContent = 'W'+String(w).padStart(2,'0')+' · '+d.getFullYear();
+})();
+
+function pickScale(id,val){
+  state[id]=val;
+  document.getElementById('scale-'+id).querySelectorAll('.scale-btn').forEach(function(b,i){
+    b.classList.toggle('sel', i===val);
+  });
+  checkForm();
+}
+
+var SL={fr:['','😐 Décevant','😕 Moyen','😊 Correct','😄 Bien','🤩 Excellent'],
+        en:['','😐 Poor','😕 Average','😊 Decent','😄 Good','🤩 Excellent'],
+        de:['','😐 Schwach','😕 Mittelmäßig','😊 OK','😄 Gut','🤩 Ausgezeichnet'],
+        es:['','😐 Malo','😕 Regular','😊 Correcto','😄 Bien','🤩 Excelente'],
+        it:['','😐 Scarso','😕 Nella media','😊 Discreto','😄 Buono','🤩 Eccellente']};
+var NS={fr:'—',en:'—',de:'—',es:'—',it:'—'};
+
+function pickStar(id,val){
+  state[id]=val;
+  document.getElementById('stars-'+id).querySelectorAll('button').forEach(function(b,i){
+    b.classList.toggle('inactive', i>=val);
+  });
+  document.getElementById('star-'+id+'-label').textContent = SL[state.lang][val];
+  checkForm();
+}
+
+function toggleChip(el,group){
+  el.classList.toggle('selected');
+  state[group]=[];
+  document.getElementById('chips-'+group).querySelectorAll('.chip.selected').forEach(function(c){
+    state[group].push(c.textContent.trim());
+  });
+}
+
+function pickOne(group,el){
+  document.getElementById('chips-'+group).querySelectorAll('.chip').forEach(function(c){ c.classList.remove('selected'); });
+  el.classList.add('selected');
+  state[group]=el.textContent.trim();
+  var showBug = el.id==='crash-minor'||el.id==='crash-major';
+  document.getElementById('field-bug-desc').style.display = showBug?'block':'none';
+  checkForm();
+}
+
+function toggleLangIssue(){
+  var ok = document.getElementById('fLangOk').checked;
+  document.getElementById('field-lang-issue').style.display = ok?'none':'block';
+}
+
+function checkForm(){
+  var bta = document.getElementById('fBta').value.trim();
+  document.getElementById('submitBtn').disabled = !(bta.length>=6 && state.days!==null && state.overall!==null);
+}
+
+function submitForm(){
+  var bta      = document.getElementById('fBta').value.trim();
+  var name     = document.getElementById('fName').value.trim();
+  var bugDesc  = document.getElementById('fBugDesc').value.trim();
+  var langIssue= document.getElementById('fLangIssue').value.trim();
+  var best     = document.getElementById('fBest').value.trim();
+  var worst    = document.getElementById('fWorst').value.trim();
+  var feature  = document.getElementById('fFeature').value.trim();
+  var aiCom    = document.getElementById('fAiComment').value.trim();
+  var langOk   = document.getElementById('fLangOk').checked;
+  var week     = document.getElementById('week-num').textContent;
+
+  document.getElementById('formWrap').style.display = 'none';
+  document.getElementById('sendingMsg').style.display = 'block';
+
+  var body = new FormData();
+  body.append('_subject', '📋 FitCoach AI Feedback — '+bta+' — '+week);
+  body.append('bta_id',        bta);
+  body.append('prenom',        name||'—');
+  body.append('langue',        state.lang);
+  body.append('semaine',       week);
+  body.append('jours_utilises', state.days!==null?state.days:'—');
+  body.append('fonctionnalites', state.features.join(', ')||'—');
+  body.append('note_globale',  state.overall!==null?state.overall+'/5':'—');
+  body.append('nps',           state.nps!==null?state.nps+'/10':'—');
+  body.append('ai_note',       state.ai!==null?state.ai+'/5':'—');
+  body.append('bugs',          state.crash||'—');
+  body.append('detail_bugs',   bugDesc||'—');
+  body.append('langue_ok',     langOk?'Oui':'Non');
+  body.append('probleme_langue', langIssue||'—');
+  body.append('ce_qui_a_plu',  best||'—');
+  body.append('ce_qui_a_deplu', worst||'—');
+  body.append('fonctionnalite_souhaitee', feature||'—');
+  body.append('commentaire_coach_ia', aiCom||'—');
+  body.append('date_envoi',    new Date().toLocaleString());
+
+  fetch(FORMSPREE_URL, { method:'POST', body:body, headers:{'Accept':'application/json'} })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      document.getElementById('sendingMsg').style.display = 'none';
+      if(data.ok || data.next){
+        document.getElementById('successMsg').style.display = 'block';
+        document.getElementById('success-bta').textContent = bta;
+      } else {
+        alert('Erreur envoi. Vérifie ton endpoint Formspree.');
+        document.getElementById('formWrap').style.display = 'block';
+        document.getElementById('sendingMsg').style.display = 'none';
+      }
+    })
+    .catch(function(){
+      document.getElementById('sendingMsg').style.display = 'none';
+      alert('Erreur réseau. Réessaie.');
+      document.getElementById('formWrap').style.display = 'block';
+    });
+}
+
+// ── TRADUCTIONS ─────────────────────────────────────────────────
+var T={
+  fr:{badge:'📋 Feedback Hebdomadaire',title:"Comment s'est passée ta semaine ?",sub:'2 minutes · Confidentiel · Chaque lundi',week:'Semaine en cours',
+    s0:'🪪 Ton identifiant',l_bta:'Numéro bêta testeur *',l_name:'Prénom (optionnel)',
+    s1:'📱 Utilisation cette semaine',l_days:"Combien de jours as-tu utilisé l'app ?",l_feat:'Fonctionnalités utilisées',
+    s2:'⭐ Satisfaction générale',l_overall:"Note globale de l'app cette semaine *",l_rec:'La recommanderais-tu ? (0 = non · 10 = absolument)',nps_low:'Pas du tout',nps_high:'Absolument',
+    s3:'🐛 Bugs & problèmes',l_crash:'As-tu eu des bugs ou crashes ?',crash_none:'✅ Aucun',crash_minor:'⚠️ Mineurs',crash_major:'🔴 Bloquants',
+    l_bug:'Décris le(s) bug(s)',l_lang_ok:"La langue de l'app était-elle correcte ?",lang_ok_lbl:'Oui, tout était dans ma langue',l_lang_issue:"Qu'est-ce qui n'était pas traduit ?",
+    s4:"💡 Ce qui t'a marqué",l_best:'Ce que tu as le plus aimé',l_worst:'Ce qui t\'a frustré ou manqué',l_feat_req:'Une fonctionnalité souhaitée',
+    s5:'🤖 Le Coach IA',l_ai:'Qualité des réponses du coach IA',l_ai_com:'Commentaire sur le coach IA',
+    submit:'📤 Envoyer mon feedback',submit_note:'🔒 Envoyé directement par email · Confidentiel',sending:'⏳ Envoi en cours…',
+    success_h:'Merci pour ton feedback !',success_p:"Tes retours nous aident directement à améliorer FitCoach AI.\n\nÀ la semaine prochaine ! ⚡"},
+  en:{badge:'📋 Weekly Feedback',title:'How was your week?',sub:'2 minutes · Confidential · Every Monday',week:'Current week',
+    s0:'🪪 Your ID',l_bta:'Beta tester number *',l_name:'First name (optional)',
+    s1:'📱 Usage this week',l_days:'How many days did you use the app?',l_feat:'Features used',
+    s2:'⭐ Overall satisfaction',l_overall:'Overall app rating this week *',l_rec:'Would you recommend it? (0 = no · 10 = absolutely)',nps_low:'Not at all',nps_high:'Absolutely',
+    s3:'🐛 Bugs & issues',l_crash:'Did you experience any bugs or crashes?',crash_none:'✅ None',crash_minor:'⚠️ Minor',crash_major:'🔴 Blocking',
+    l_bug:'Describe the bug(s)',l_lang_ok:'Was the app language correct?',lang_ok_lbl:'Yes, everything was in my language',l_lang_issue:'What was not translated?',
+    s4:'💡 What stood out',l_best:'What you liked most',l_worst:'What frustrated you or was missing',l_feat_req:'A feature you would like',
+    s5:'🤖 The AI Coach',l_ai:'Quality of the AI coach responses',l_ai_com:'Comment on the AI coach',
+    submit:'📤 Send my feedback',submit_note:'🔒 Sent directly by email · Confidential',sending:'⏳ Sending…',
+    success_h:'Thanks for your feedback!',success_p:'Your input helps us improve FitCoach AI directly.\n\nSee you next week! ⚡'},
+  de:{badge:'📋 Wöchentliches Feedback',title:'Wie war deine Woche?',sub:'2 Minuten · Vertraulich · Jeden Montag',week:'Aktuelle Woche',
+    s0:'🪪 Deine ID',l_bta:'Beta-Tester-Nummer *',l_name:'Vorname (optional)',
+    s1:'📱 Nutzung diese Woche',l_days:'An wie vielen Tagen hast du die App genutzt?',l_feat:'Genutzte Funktionen',
+    s2:'⭐ Allgemeine Zufriedenheit',l_overall:'Gesamtbewertung diese Woche *',l_rec:'Würdest du sie empfehlen? (0 = nein · 10 = unbedingt)',nps_low:'Überhaupt nicht',nps_high:'Unbedingt',
+    s3:'🐛 Bugs & Probleme',l_crash:'Hattest du Bugs oder Abstürze?',crash_none:'✅ Keine',crash_minor:'⚠️ Kleinere',crash_major:'🔴 Blockierende',
+    l_bug:'Beschreibe die Bugs',l_lang_ok:'War die Sprache der App korrekt?',lang_ok_lbl:'Ja, alles war in meiner Sprache',l_lang_issue:'Was war nicht übersetzt?',
+    s4:'💡 Was auffiel',l_best:'Was dir am besten gefallen hat',l_worst:'Was dich frustriert hat oder fehlte',l_feat_req:'Eine gewünschte Funktion',
+    s5:'🤖 Der KI-Coach',l_ai:'Qualität der KI-Coach-Antworten',l_ai_com:'Kommentar zum KI-Coach',
+    submit:'📤 Feedback absenden',submit_note:'🔒 Per E-Mail gesendet · Vertraulich',sending:'⏳ Wird gesendet…',
+    success_h:'Danke für dein Feedback!',success_p:'Deine Rückmeldungen helfen uns, FitCoach AI zu verbessern.\n\nBis nächste Woche! ⚡'},
+  es:{badge:'📋 Feedback Semanal',title:'¿Cómo fue tu semana?',sub:'2 minutos · Confidencial · Cada lunes',week:'Semana actual',
+    s0:'🪪 Tu identificador',l_bta:'Número de beta tester *',l_name:'Nombre (opcional)',
+    s1:'📱 Uso esta semana',l_days:'¿Cuántos días usaste la app?',l_feat:'Funcionalidades usadas',
+    s2:'⭐ Satisfacción general',l_overall:'Valoración general esta semana *',l_rec:'¿La recomendarías? (0 = no · 10 = absolutamente)',nps_low:'Para nada',nps_high:'Absolutamente',
+    s3:'🐛 Bugs & problemas',l_crash:'¿Tuviste bugs o crashes?',crash_none:'✅ Ninguno',crash_minor:'⚠️ Menores',crash_major:'🔴 Bloqueantes',
+    l_bug:'Describe los bugs',l_lang_ok:'¿El idioma de la app era correcto?',lang_ok_lbl:'Sí, todo estaba en mi idioma',l_lang_issue:'¿Qué no estaba traducido?',
+    s4:'💡 Lo que destacó',l_best:'Lo que más te gustó',l_worst:'Lo que te frustró o echaste en falta',l_feat_req:'Una función que te gustaría',
+    s5:'🤖 El Coach IA',l_ai:'Calidad de las respuestas del coach IA',l_ai_com:'Comentario sobre el coach IA',
+    submit:'📤 Enviar mi feedback',submit_note:'🔒 Enviado por email · Confidencial',sending:'⏳ Enviando…',
+    success_h:'¡Gracias por tu feedback!',success_p:'Tus comentarios nos ayudan a mejorar FitCoach AI.\n\n¡Hasta la semana que viene! ⚡'},
+  it:{badge:'📋 Feedback Settimanale',title:"Com'è andata la tua settimana?",sub:'2 minuti · Riservato · Ogni lunedì',week:'Settimana corrente',
+    s0:'🪪 Il tuo identificativo',l_bta:'Numero beta tester *',l_name:'Nome (opzionale)',
+    s1:'📱 Utilizzo questa settimana',l_days:"Quanti giorni hai usato l'app?",l_feat:'Funzionalità utilizzate',
+    s2:'⭐ Soddisfazione generale',l_overall:"Valutazione generale dell'app questa settimana *",l_rec:'La consiglieresti? (0 = no · 10 = assolutamente)',nps_low:'Per niente',nps_high:'Assolutamente',
+    s3:'🐛 Bug & problemi',l_crash:'Hai avuto bug o crash?',crash_none:'✅ Nessuno',crash_minor:'⚠️ Minori',crash_major:'🔴 Bloccanti',
+    l_bug:'Descrivi i bug',l_lang_ok:"La lingua dell'app era corretta?",lang_ok_lbl:'Sì, tutto era nella mia lingua',l_lang_issue:'Cosa non era tradotto?',
+    s4:'💡 Cosa ti ha colpito',l_best:'Cosa ti è piaciuto di più',l_worst:'Cosa ti ha frustrato o mancato',l_feat_req:'Una funzione che vorresti',
+    s5:'🤖 Il Coach IA',l_ai:'Qualità delle risposte del coach IA',l_ai_com:'Commento sul coach IA',
+    submit:'📤 Invia il mio feedback',submit_note:'🔒 Inviato per email · Riservato',sending:'⏳ Invio in corso…',
+    success_h:'Grazie per il tuo feedback!',success_p:"I tuoi commenti ci aiutano a migliorare FitCoach AI.\n\nA la settimana prossima! ⚡"}
+};
+
+function setLang(l){
+  state.lang=l;
+  var t=T[l];
+  var ids={
+    'badge-txt':t.badge,'main-title':t.title,'main-sub':t.sub,'week-label':t.week,
+    's0-title':t.s0,'l-bta':t.l_bta,'l-name':t.l_name,
+    's1-title':t.s1,'l-days':t.l_days,'l-features':t.l_feat,
+    's2-title':t.s2,'l-overall':t.l_overall,'l-recommend':t.l_rec,'nps-low':t.nps_low,'nps-high':t.nps_high,
+    's3-title':t.s3,'l-crash':t.l_crash,'crash-none':t.crash_none,'crash-minor':t.crash_minor,'crash-major':t.crash_major,
+    'l-bug-desc':t.l_bug,'l-lang-ok':t.l_lang_ok,'lang-ok-label':t.lang_ok_lbl,'l-lang-issue':t.l_lang_issue,
+    's4-title':t.s4,'l-best':t.l_best,'l-worst':t.l_worst,'l-feature':t.l_feat_req,
+    's5-title':t.s5,'l-ai-quality':t.l_ai,'l-ai-comment':t.l_ai_com,
+    'submit-label':t.submit.replace(/^[^\s]+\s/,''),'submit-note':t.submit_note,'sending-label':t.sending,
+    'success-h':t.success_h,'success-p':t.success_p
+  };
+  Object.keys(ids).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.textContent=ids[id];
+  });
+  if(state.overall) document.getElementById('star-overall-label').textContent=SL[l][state.overall];
+  if(state.ai)      document.getElementById('star-ai-label').textContent=SL[l][state.ai];
+  ['fr','en','de','es','it'].forEach(function(c){
+    document.getElementById('btn-'+c).classList.toggle('active',c===l);
+  });
+  document.documentElement.lang=l;
+}
+
+var det=navigator.language.slice(0,2);
+setLang(['fr','en','de','es','it'].includes(det)?det:'fr');
+</script>
+</body>
+</html>
