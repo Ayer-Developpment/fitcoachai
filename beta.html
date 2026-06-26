@@ -217,9 +217,9 @@ h1{font-size:26px;font-weight:900;margin-bottom:8px}
       <input type="text" id="signName" placeholder="Ex: Lucas Dupont" required>
     </div>
     <div class="form-group">
-      <label>Adresse email Apple ID * (identique à ton App Store)</label>
+      <label id="label-email">Adresse email Apple ID * (identique à ton App Store)</label>
       <input type="email" id="signEmail" placeholder="ton.apple.id@email.com" required>
-      <p style="font-size:11px;color:#FF8C3C;margin-top:5px">⚠️ Doit être exactement le même email que ton Apple ID / App Store</p>
+      <p id="email-warn" style="font-size:11px;color:#FF8C3C;margin-top:5px">⚠️ Doit être exactement le même email que ton Apple ID / App Store</p>
     </div>
     <div class="form-group">
       <label>Date du jour *</label>
@@ -228,7 +228,7 @@ h1{font-size:26px;font-weight:900;margin-bottom:8px}
 
     <div class="checkbox-wrap">
       <input type="checkbox" id="check1">
-      <label for="check1">J'ai lu et j'accepte l'intégralité des <strong>conditions de participation bêta</strong> de FitCoach AI, et je comprends que je dois télécharger <strong>TestFlight</strong> sur l'App Store pour accéder à l'application.</label>
+      <label id="label-check1" for="check1">J'ai lu et j'accepte l'intégralité des <strong>conditions de participation bêta</strong> de FitCoach AI, et je comprends que je dois télécharger <strong>TestFlight</strong> sur l'App Store pour accéder à l'application.</label>
     </div>
     <div class="checkbox-wrap">
       <input type="checkbox" id="check2">
@@ -244,7 +244,7 @@ h1{font-size:26px;font-weight:900;margin-bottom:8px}
     </div>
     <div class="checkbox-wrap">
       <input type="checkbox" id="check5">
-      <label for="check5">Je confirme que l'email renseigné ci-dessus est bien mon <strong>Apple ID</strong> (celui utilisé sur l'App Store) et que j'ai ou je vais télécharger <strong>TestFlight</strong> gratuitement sur l'App Store.</label>
+      <label id="label-check5" for="check5">Je confirme que l'email renseigné ci-dessus est bien mon <strong>Apple ID</strong> (celui utilisé sur l'App Store) et que j'ai ou je vais télécharger <strong>TestFlight</strong> gratuitement sur l'App Store.</label>
     </div>
 
     <button class="sign-btn" id="signBtn" disabled onclick="submitSignature()">
@@ -259,13 +259,13 @@ h1{font-size:26px;font-weight:900;margin-bottom:8px}
   <!-- SUCCESS -->
   <div class="success" id="successMsg">
     <div class="success-icon">🎉</div>
-    <h3>Accord signé !</h3>
+    <h3 id="success-h">Accord signé !</h3>
     <p>Merci <span id="successName"></span> ! Ton accord a bien été enregistré.<br><br>
     Tu recevras ton <strong>invitation TestFlight</strong> sur <span id="successEmail"></span> dans les 24-48h.<br><br>
     Bienvenue dans l'équipe bêta FitCoach AI ! ⚡</p>
     <div style="margin-top:20px;background:rgba(0,212,164,.08);border:1px solid rgba(0,212,164,.2);
       border-radius:12px;padding:16px;font-size:13px;color:#00D4A4;line-height:1.6">
-      📋 Un récapitulatif de ton accord a été envoyé à ton adresse email.
+      <span id="success-note">📋 Un récapitulatif de ton accord a été envoyé à ton adresse email.</span>
     </div>
   </div>
 
@@ -329,7 +329,18 @@ const BT = {
     h2_4:"📲 4. Accès et conditions d'utilisation", h2_5:"🔒 5. Confidentialité",
     h2_6:"✅ 6. Obligations du bêta testeur", h2_7:"🛡️ 7. Données personnelles",
     h2_8:"⚖️ 8. Limitation de responsabilité", h2_9:"🚪 9. Résiliation", h2_10:"🌍 10. Droit applicable",
-    sign_h:"✍️ Signature électronique"
+    sign_h:"✍️ Signature électronique",
+    dev_name:"Ayer-Developpment",
+    email_label:"Adresse email Apple ID * (identique à ton App Store)",
+    email_warn:"⚠️ Doit être exactement le même email que ton Apple ID / App Store",
+    check1_txt:"J'ai lu et j'accepte l'intégralité des conditions de participation bêta de FitCoach AI, et je comprends que je dois télécharger TestFlight sur l'App Store pour accéder à l'application.",
+    check5_txt:"Je confirme que l'email renseigné est bien mon Apple ID (celui utilisé sur l'App Store) et que j'ai ou je vais télécharger TestFlight gratuitement sur l'App Store.",
+    sign_btn:"✍️ Signer et rejoindre la bêta",
+    success_h:"Accord signé !",
+    success_p1:"Ton accord a bien été enregistré.",
+    success_p2:"Tu recevras ton invitation TestFlight dans les 24-48h.",
+    success_p3:"Bienvenue dans l'équipe bêta FitCoach AI ! ⚡",
+    success_note:"📋 Un récapitulatif de ton accord a été envoyé à ton adresse email."
   },
   en:{
     title:"Participation Agreement", subtitle:"Read and sign before TestFlight access",
@@ -337,7 +348,18 @@ const BT = {
     h2_4:"📲 4. Access & Terms of Use", h2_5:"🔒 5. Confidentiality",
     h2_6:"✅ 6. Beta Tester Obligations", h2_7:"🛡️ 7. Personal Data",
     h2_8:"⚖️ 8. Limitation of Liability", h2_9:"🚪 9. Termination", h2_10:"🌍 10. Applicable Law",
-    sign_h:"✍️ Electronic Signature"
+    sign_h:"✍️ Electronic Signature",
+    dev_name:"Ayer-Developpment",
+    email_label:"Apple ID Email * (same as your App Store)",
+    email_warn:"⚠️ Must be exactly the same email as your Apple ID / App Store",
+    check1_txt:"I have read and accept all the beta participation terms of FitCoach AI, and I understand I need to download TestFlight from the App Store to access the app.",
+    check5_txt:"I confirm that the email provided above is my Apple ID (used on the App Store) and that I have or will download TestFlight for free from the App Store.",
+    sign_btn:"✍️ Sign and join the beta",
+    success_h:"Agreement signed!",
+    success_p1:"Your agreement has been recorded.",
+    success_p2:"You will receive your TestFlight invitation within 24-48h.",
+    success_p3:"Welcome to the FitCoach AI beta team! ⚡",
+    success_note:"📋 A summary of your agreement has been sent to your email."
   },
   es:{
     title:"Acuerdo de participación", subtitle:"Leer y firmar antes del acceso TestFlight",
@@ -345,7 +367,18 @@ const BT = {
     h2_4:"📲 4. Acceso y condiciones", h2_5:"🔒 5. Confidencialidad",
     h2_6:"✅ 6. Obligaciones del beta tester", h2_7:"🛡️ 7. Datos personales",
     h2_8:"⚖️ 8. Limitación de responsabilidad", h2_9:"🚪 9. Rescisión", h2_10:"🌍 10. Ley aplicable",
-    sign_h:"✍️ Firma electrónica"
+    sign_h:"✍️ Firma electrónica",
+    dev_name:"Ayer-Developpment",
+    email_label:"Email Apple ID * (igual que tu App Store)",
+    email_warn:"⚠️ Debe ser exactamente el mismo email que tu Apple ID / App Store",
+    check1_txt:"He leído y acepto todos los términos de participación beta de FitCoach AI, y entiendo que debo descargar TestFlight de la App Store para acceder a la app.",
+    check5_txt:"Confirmo que el email proporcionado es mi Apple ID (usado en la App Store) y que tengo o descargaré TestFlight gratis de la App Store.",
+    sign_btn:"✍️ Firmar y unirse a la beta",
+    success_h:"¡Acuerdo firmado!",
+    success_p1:"Tu acuerdo ha sido registrado.",
+    success_p2:"Recibirás tu invitación TestFlight en 24-48h.",
+    success_p3:"¡Bienvenido al equipo beta de FitCoach AI! ⚡",
+    success_note:"📋 Un resumen de tu acuerdo ha sido enviado a tu email."
   },
   de:{
     title:"Teilnahmevereinbarung", subtitle:"Vor TestFlight-Zugang lesen und unterzeichnen",
@@ -353,7 +386,18 @@ const BT = {
     h2_4:"📲 4. Zugang & Nutzungsbedingungen", h2_5:"🔒 5. Vertraulichkeit",
     h2_6:"✅ 6. Pflichten des Beta-Testers", h2_7:"🛡️ 7. Personenbezogene Daten",
     h2_8:"⚖️ 8. Haftungsbeschränkung", h2_9:"🚪 9. Kündigung", h2_10:"🌍 10. Anwendbares Recht",
-    sign_h:"✍️ Elektronische Unterschrift"
+    sign_h:"✍️ Elektronische Unterschrift",
+    dev_name:"Ayer-Developpment",
+    email_label:"Apple ID E-Mail * (identisch mit deinem App Store)",
+    email_warn:"⚠️ Muss exakt dieselbe E-Mail wie deine Apple ID / App Store sein",
+    check1_txt:"Ich habe die Beta-Teilnahmebedingungen von FitCoach AI gelesen und akzeptiere sie. Ich verstehe, dass ich TestFlight aus dem App Store herunterladen muss, um auf die App zuzugreifen.",
+    check5_txt:"Ich bestätige, dass die angegebene E-Mail meine Apple ID ist (verwendet im App Store) und dass ich TestFlight kostenlos aus dem App Store heruntergeladen habe oder herunterladen werde.",
+    sign_btn:"✍️ Unterschreiben und Beta beitreten",
+    success_h:"Vereinbarung unterzeichnet!",
+    success_p1:"Deine Vereinbarung wurde aufgezeichnet.",
+    success_p2:"Du erhältst deine TestFlight-Einladung innerhalb von 24-48h.",
+    success_p3:"Willkommen im FitCoach AI Beta-Team! ⚡",
+    success_note:"📋 Eine Zusammenfassung deiner Vereinbarung wurde an deine E-Mail gesendet."
   },
   it:{
     title:"Accordo di partecipazione", subtitle:"Leggere e firmare prima dell'accesso TestFlight",
@@ -361,7 +405,18 @@ const BT = {
     h2_4:"📲 4. Accesso e condizioni d'uso", h2_5:"🔒 5. Riservatezza",
     h2_6:"✅ 6. Obblighi del beta tester", h2_7:"🛡️ 7. Dati personali",
     h2_8:"⚖️ 8. Limitazione di responsabilità", h2_9:"🚪 9. Risoluzione", h2_10:"🌍 10. Legge applicabile",
-    sign_h:"✍️ Firma elettronica"
+    sign_h:"✍️ Firma elettronica",
+    dev_name:"Ayer-Developpment",
+    email_label:"Email Apple ID * (uguale al tuo App Store)",
+    email_warn:"⚠️ Deve essere esattamente la stessa email del tuo Apple ID / App Store",
+    check1_txt:"Ho letto e accetto tutti i termini di partecipazione beta di FitCoach AI, e capisco che devo scaricare TestFlight dall'App Store per accedere all'app.",
+    check5_txt:"Confermo che l'email fornita è il mio Apple ID (usato sull'App Store) e che ho o scaricherò TestFlight gratuitamente dall'App Store.",
+    sign_btn:"✍️ Firma e unisciti alla beta",
+    success_h:"Accordo firmato!",
+    success_p1:"Il tuo accordo è stato registrato.",
+    success_p2:"Riceverai il tuo invito TestFlight entro 24-48h.",
+    success_p3:"Benvenuto nel team beta di FitCoach AI! ⚡",
+    success_note:"📋 Un riepilogo del tuo accordo è stato inviato alla tua email."
   }
 };
 
@@ -371,6 +426,15 @@ function setLang(l) {
     const k = el.getAttribute('data-t');
     if (t[k]) el.textContent = t[k];
   });
+  // Translate form elements
+  const el = (id) => document.getElementById(id);
+  if (el('label-email') && t.email_label) el('label-email').textContent = t.email_label;
+  if (el('email-warn') && t.email_warn)   el('email-warn').textContent  = t.email_warn;
+  if (el('label-check1') && t.check1_txt) el('label-check1').innerHTML = t.check1_txt;
+  if (el('label-check5') && t.check5_txt) el('label-check5').innerHTML = t.check5_txt;
+  if (el('signBtn') && t.sign_btn)        el('signBtn').textContent = t.sign_btn;
+  if (el('success-h') && t.success_h)    el('success-h').textContent = t.success_h;
+  if (el('success-note') && t.success_note) el('success-note').textContent = t.success_note;
   // Update buttons
   ['fr','en','es','de','it'].forEach(code => {
     const btn = document.getElementById('btn-'+code);
