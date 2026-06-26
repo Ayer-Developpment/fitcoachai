@@ -17,16 +17,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
 h1{font-size:26px;font-weight:900;margin-bottom:8px}
 .date{font-size:13px;color:#7878A0;margin-bottom:4px}
 .version{font-size:12px;color:#7878A0}
-
-.section{background:#11111C;border:1px solid #1E1E32;border-radius:16px;
-  padding:24px;margin-bottom:16px}
-.section h2{font-size:16px;font-weight:800;color:#6C63FF;margin-bottom:14px;
-  display:flex;align-items:center;gap:8px}
+.lang-bar{display:flex;justify-content:center;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+.lang-btn{background:transparent;border:1px solid #1E1E32;border-radius:8px;
+  color:#7878A0;font-size:12px;font-weight:600;padding:6px 14px;cursor:pointer;
+  font-family:inherit;transition:all .2s}
+.lang-btn:hover{border-color:#6C63FF;color:#6C63FF}
+.lang-btn.active{background:rgba(108,99,255,.15);border-color:rgba(108,99,255,.4);color:#6C63FF;font-weight:700}
+.section{background:#11111C;border:1px solid #1E1E32;border-radius:16px;padding:24px;margin-bottom:16px}
+.section h2{font-size:16px;font-weight:800;color:#6C63FF;margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .section p{color:#9090B0;font-size:14px;line-height:1.7;margin-bottom:10px}
 .section p:last-child{margin-bottom:0}
 .section ul{list-style:none;display:flex;flex-direction:column;gap:8px}
-.section li{color:#9090B0;font-size:14px;line-height:1.6;
-  display:flex;align-items:flex-start;gap:8px}
+.section li{color:#9090B0;font-size:14px;line-height:1.6;display:flex;align-items:flex-start;gap:8px}
 .section li::before{content:'›';color:#6C63FF;font-weight:900;flex-shrink:0;margin-top:1px}
 .highlight{background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.2);
   border-radius:10px;padding:12px 14px;margin:10px 0;font-size:13px;color:#E8E8F0}
@@ -34,8 +36,6 @@ h1{font-size:26px;font-weight:900;margin-bottom:8px}
   border-radius:10px;padding:12px 14px;margin:10px 0;font-size:13px;color:#FF8080}
 .green-box{background:rgba(0,212,164,.06);border:1px solid rgba(0,212,164,.2);
   border-radius:10px;padding:12px 14px;margin:10px 0;font-size:13px;color:#00D4A4}
-
-/* Signature block */
 .sign-section{background:linear-gradient(135deg,rgba(108,99,255,.08),rgba(0,212,164,.04));
   border:1px solid rgba(108,99,255,.25);border-radius:20px;padding:28px;margin-top:24px}
 .sign-section h2{font-size:18px;font-weight:900;margin-bottom:6px}
@@ -53,16 +53,15 @@ h1{font-size:26px;font-weight:900;margin-bottom:8px}
 .checkbox-wrap input[type=checkbox]{width:18px;height:18px;cursor:pointer;
   accent-color:#6C63FF;flex-shrink:0;margin-top:2px}
 .checkbox-wrap label{font-size:13px;color:#9090B0;line-height:1.5;cursor:pointer}
-.checkbox-wrap label a{color:#6C63FF;text-decoration:none}
+.star-wrap{border-color:rgba(255,200,0,.3) !important;background:#0D0D10 !important}
+.star-wrap label{color:#FFD700 !important}
 .sign-btn{width:100%;padding:16px;border-radius:14px;border:none;
-  background:linear-gradient(135deg,#6C63FF,#00D4A4);
-  color:#fff;font-size:16px;font-weight:800;cursor:pointer;
-  box-shadow:0 8px 24px rgba(108,99,255,.3);transition:transform .2s,box-shadow .2s;
+  background:linear-gradient(135deg,#6C63FF,#00D4A4);color:#fff;font-size:16px;font-weight:800;
+  cursor:pointer;box-shadow:0 8px 24px rgba(108,99,255,.3);transition:transform .2s,box-shadow .2s;
   display:flex;align-items:center;justify-content:center;gap:8px}
 .sign-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(108,99,255,.4)}
 .sign-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-
-/* Success */
+.sending{display:none;text-align:center;padding:40px;color:#7878A0;font-size:14px}
 .success{display:none;text-align:center;padding:32px 20px}
 .success-icon{font-size:60px;margin-bottom:16px}
 .success h3{font-size:22px;font-weight:900;margin-bottom:8px;color:#00D4A4}
@@ -72,391 +71,603 @@ h1{font-size:26px;font-weight:900;margin-bottom:8px}
 <body>
 <div class="container">
 
-  <!-- HEADER -->
   <div class="header">
     <div class="logo">⚡ FitCoach AI</div>
-    <div class="badge">🧪 Programme Bêta Testeur</div>
-    <h1>Accord de participation</h1>
+    <div class="badge" id="hdr-badge">🧪 Programme Bêta Testeur</div>
+    <h1 id="hdr-title">Accord de participation</h1>
     <div class="date">Version 1.0 — Juin 2026</div>
-    <div class="version">À lire et signer avant l'accès TestFlight</div>
+    <div class="version" id="hdr-sub">À lire et signer avant l'accès TestFlight</div>
   </div>
 
-  <!-- 1. PARTIES -->
-  <div class="section">
-    <h2 data-t="h2_1">📋 1. Les parties</h2>
-    <p>Le présent accord est conclu entre :</p>
+  <div class="lang-bar">
+    <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">🇫🇷 FR</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">🇬🇧 EN</button>
+    <button class="lang-btn" id="btn-de" onclick="setLang('de')">🇩🇪 DE</button>
+    <button class="lang-btn" id="btn-es" onclick="setLang('es')">🇪🇸 ES</button>
+    <button class="lang-btn" id="btn-it" onclick="setLang('it')">🇮🇹 IT</button>
+  </div>
+
+  <div class="section"><h2 data-t="h2_1">📋 1. Les parties</h2>
+    <p data-t="p_parties">Le présent accord est conclu entre :</p>
+    <div class="highlight"><strong data-t="editor_lbl">L'éditeur :</strong> FitCoach AI, <span data-t="dev_by">développé par</span> Ayer-Developpment<br>Contact : support.fitcoachai@gmail.com<br><br><strong data-t="tester_lbl">Le bêta testeur :</strong> <span data-t="tester_desc">Toute personne ayant accepté cet accord et reçu un accès via TestFlight.</span></div>
+  </div>
+
+  <div class="section"><h2 data-t="h2_2">🎯 2. Objet de l'accord</h2>
+    <p data-t="p_objet1">Cet accord définit les conditions dans lesquelles le bêta testeur participe au programme de test anticipé de l'application <strong>FitCoach AI</strong> avant son lancement officiel sur l'App Store.</p>
+    <p data-t="p_objet2">L'accès bêta est accordé à titre <strong>gratuit et temporaire</strong>, exclusivement via l'application <strong>TestFlight</strong> d'Apple.</p>
+  </div>
+
+  <div class="section"><h2 data-t="h2_3">⏱️ 3. Durée de la participation</h2>
+    <ul>
+      <li data-t="dur1">La période de bêta test est de <strong>90 jours maximum</strong> à compter de la réception de l'invitation TestFlight.</li>
+      <li data-t="dur2">L'accès peut être révoqué à tout moment par FitCoach AI sans préavis ni justification.</li>
+      <li data-t="dur3">Le bêta testeur peut se retirer du programme à tout moment sans obligation.</li>
+      <li data-t="dur4">À l'issue de la bêta, l'accès gratuit prend fin et l'application passe en version commerciale.</li>
+    </ul>
+  </div>
+
+  <div class="section"><h2 data-t="h2_4">📲 4. Accès et conditions d'utilisation</h2>
+    <ul>
+      <li data-t="acc1">L'accès est <strong>strictement personnel et non transférable</strong>. Le lien TestFlight ne doit pas être partagé.</li>
+      <li data-t="acc2">L'application est réservée aux appareils <strong>iPhone sous iOS 17 ou supérieur</strong>.</li>
+      <li data-t="acc3">L'accès bêta est limité à <strong>1 appareil par testeur</strong>.</li>
+      <li data-t="acc4">L'utilisation à des fins commerciales ou professionnelles est interdite pendant la phase bêta.</li>
+    </ul>
+    <div class="warning"><span data-t="warn_share">⚠️ Il est strictement interdit de partager, reproduire, revendre ou distribuer l'application ou son contenu sous quelque forme que ce soit.</span></div>
     <div class="highlight">
-      <strong>L'éditeur :</strong> FitCoach AI, développé par Ayer-Developpment<br>
-      Contact : support.fitcoachai@gmail.com<br><br>
-      <strong>Le bêta testeur :</strong> Toute personne ayant accepté cet accord et reçu un accès via TestFlight.
+      📧 <strong data-t="imp_email_title">Important — Email Apple ID :</strong><br>
+      <span data-t="imp_email_body">L'invitation TestFlight sera envoyée à l'adresse email renseignée dans ce formulaire. Cette adresse doit être identique à celle de ton Apple ID / App Store, sinon tu ne pourras pas accepter l'invitation.</span><br><br>
+      📲 <strong data-t="imp_tf_title">Important — Télécharger TestFlight :</strong><br>
+      <span data-t="imp_tf_body">Avant de pouvoir installer FitCoach AI, tu dois télécharger l'application TestFlight sur l'App Store : → Ouvre l'App Store → Recherche "TestFlight" → Installe l'app gratuite d'Apple. Une fois l'invitation reçue par email, ouvre-la sur ton iPhone pour installer FitCoach AI via TestFlight.</span>
     </div>
   </div>
 
-  <!-- 2. OBJET -->
-  <div class="section">
-    <h2 data-t="h2_2">🎯 2. Objet de l'accord</h2>
-    <p>Cet accord définit les conditions dans lesquelles le bêta testeur participe au programme de test anticipé de l'application <strong>FitCoach AI</strong> avant son lancement officiel sur l'App Store.</p>
-    <p>L'accès bêta est accordé à titre <strong>gratuit et temporaire</strong>, exclusivement via l'application <strong>TestFlight</strong> d'Apple.</p>
+  <div class="section"><h2 data-t="h2_5">🔒 5. Confidentialité</h2>
+    <p data-t="p_conf">En participant à la bêta, le testeur s'engage à :</p>
+    <ul>
+      <li data-t="conf1">Garder <strong>confidentiel</strong> toute information relative à l'application, ses fonctionnalités et son contenu.</li>
+      <li data-t="conf2">Ne pas publier de captures d'écran, vidéos ou descriptions détaillées de l'app sans accord écrit préalable.</li>
+      <li data-t="conf3">Ne pas divulguer l'existence du programme bêta à des tiers en dehors de son réseau personnel proche.</li>
+      <li data-t="conf4">Ne pas tenter de décompiler, désassembler ou extraire le code source de l'application.</li>
+    </ul>
+    <div class="highlight"><span data-t="conf_exc">💡 Exception : le testeur peut mentionner sa participation à la bêta sur ses réseaux sociaux en précisant "Bêta testeur FitCoach AI" si FitCoach AI l'autorise expressément.</span></div>
   </div>
 
-  <!-- 3. DURÉE -->
-  <div class="section">
-    <h2 data-t="h2_3">⏱️ 3. Durée de la participation</h2>
+  <div class="section"><h2 data-t="h2_6">✅ 6. Obligations du bêta testeur</h2>
+    <p data-t="p_oblig">En contrepartie de l'accès gratuit, le testeur s'engage à :</p>
     <ul>
-      <li>La période de bêta test est de <strong>90 jours maximum</strong> à compter de la réception de l'invitation TestFlight.</li>
-      <li>L'accès peut être révoqué à tout moment par FitCoach AI sans préavis ni justification.</li>
-      <li>Le bêta testeur peut se retirer du programme à tout moment sans obligation.</li>
-      <li>À l'issue de la bêta, l'accès gratuit prend fin et l'application passe en version commerciale.</li>
+      <li data-t="obl1">Utiliser l'application <strong>régulièrement</strong> pendant la période de bêta (minimum 3 fois par semaine).</li>
+      <li data-t="obl2">Signaler tout <strong>bug, crash ou comportement inattendu</strong> via le formulaire prévu ou par email.</li>
+      <li data-t="obl3">Fournir un <strong>retour honnête et constructif</strong> sur l'expérience utilisateur.</li>
+      <li data-t="obl4">Répondre aux <strong>questionnaires de feedback</strong> envoyés par FitCoach AI (maximum 1 par semaine).</li>
+      <li data-t="obl5">Informer FitCoach AI en cas d'impossibilité de continuer à tester.</li>
+    </ul>
+    <div class="green-box"><span data-t="reward">🎁 En échange de ta participation active : accès complet 90 jours, badge "Bêta Testeur Officiel" dans l'app et mention dans les crédits au lancement.</span></div>
+  </div>
+
+  <div class="section"><h2 data-t="h2_7">🛡️ 7. Données personnelles</h2>
+    <ul>
+      <li data-t="data1">L'email collecté lors de l'inscription est utilisé <strong>uniquement</strong> pour l'envoi de l'invitation TestFlight et des communications liées à la bêta.</li>
+      <li data-t="data2">Les données de santé et nutrition saisies dans l'app sont stockées <strong>localement sur l'appareil</strong> et ne sont pas transmises à FitCoach AI.</li>
+      <li data-t="data3">Les messages envoyés au coach IA transitent par l'<strong>API Anthropic</strong> conformément à leur politique de confidentialité.</li>
+      <li data-t="data4">Les données du testeur ne sont jamais vendues ou partagées avec des tiers.</li>
+      <li data-t="data5">Le testeur peut demander la suppression de ses données à tout moment : support.fitcoachai@gmail.com</li>
     </ul>
   </div>
 
-  <!-- 4. ACCÈS -->
-  <div class="section">
-    <h2 data-t="h2_4">📲 4. Accès et conditions d'utilisation</h2>
+  <div class="section"><h2 data-t="h2_8">⚖️ 8. Limitation de responsabilité</h2>
+    <p data-t="p_liab">L'application bêta est fournie <strong>"en l'état"</strong>, sans garantie d'aucune sorte. FitCoach AI ne peut être tenu responsable de :</p>
     <ul>
-      <li>L'accès est <strong>strictement personnel et non transférable</strong>. Le lien TestFlight ne doit pas être partagé.</li>
-      <li>L'application est réservée aux appareils <strong>iPhone sous iOS 17 ou supérieur</strong>.</li>
-      <li>L'accès bêta est limité à <strong>1 appareil par testeur</strong>.</li>
-      <li>L'utilisation à des fins commerciales ou professionnelles est interdite pendant la phase bêta.</li>
+      <li data-t="liab1">Perte ou corruption de données liées à l'utilisation de la version bêta.</li>
+      <li data-t="liab2">Interruptions ou dysfonctionnements du service pendant la phase de test.</li>
+      <li data-t="liab3">Toute décision prise sur la base des conseils nutritionnels ou fitness fournis par l'IA.</li>
     </ul>
-    <div class="warning">
-      ⚠️ Il est strictement interdit de partager, reproduire, revendre ou distribuer l'application ou son contenu sous quelque forme que ce soit.
-    </div>
-    <div class="highlight">
-      📧 <strong>Important — Email Apple ID :</strong><br>
-      L'invitation TestFlight sera envoyée à l'adresse email renseignée dans ce formulaire.<br>
-      <strong>Cette adresse doit être identique à celle de ton Apple ID / App Store</strong>, sinon tu ne pourras pas accepter l'invitation.<br><br>
-      📲 <strong>Important — Télécharger TestFlight :</strong><br>
-      Avant de pouvoir installer FitCoach AI, tu dois <strong>télécharger l'application TestFlight</strong> sur l'App Store :<br>
-      → Ouvre l'App Store → Recherche <strong>"TestFlight"</strong> → Installe l'app gratuite d'Apple.<br>
-      Une fois l'invitation reçue par email, ouvre-la sur ton iPhone pour installer FitCoach AI via TestFlight.
-    </div>
+    <div class="warning"><span data-t="warn_medical">⚠️ Les conseils de FitCoach AI sont informatifs et ne remplacent en aucun cas un avis médical ou nutritionnel professionnel.</span></div>
   </div>
 
-  <!-- 5. CONFIDENTIALITÉ -->
-  <div class="section">
-    <h2 data-t="h2_5">🔒 5. Confidentialité</h2>
-    <p>En participant à la bêta, le testeur s'engage à :</p>
+  <div class="section"><h2 data-t="h2_9">🚪 9. Résiliation</h2>
     <ul>
-      <li>Garder <strong>confidentiel</strong> toute information relative à l'application, ses fonctionnalités et son contenu.</li>
-      <li>Ne pas publier de captures d'écran, vidéos ou descriptions détaillées de l'app sans accord écrit préalable.</li>
-      <li>Ne pas divulguer l'existence du programme bêta à des tiers en dehors de son réseau personnel proche.</li>
-      <li>Ne pas tenter de décompiler, désassembler ou extraire le code source de l'application.</li>
-    </ul>
-    <div class="highlight">
-      💡 Exception : le testeur peut mentionner sa participation à la bêta sur ses réseaux sociaux en précisant "Bêta testeur FitCoach AI" si FitCoach AI l'autorise expressément.
-    </div>
-  </div>
-
-  <!-- 6. OBLIGATIONS DU TESTEUR -->
-  <div class="section">
-    <h2 data-t="h2_6">✅ 6. Obligations du bêta testeur</h2>
-    <p>En contrepartie de l'accès gratuit, le testeur s'engage à :</p>
-    <ul>
-      <li>Utiliser l'application <strong>régulièrement</strong> pendant la période de bêta (minimum 3 fois par semaine).</li>
-      <li>Signaler tout <strong>bug, crash ou comportement inattendu</strong> via le formulaire prévu ou par email.</li>
-      <li>Fournir un <strong>retour honnête et constructif</strong> sur l'expérience utilisateur.</li>
-      <li>Répondre aux <strong>questionnaires de feedback</strong> envoyés par FitCoach AI (maximum 1 par semaine).</li>
-      <li>Informer FitCoach AI en cas d'impossibilité de continuer à tester.</li>
-    </ul>
-    <div class="green-box">
-      🎁 En échange de ta participation active : accès complet 90 jours, badge "Bêta Testeur Officiel" dans l'app et mention dans les crédits au lancement.
-    </div>
-  </div>
-
-  <!-- 7. DONNÉES PERSONNELLES -->
-  <div class="section">
-    <h2 data-t="h2_7">🛡️ 7. Données personnelles</h2>
-    <ul>
-      <li>L'email collecté lors de l'inscription est utilisé <strong>uniquement</strong> pour l'envoi de l'invitation TestFlight et des communications liées à la bêta.</li>
-      <li>Les données de santé et nutrition saisies dans l'app sont stockées <strong>localement sur l'appareil</strong> et ne sont pas transmises à FitCoach AI.</li>
-      <li>Les messages envoyés au coach IA transitent par l'<strong>API Anthropic</strong> conformément à leur politique de confidentialité.</li>
-      <li>Les données du testeur ne sont jamais vendues ou partagées avec des tiers.</li>
-      <li>Le testeur peut demander la suppression de ses données à tout moment : support.fitcoachai@gmail.com</li>
+      <li data-t="res1">FitCoach AI se réserve le droit de <strong>révoquer l'accès</strong> de tout testeur ne respectant pas cet accord.</li>
+      <li data-t="res2">En cas de violation de la confidentialité, FitCoach AI se réserve le droit d'engager des poursuites.</li>
+      <li data-t="res3">Le testeur peut se retirer à tout moment en envoyant un email à support.fitcoachai@gmail.com</li>
     </ul>
   </div>
 
-  <!-- 8. LIMITATION DE RESPONSABILITÉ -->
-  <div class="section">
-    <h2 data-t="h2_8">⚖️ 8. Limitation de responsabilité</h2>
-    <p>L'application bêta est fournie <strong>"en l'état"</strong>, sans garantie d'aucune sorte. FitCoach AI ne peut être tenu responsable de :</p>
-    <ul>
-      <li>Perte ou corruption de données liées à l'utilisation de la version bêta.</li>
-      <li>Interruptions ou dysfonctionnements du service pendant la phase de test.</li>
-      <li>Toute décision prise sur la base des conseils nutritionnels ou fitness fournis par l'IA.</li>
-    </ul>
-    <div class="warning">
-      ⚠️ Les conseils de FitCoach AI sont informatifs et ne remplacent en aucun cas un avis médical ou nutritionnel professionnel.
-    </div>
-  </div>
-
-  <!-- 9. RÉSILIATION -->
-  <div class="section">
-    <h2 data-t="h2_9">🚪 9. Résiliation</h2>
-    <ul>
-      <li>FitCoach AI se réserve le droit de <strong>révoquer l'accès</strong> de tout testeur ne respectant pas cet accord.</li>
-      <li>En cas de violation de la confidentialité, FitCoach AI se réserve le droit d'engager des poursuites.</li>
-      <li>Le testeur peut se retirer à tout moment en envoyant un email à support.fitcoachai@gmail.com</li>
-    </ul>
-  </div>
-
-  <!-- 10. DROIT APPLICABLE -->
-  <div class="section">
-    <h2 data-t="h2_10">🌍 10. Droit applicable</h2>
-    <p>Le présent accord est soumis au <strong>droit français</strong>. Tout litige sera soumis aux tribunaux compétents de la juridiction de l'éditeur.</p>
-    <p>En cas de version multilingue, la version <strong>française fait foi</strong>.</p>
+  <div class="section"><h2 data-t="h2_10">🌍 10. Droit applicable</h2>
+    <p data-t="p_law1">Le présent accord est soumis au <strong>droit français</strong>. Tout litige sera soumis aux tribunaux compétents de la juridiction de l'éditeur.</p>
+    <p data-t="p_law2">En cas de version multilingue, la version <strong>française fait foi</strong>.</p>
   </div>
 
   <!-- SIGNATURE -->
   <div class="sign-section" id="signForm">
     <h2 data-t="sign_h">✍️ Signature électronique</h2>
-    <p>En remplissant ce formulaire, tu confirmes avoir lu, compris et accepté l'intégralité des conditions ci-dessus. Cette signature a valeur d'accord contractuel.</p>
+    <p data-t="sign_intro">En remplissant ce formulaire, tu confirmes avoir lu, compris et accepté l'intégralité des conditions ci-dessus. Cette signature a valeur d'accord contractuel.</p>
 
     <div class="form-group">
-      <label>Prénom et Nom *</label>
+      <label data-t="lbl_name">Prénom et Nom *</label>
       <input type="text" id="signName" placeholder="Ex: Lucas Dupont" required>
     </div>
     <div class="form-group">
-      <label id="label-email">Adresse email Apple ID * (identique à ton App Store)</label>
+      <label id="label-email" data-t="lbl_email">Adresse email Apple ID * (identique à ton App Store)</label>
       <input type="email" id="signEmail" placeholder="ton.apple.id@email.com" required>
-      <p id="email-warn" style="font-size:11px;color:#FF8C3C;margin-top:5px">⚠️ Doit être exactement le même email que ton Apple ID / App Store</p>
+      <p id="email-warn" style="font-size:11px;color:#FF8C3C;margin-top:5px" data-t="email_warn">⚠️ Doit être exactement le même email que ton Apple ID / App Store</p>
     </div>
     <div class="form-group">
-      <label>Date du jour *</label>
+      <label data-t="lbl_date">Date du jour *</label>
       <input type="text" id="signDate" placeholder="Ex: 26/06/2026" required>
     </div>
 
     <div class="checkbox-wrap">
-      <input type="checkbox" id="check1">
-      <label id="label-check1" for="check1">J'ai lu et j'accepte l'intégralité des <strong>conditions de participation bêta</strong> de FitCoach AI, et je comprends que je dois télécharger <strong>TestFlight</strong> sur l'App Store pour accéder à l'application.</label>
+      <input type="checkbox" id="check1" onchange="checkForm()">
+      <label id="label-check1" for="check1" data-t="check1">J'ai lu et j'accepte l'intégralité des <strong>conditions de participation bêta</strong> de FitCoach AI, et je comprends que je dois télécharger <strong>TestFlight</strong> sur l'App Store pour accéder à l'application.</label>
     </div>
     <div class="checkbox-wrap">
-      <input type="checkbox" id="check2">
-      <label for="check2">Je m'engage à respecter la <strong>confidentialité</strong> de l'application et à ne pas partager le lien TestFlight.</label>
+      <input type="checkbox" id="check2" onchange="checkForm()">
+      <label for="check2" data-t="check2">Je m'engage à respecter la <strong>confidentialité</strong> de l'application et à ne pas partager le lien TestFlight.</label>
     </div>
     <div class="checkbox-wrap">
-      <input type="checkbox" id="check3">
-      <label for="check3">J'accepte la <strong>politique de confidentialité</strong> et le traitement de mon email pour les communications bêta.</label>
+      <input type="checkbox" id="check3" onchange="checkForm()">
+      <label for="check3" data-t="check3">J'accepte la <strong>politique de confidentialité</strong> et le traitement de mon email pour les communications bêta.</label>
     </div>
     <div class="checkbox-wrap">
-      <input type="checkbox" id="check4">
-      <label for="check4">Je m'engage à fournir un <strong>retour honnête</strong> et à signaler les bugs rencontrés.</label>
+      <input type="checkbox" id="check4" onchange="checkForm()">
+      <label for="check4" data-t="check4">Je m'engage à fournir un <strong>retour honnête</strong> et à signaler les bugs rencontrés.</label>
     </div>
     <div class="checkbox-wrap">
-      <input type="checkbox" id="check5">
-      <label id="label-check5" for="check5">Je confirme que l'email renseigné ci-dessus est bien mon <strong>Apple ID</strong> (celui utilisé sur l'App Store) et que j'ai ou je vais télécharger <strong>TestFlight</strong> gratuitement sur l'App Store.</label>
+      <input type="checkbox" id="check5" onchange="checkForm()">
+      <label id="label-check5" for="check5" data-t="check5">Je confirme que l'email renseigné ci-dessus est bien mon <strong>Apple ID</strong> (celui utilisé sur l'App Store) et que j'ai ou je vais télécharger <strong>TestFlight</strong> gratuitement sur l'App Store.</label>
+    </div>
+    <div class="checkbox-wrap star-wrap">
+      <input type="checkbox" id="check6" onchange="checkForm()">
+      <label for="check6" data-t="check6">⭐ Je m'engage à <strong>noter FitCoach AI sur l'App Store</strong> dès sa sortie officielle — c'est le meilleur moyen de soutenir l'app !</label>
     </div>
 
     <button class="sign-btn" id="signBtn" disabled onclick="submitSignature()">
-      ✍️ Signer et rejoindre la bêta
+      ✍️ <span data-t="sign_btn">Signer et rejoindre la bêta</span>
     </button>
-
-    <p style="text-align:center;font-size:11px;color:#4A4A6A;margin-top:12px">
-      🔒 Signature horodatée et enregistrée · Valeur contractuelle
-    </p>
+    <p style="text-align:center;font-size:11px;color:#4A4A6A;margin-top:12px" data-t="sign_lock">🔒 Signature horodatée et enregistrée · Valeur contractuelle</p>
   </div>
 
-  <!-- SUCCESS -->
+  <div class="sending" id="sendingMsg">⏳ <span data-t="sending">Envoi en cours…</span></div>
+
   <div class="success" id="successMsg">
     <div class="success-icon">🎉</div>
-    <h3 id="success-h">Accord signé !</h3>
-    <p>Merci <span id="successName"></span> ! Ton accord a bien été enregistré.<br><br>
-    Tu recevras ton <strong>invitation TestFlight</strong> sur <span id="successEmail"></span> dans les 24-48h.<br><br>
-    Bienvenue dans l'équipe bêta FitCoach AI ! ⚡</p>
-    <div style="margin-top:20px;background:rgba(0,212,164,.08);border:1px solid rgba(0,212,164,.2);
-      border-radius:12px;padding:16px;font-size:13px;color:#00D4A4;line-height:1.6">
-      <span id="success-note">📋 Un récapitulatif de ton accord a été envoyé à ton adresse email.</span>
+    <h3 id="success-h" data-t="succ_h">Accord signé !</h3>
+    <p>
+      <span data-t="succ_thanks">Merci</span> <span id="successName"></span> !
+      <span data-t="succ_p1">Ton accord a bien été enregistré.</span><br><br>
+      <span data-t="succ_p2">Tu recevras ton <strong>invitation TestFlight</strong> sur</span> <span id="successEmail"></span> <span data-t="succ_delay">dans les 24-48h.</span><br><br>
+      <span data-t="succ_p3">Bienvenue dans l'équipe bêta FitCoach AI ! ⚡</span>
+    </p>
+    <div style="margin-top:20px;background:rgba(0,212,164,.08);border:1px solid rgba(0,212,164,.2);border-radius:12px;padding:16px;font-size:13px;color:#00D4A4;line-height:1.6">
+      <span data-t="succ_note">📋 Un récapitulatif de ton accord a été envoyé à ton adresse email.</span>
     </div>
   </div>
 
 </div>
-
 <script>
-// Auto-fill today's date
-var today = new Date();
-var dd = String(today.getDate()).padStart(2,'0');
-var mm = String(today.getMonth()+1).padStart(2,'0');
-var yyyy = today.getFullYear();
-document.getElementById('signDate').value = dd+'/'+mm+'/'+yyyy;
+// ── CONFIG ─────────────────────────────────────────────────────────
+var FORMSPREE = 'https://formspree.io/f/xgojkojn';
+// ──────────────────────────────────────────────────────────────────
 
-// Enable button only when all checks + fields filled
-function checkForm() {
-  var name  = document.getElementById('signName').value.trim();
-  var email = document.getElementById('signEmail').value.trim();
-  var c1 = document.getElementById('check1').checked;
-  var c2 = document.getElementById('check2').checked;
-  var c3 = document.getElementById('check3').checked;
-  var c4 = document.getElementById('check4').checked;
-  var c5 = document.getElementById('check5').checked;
-  document.getElementById('signBtn').disabled = !(name && email && c1 && c2 && c3 && c4 && c5);
+// Date auto
+var today=new Date();
+document.getElementById('signDate').value=
+  String(today.getDate()).padStart(2,'0')+'/'+
+  String(today.getMonth()+1).padStart(2,'0')+'/'+today.getFullYear();
+
+function checkForm(){
+  var name=document.getElementById('signName').value.trim();
+  var email=document.getElementById('signEmail').value.trim();
+  var ok=name&&email&&
+    document.getElementById('check1').checked&&
+    document.getElementById('check2').checked&&
+    document.getElementById('check3').checked&&
+    document.getElementById('check4').checked&&
+    document.getElementById('check5').checked&&
+    document.getElementById('check6').checked;
+  document.getElementById('signBtn').disabled=!ok;
 }
-
-['signName','signEmail','check1','check2','check3','check4','check5'].forEach(function(id){
-  document.getElementById(id).addEventListener('input', checkForm);
-  document.getElementById(id).addEventListener('change', checkForm);
+['signName','signEmail'].forEach(function(id){
+  document.getElementById(id).addEventListener('input',checkForm);
 });
 
-function submitSignature() {
+function submitSignature(){
   var name  = document.getElementById('signName').value.trim();
   var email = document.getElementById('signEmail').value.trim();
   var date  = document.getElementById('signDate').value;
 
-  // Build Tally URL with prefilled data + redirect
-  var tallyUrl = 'https://tally.so/r/Bzgare'
-    + '?name=' + encodeURIComponent(name)
-    + '&email=' + encodeURIComponent(email)
-    + '&signed_at=' + encodeURIComponent(date)
-    + '&cgu_accepted=true';
+  document.getElementById('signForm').style.display='none';
+  document.getElementById('sendingMsg').style.display='block';
 
-  // Show success
-  document.getElementById('signForm').style.display = 'none';
-  document.getElementById('successMsg').style.display = 'block';
-  document.getElementById('successName').textContent = name.split(' ')[0];
-  document.getElementById('successEmail').textContent = email;
+  var fd=new FormData();
+  fd.append('_subject','✍️ Nouvelle inscription bêta — '+name);
+  fd.append('nom_prenom', name);
+  fd.append('email_apple_id', email);
+  fd.append('date_signature', date);
+  fd.append('langue', document.documentElement.lang);
+  fd.append('cgu_acceptees','Oui');
+  fd.append('confidentialite','Oui');
+  fd.append('politique_confidentialite','Oui');
+  fd.append('retours_bugs','Oui');
+  fd.append('apple_id_confirme','Oui');
+  fd.append('engagement_note_app_store','Oui ⭐');
+  fd.append('horodatage', new Date().toISOString());
 
-  // Also open Tally to save the data
-  window.open(tallyUrl, '_blank');
-
-  // Log locally
-  console.log('Signature enregistrée:', {name, email, date, timestamp: new Date().toISOString()});
+  fetch(FORMSPREE,{method:'POST',body:fd,headers:{Accept:'application/json'}})
+    .then(function(r){return r.json();})
+    .then(function(data){
+      document.getElementById('sendingMsg').style.display='none';
+      if(data.ok||data.next){
+        document.getElementById('successMsg').style.display='block';
+        document.getElementById('successName').textContent=name.split(' ')[0];
+        document.getElementById('successEmail').textContent=email;
+      } else {
+        alert('Erreur. Réessaie ou contacte support.fitcoachai@gmail.com');
+        document.getElementById('signForm').style.display='block';
+      }
+    })
+    .catch(function(){
+      document.getElementById('sendingMsg').style.display='none';
+      alert('Erreur réseau. Réessaie.');
+      document.getElementById('signForm').style.display='block';
+    });
 }
 
-// ── TRANSLATIONS ──────────────────────────────────
-const BT = {
-  fr:{
-    title:"Accord de participation", subtitle:"À lire et signer avant l'accès TestFlight",
-    h2_1:"📋 1. Les parties", h2_2:"🎯 2. Objet de l'accord", h2_3:"⏱️ 3. Durée de la participation",
-    h2_4:"📲 4. Accès et conditions d'utilisation", h2_5:"🔒 5. Confidentialité",
-    h2_6:"✅ 6. Obligations du bêta testeur", h2_7:"🛡️ 7. Données personnelles",
-    h2_8:"⚖️ 8. Limitation de responsabilité", h2_9:"🚪 9. Résiliation", h2_10:"🌍 10. Droit applicable",
-    sign_h:"✍️ Signature électronique",
-    dev_name:"Ayer-Developpment",
-    email_label:"Adresse email Apple ID * (identique à ton App Store)",
-    email_warn:"⚠️ Doit être exactement le même email que ton Apple ID / App Store",
-    check1_txt:"J'ai lu et j'accepte l'intégralité des conditions de participation bêta de FitCoach AI, et je comprends que je dois télécharger TestFlight sur l'App Store pour accéder à l'application.",
-    check5_txt:"Je confirme que l'email renseigné est bien mon Apple ID (celui utilisé sur l'App Store) et que j'ai ou je vais télécharger TestFlight gratuitement sur l'App Store.",
-    sign_btn:"✍️ Signer et rejoindre la bêta",
-    success_h:"Accord signé !",
-    success_p1:"Ton accord a bien été enregistré.",
-    success_p2:"Tu recevras ton invitation TestFlight dans les 24-48h.",
-    success_p3:"Bienvenue dans l'équipe bêta FitCoach AI ! ⚡",
-    success_note:"📋 Un récapitulatif de ton accord a été envoyé à ton adresse email."
-  },
-  en:{
-    title:"Participation Agreement", subtitle:"Read and sign before TestFlight access",
-    h2_1:"📋 1. The Parties", h2_2:"🎯 2. Subject of Agreement", h2_3:"⏱️ 3. Duration",
-    h2_4:"📲 4. Access & Terms of Use", h2_5:"🔒 5. Confidentiality",
-    h2_6:"✅ 6. Beta Tester Obligations", h2_7:"🛡️ 7. Personal Data",
-    h2_8:"⚖️ 8. Limitation of Liability", h2_9:"🚪 9. Termination", h2_10:"🌍 10. Applicable Law",
-    sign_h:"✍️ Electronic Signature",
-    dev_name:"Ayer-Developpment",
-    email_label:"Apple ID Email * (same as your App Store)",
-    email_warn:"⚠️ Must be exactly the same email as your Apple ID / App Store",
-    check1_txt:"I have read and accept all the beta participation terms of FitCoach AI, and I understand I need to download TestFlight from the App Store to access the app.",
-    check5_txt:"I confirm that the email provided above is my Apple ID (used on the App Store) and that I have or will download TestFlight for free from the App Store.",
-    sign_btn:"✍️ Sign and join the beta",
-    success_h:"Agreement signed!",
-    success_p1:"Your agreement has been recorded.",
-    success_p2:"You will receive your TestFlight invitation within 24-48h.",
-    success_p3:"Welcome to the FitCoach AI beta team! ⚡",
-    success_note:"📋 A summary of your agreement has been sent to your email."
-  },
-  es:{
-    title:"Acuerdo de participación", subtitle:"Leer y firmar antes del acceso TestFlight",
-    h2_1:"📋 1. Las partes", h2_2:"🎯 2. Objeto del acuerdo", h2_3:"⏱️ 3. Duración",
-    h2_4:"📲 4. Acceso y condiciones", h2_5:"🔒 5. Confidencialidad",
-    h2_6:"✅ 6. Obligaciones del beta tester", h2_7:"🛡️ 7. Datos personales",
-    h2_8:"⚖️ 8. Limitación de responsabilidad", h2_9:"🚪 9. Rescisión", h2_10:"🌍 10. Ley aplicable",
-    sign_h:"✍️ Firma electrónica",
-    dev_name:"Ayer-Developpment",
-    email_label:"Email Apple ID * (igual que tu App Store)",
-    email_warn:"⚠️ Debe ser exactamente el mismo email que tu Apple ID / App Store",
-    check1_txt:"He leído y acepto todos los términos de participación beta de FitCoach AI, y entiendo que debo descargar TestFlight de la App Store para acceder a la app.",
-    check5_txt:"Confirmo que el email proporcionado es mi Apple ID (usado en la App Store) y que tengo o descargaré TestFlight gratis de la App Store.",
-    sign_btn:"✍️ Firmar y unirse a la beta",
-    success_h:"¡Acuerdo firmado!",
-    success_p1:"Tu acuerdo ha sido registrado.",
-    success_p2:"Recibirás tu invitación TestFlight en 24-48h.",
-    success_p3:"¡Bienvenido al equipo beta de FitCoach AI! ⚡",
-    success_note:"📋 Un resumen de tu acuerdo ha sido enviado a tu email."
-  },
-  de:{
-    title:"Teilnahmevereinbarung", subtitle:"Vor TestFlight-Zugang lesen und unterzeichnen",
-    h2_1:"📋 1. Die Parteien", h2_2:"🎯 2. Vertragsgegenstand", h2_3:"⏱️ 3. Laufzeit",
-    h2_4:"📲 4. Zugang & Nutzungsbedingungen", h2_5:"🔒 5. Vertraulichkeit",
-    h2_6:"✅ 6. Pflichten des Beta-Testers", h2_7:"🛡️ 7. Personenbezogene Daten",
-    h2_8:"⚖️ 8. Haftungsbeschränkung", h2_9:"🚪 9. Kündigung", h2_10:"🌍 10. Anwendbares Recht",
-    sign_h:"✍️ Elektronische Unterschrift",
-    dev_name:"Ayer-Developpment",
-    email_label:"Apple ID E-Mail * (identisch mit deinem App Store)",
-    email_warn:"⚠️ Muss exakt dieselbe E-Mail wie deine Apple ID / App Store sein",
-    check1_txt:"Ich habe die Beta-Teilnahmebedingungen von FitCoach AI gelesen und akzeptiere sie. Ich verstehe, dass ich TestFlight aus dem App Store herunterladen muss, um auf die App zuzugreifen.",
-    check5_txt:"Ich bestätige, dass die angegebene E-Mail meine Apple ID ist (verwendet im App Store) und dass ich TestFlight kostenlos aus dem App Store heruntergeladen habe oder herunterladen werde.",
-    sign_btn:"✍️ Unterschreiben und Beta beitreten",
-    success_h:"Vereinbarung unterzeichnet!",
-    success_p1:"Deine Vereinbarung wurde aufgezeichnet.",
-    success_p2:"Du erhältst deine TestFlight-Einladung innerhalb von 24-48h.",
-    success_p3:"Willkommen im FitCoach AI Beta-Team! ⚡",
-    success_note:"📋 Eine Zusammenfassung deiner Vereinbarung wurde an deine E-Mail gesendet."
-  },
-  it:{
-    title:"Accordo di partecipazione", subtitle:"Leggere e firmare prima dell'accesso TestFlight",
-    h2_1:"📋 1. Le parti", h2_2:"🎯 2. Oggetto dell'accordo", h2_3:"⏱️ 3. Durata",
-    h2_4:"📲 4. Accesso e condizioni d'uso", h2_5:"🔒 5. Riservatezza",
-    h2_6:"✅ 6. Obblighi del beta tester", h2_7:"🛡️ 7. Dati personali",
-    h2_8:"⚖️ 8. Limitazione di responsabilità", h2_9:"🚪 9. Risoluzione", h2_10:"🌍 10. Legge applicabile",
-    sign_h:"✍️ Firma elettronica",
-    dev_name:"Ayer-Developpment",
-    email_label:"Email Apple ID * (uguale al tuo App Store)",
-    email_warn:"⚠️ Deve essere esattamente la stessa email del tuo Apple ID / App Store",
-    check1_txt:"Ho letto e accetto tutti i termini di partecipazione beta di FitCoach AI, e capisco che devo scaricare TestFlight dall'App Store per accedere all'app.",
-    check5_txt:"Confermo che l'email fornita è il mio Apple ID (usato sull'App Store) e che ho o scaricherò TestFlight gratuitamente dall'App Store.",
-    sign_btn:"✍️ Firma e unisciti alla beta",
-    success_h:"Accordo firmato!",
-    success_p1:"Il tuo accordo è stato registrato.",
-    success_p2:"Riceverai il tuo invito TestFlight entro 24-48h.",
-    success_p3:"Benvenuto nel team beta di FitCoach AI! ⚡",
-    success_note:"📋 Un riepilogo del tuo accordo è stato inviato alla tua email."
-  }
+// ── TRADUCTIONS ────────────────────────────────────────────────────
+var T={
+fr:{
+  hdr_badge:'🧪 Programme Bêta Testeur', hdr_title:'Accord de participation', hdr_sub:"À lire et signer avant l'accès TestFlight",
+  h2_1:'📋 1. Les parties', h2_2:"🎯 2. Objet de l'accord", h2_3:'⏱️ 3. Durée de la participation',
+  h2_4:"📲 4. Accès et conditions d'utilisation", h2_5:'🔒 5. Confidentialité',
+  h2_6:'✅ 6. Obligations du bêta testeur', h2_7:'🛡️ 7. Données personnelles',
+  h2_8:'⚖️ 8. Limitation de responsabilité', h2_9:'🚪 9. Résiliation', h2_10:'🌍 10. Droit applicable',
+  p_parties:'Le présent accord est conclu entre :',
+  editor_lbl:"L'éditeur :", dev_by:'développé par', tester_lbl:'Le bêta testeur :', tester_desc:"Toute personne ayant accepté cet accord et reçu un accès via TestFlight.",
+  p_objet1:"Cet accord définit les conditions dans lesquelles le bêta testeur participe au programme de test anticipé de l'application FitCoach AI avant son lancement officiel sur l'App Store.",
+  p_objet2:"L'accès bêta est accordé à titre gratuit et temporaire, exclusivement via l'application TestFlight d'Apple.",
+  dur1:"La période de bêta test est de 90 jours maximum à compter de la réception de l'invitation TestFlight.",
+  dur2:"L'accès peut être révoqué à tout moment par FitCoach AI sans préavis ni justification.",
+  dur3:"Le bêta testeur peut se retirer du programme à tout moment sans obligation.",
+  dur4:"À l'issue de la bêta, l'accès gratuit prend fin et l'application passe en version commerciale.",
+  acc1:"L'accès est strictement personnel et non transférable. Le lien TestFlight ne doit pas être partagé.",
+  acc2:"L'application est réservée aux appareils iPhone sous iOS 17 ou supérieur.",
+  acc3:"L'accès bêta est limité à 1 appareil par testeur.",
+  acc4:"L'utilisation à des fins commerciales ou professionnelles est interdite pendant la phase bêta.",
+  warn_share:"⚠️ Il est strictement interdit de partager, reproduire, revendre ou distribuer l'application ou son contenu sous quelque forme que ce soit.",
+  imp_email_title:'Important — Email Apple ID :',
+  imp_email_body:"L'invitation TestFlight sera envoyée à l'adresse email renseignée. Cette adresse doit être identique à celle de ton Apple ID / App Store, sinon tu ne pourras pas accepter l'invitation.",
+  imp_tf_title:'Important — Télécharger TestFlight :',
+  imp_tf_body:'Avant de pouvoir installer FitCoach AI, tu dois télécharger TestFlight sur l\'App Store : → Ouvre l\'App Store → Recherche "TestFlight" → Installe l\'app gratuite d\'Apple.',
+  p_conf:'En participant à la bêta, le testeur s\'engage à :',
+  conf1:'Garder confidentiel toute information relative à l\'application, ses fonctionnalités et son contenu.',
+  conf2:"Ne pas publier de captures d'écran, vidéos ou descriptions détaillées de l'app sans accord écrit préalable.",
+  conf3:"Ne pas divulguer l'existence du programme bêta à des tiers en dehors de son réseau personnel proche.",
+  conf4:"Ne pas tenter de décompiler, désassembler ou extraire le code source de l'application.",
+  conf_exc:'💡 Exception : le testeur peut mentionner sa participation sur ses réseaux sociaux en précisant "Bêta testeur FitCoach AI" si FitCoach AI l\'autorise.',
+  p_oblig:"En contrepartie de l'accès gratuit, le testeur s'engage à :",
+  obl1:'Utiliser l\'application régulièrement pendant la période de bêta (minimum 3 fois par semaine).',
+  obl2:'Signaler tout bug, crash ou comportement inattendu via le formulaire prévu ou par email.',
+  obl3:'Fournir un retour honnête et constructif sur l\'expérience utilisateur.',
+  obl4:'Répondre aux questionnaires de feedback envoyés par FitCoach AI (maximum 1 par semaine).',
+  obl5:"Informer FitCoach AI en cas d'impossibilité de continuer à tester.",
+  reward:'🎁 En échange de ta participation active : accès complet 90 jours, badge "Bêta Testeur Officiel" dans l\'app et mention dans les crédits au lancement.',
+  data1:"L'email collecté est utilisé uniquement pour l'envoi de l'invitation TestFlight et des communications liées à la bêta.",
+  data2:'Les données de santé et nutrition saisies dans l\'app sont stockées localement sur l\'appareil et ne sont pas transmises à FitCoach AI.',
+  data3:"Les messages envoyés au coach IA transitent par l'API Anthropic conformément à leur politique de confidentialité.",
+  data4:'Les données du testeur ne sont jamais vendues ou partagées avec des tiers.',
+  data5:'Le testeur peut demander la suppression de ses données à tout moment : support.fitcoachai@gmail.com',
+  p_liab:'L\'application bêta est fournie "en l\'état", sans garantie d\'aucune sorte. FitCoach AI ne peut être tenu responsable de :',
+  liab1:'Perte ou corruption de données liées à l\'utilisation de la version bêta.',
+  liab2:'Interruptions ou dysfonctionnements du service pendant la phase de test.',
+  liab3:"Toute décision prise sur la base des conseils nutritionnels ou fitness fournis par l'IA.",
+  warn_medical:"⚠️ Les conseils de FitCoach AI sont informatifs et ne remplacent en aucun cas un avis médical ou nutritionnel professionnel.",
+  res1:"FitCoach AI se réserve le droit de révoquer l'accès de tout testeur ne respectant pas cet accord.",
+  res2:"En cas de violation de la confidentialité, FitCoach AI se réserve le droit d'engager des poursuites.",
+  res3:"Le testeur peut se retirer à tout moment en envoyant un email à support.fitcoachai@gmail.com",
+  p_law1:"Le présent accord est soumis au droit français. Tout litige sera soumis aux tribunaux compétents de la juridiction de l'éditeur.",
+  p_law2:"En cas de version multilingue, la version française fait foi.",
+  sign_h:'✍️ Signature électronique',
+  sign_intro:"En remplissant ce formulaire, tu confirmes avoir lu, compris et accepté l'intégralité des conditions ci-dessus. Cette signature a valeur d'accord contractuel.",
+  lbl_name:'Prénom et Nom *', lbl_email:"Adresse email Apple ID * (identique à ton App Store)", email_warn:"⚠️ Doit être exactement le même email que ton Apple ID / App Store", lbl_date:'Date du jour *',
+  check1:"J'ai lu et j'accepte l'intégralité des conditions de participation bêta de FitCoach AI, et je comprends que je dois télécharger TestFlight sur l'App Store pour accéder à l'application.",
+  check2:"Je m'engage à respecter la confidentialité de l'application et à ne pas partager le lien TestFlight.",
+  check3:"J'accepte la politique de confidentialité et le traitement de mon email pour les communications bêta.",
+  check4:"Je m'engage à fournir un retour honnête et à signaler les bugs rencontrés.",
+  check5:"Je confirme que l'email renseigné est bien mon Apple ID (celui utilisé sur l'App Store) et que j'ai ou je vais télécharger TestFlight gratuitement sur l'App Store.",
+  check6:"⭐ Je m'engage à noter FitCoach AI sur l'App Store dès sa sortie officielle — c'est le meilleur moyen de soutenir l'app !",
+  sign_btn:'Signer et rejoindre la bêta', sign_lock:'🔒 Signature horodatée et enregistrée · Valeur contractuelle',
+  sending:'Envoi en cours…',
+  succ_h:'Accord signé !', succ_thanks:'Merci', succ_p1:"Ton accord a bien été enregistré.",
+  succ_p2:"Tu recevras ton invitation TestFlight sur", succ_delay:"dans les 24-48h.",
+  succ_p3:"Bienvenue dans l'équipe bêta FitCoach AI ! ⚡",
+  succ_note:"📋 Un récapitulatif de ton accord a été envoyé à ton adresse email."
+},
+en:{
+  hdr_badge:'🧪 Beta Tester Program', hdr_title:'Participation Agreement', hdr_sub:'Read and sign before TestFlight access',
+  h2_1:'📋 1. The Parties', h2_2:'🎯 2. Subject of Agreement', h2_3:'⏱️ 3. Duration',
+  h2_4:'📲 4. Access & Terms of Use', h2_5:'🔒 5. Confidentiality',
+  h2_6:'✅ 6. Beta Tester Obligations', h2_7:'🛡️ 7. Personal Data',
+  h2_8:'⚖️ 8. Limitation of Liability', h2_9:'🚪 9. Termination', h2_10:'🌍 10. Applicable Law',
+  p_parties:'This agreement is concluded between:',
+  editor_lbl:'The publisher:', dev_by:'developed by', tester_lbl:'The beta tester:', tester_desc:'Any person who has accepted this agreement and received access via TestFlight.',
+  p_objet1:'This agreement defines the conditions under which the beta tester participates in the early testing program of the FitCoach AI app before its official launch on the App Store.',
+  p_objet2:'Beta access is granted free of charge and temporarily, exclusively via Apple\'s TestFlight application.',
+  dur1:'The beta test period is a maximum of 90 days from receipt of the TestFlight invitation.',
+  dur2:'Access may be revoked at any time by FitCoach AI without notice or justification.',
+  dur3:'The beta tester may withdraw from the program at any time without obligation.',
+  dur4:'At the end of the beta, free access ends and the application becomes a commercial version.',
+  acc1:'Access is strictly personal and non-transferable. The TestFlight link must not be shared.',
+  acc2:'The application is reserved for iPhone devices running iOS 17 or higher.',
+  acc3:'Beta access is limited to 1 device per tester.',
+  acc4:'Use for commercial or professional purposes is prohibited during the beta phase.',
+  warn_share:'⚠️ It is strictly forbidden to share, reproduce, resell or distribute the application or its content in any form.',
+  imp_email_title:'Important — Apple ID Email:',
+  imp_email_body:'The TestFlight invitation will be sent to the email address provided. This address must be identical to your Apple ID / App Store email, otherwise you will not be able to accept the invitation.',
+  imp_tf_title:'Important — Download TestFlight:',
+  imp_tf_body:'Before installing FitCoach AI, you must download TestFlight from the App Store: → Open the App Store → Search "TestFlight" → Install Apple\'s free app.',
+  p_conf:'By participating in the beta, the tester agrees to:',
+  conf1:'Keep confidential all information relating to the application, its features and content.',
+  conf2:'Not publish screenshots, videos or detailed descriptions of the app without prior written consent.',
+  conf3:'Not disclose the existence of the beta program to third parties outside their close personal network.',
+  conf4:'Not attempt to decompile, disassemble or extract the source code of the application.',
+  conf_exc:'💡 Exception: the tester may mention their participation on social media by stating "FitCoach AI Beta Tester" if expressly authorised by FitCoach AI.',
+  p_oblig:'In exchange for free access, the tester agrees to:',
+  obl1:'Use the application regularly during the beta period (minimum 3 times per week).',
+  obl2:'Report any bugs, crashes or unexpected behaviour via the provided form or by email.',
+  obl3:'Provide honest and constructive feedback on the user experience.',
+  obl4:'Respond to feedback questionnaires sent by FitCoach AI (maximum 1 per week).',
+  obl5:'Inform FitCoach AI if they are unable to continue testing.',
+  reward:'🎁 In exchange for your active participation: full 90-day access, "Official Beta Tester" badge in the app and mention in the launch credits.',
+  data1:'The email collected is used solely for sending the TestFlight invitation and beta-related communications.',
+  data2:'Health and nutrition data entered in the app is stored locally on the device and not transmitted to FitCoach AI.',
+  data3:'Messages sent to the AI coach are processed via the Anthropic API in accordance with their privacy policy.',
+  data4:'Tester data is never sold or shared with third parties.',
+  data5:'The tester may request deletion of their data at any time: support.fitcoachai@gmail.com',
+  p_liab:'The beta application is provided "as is" without any warranty. FitCoach AI cannot be held responsible for:',
+  liab1:'Loss or corruption of data related to the use of the beta version.',
+  liab2:'Service interruptions or malfunctions during the testing phase.',
+  liab3:'Any decision made based on nutritional or fitness advice provided by the AI.',
+  warn_medical:'⚠️ FitCoach AI\'s advice is informational and does not replace professional medical or nutritional advice.',
+  res1:'FitCoach AI reserves the right to revoke access for any tester who does not comply with this agreement.',
+  res2:'In case of confidentiality breach, FitCoach AI reserves the right to pursue legal action.',
+  res3:'The tester may withdraw at any time by sending an email to support.fitcoachai@gmail.com',
+  p_law1:'This agreement is governed by French law. Any dispute shall be submitted to the competent courts of the publisher\'s jurisdiction.',
+  p_law2:'In case of multilingual versions, the French version shall prevail.',
+  sign_h:'✍️ Electronic Signature',
+  sign_intro:'By completing this form, you confirm that you have read, understood and accepted all the conditions above. This signature has contractual value.',
+  lbl_name:'Full Name *', lbl_email:'Apple ID Email * (same as your App Store)', email_warn:'⚠️ Must be exactly the same email as your Apple ID / App Store', lbl_date:'Today\'s date *',
+  check1:'I have read and accept all the beta participation terms of FitCoach AI, and I understand I need to download TestFlight from the App Store to access the app.',
+  check2:'I agree to respect the confidentiality of the application and not to share the TestFlight link.',
+  check3:'I accept the privacy policy and the processing of my email for beta communications.',
+  check4:'I commit to providing honest feedback and reporting any bugs encountered.',
+  check5:'I confirm that the email provided is my Apple ID (used on the App Store) and that I have or will download TestFlight for free from the App Store.',
+  check6:'⭐ I commit to rating FitCoach AI on the App Store as soon as it officially launches — it\'s the best way to support the app!',
+  sign_btn:'Sign and join the beta', sign_lock:'🔒 Timestamped and recorded signature · Contractual value',
+  sending:'Sending…',
+  succ_h:'Agreement signed!', succ_thanks:'Thank you', succ_p1:'Your agreement has been recorded.',
+  succ_p2:'You will receive your TestFlight invitation at', succ_delay:'within 24-48h.',
+  succ_p3:'Welcome to the FitCoach AI beta team! ⚡',
+  succ_note:'📋 A summary of your agreement has been sent to your email address.'
+},
+de:{
+  hdr_badge:'🧪 Beta-Tester-Programm', hdr_title:'Teilnahmevereinbarung', hdr_sub:'Vor TestFlight-Zugang lesen und unterzeichnen',
+  h2_1:'📋 1. Die Parteien', h2_2:'🎯 2. Vertragsgegenstand', h2_3:'⏱️ 3. Laufzeit',
+  h2_4:'📲 4. Zugang & Nutzungsbedingungen', h2_5:'🔒 5. Vertraulichkeit',
+  h2_6:'✅ 6. Pflichten des Beta-Testers', h2_7:'🛡️ 7. Personenbezogene Daten',
+  h2_8:'⚖️ 8. Haftungsbeschränkung', h2_9:'🚪 9. Kündigung', h2_10:'🌍 10. Anwendbares Recht',
+  p_parties:'Diese Vereinbarung wird geschlossen zwischen:',
+  editor_lbl:'Der Herausgeber:', dev_by:'entwickelt von', tester_lbl:'Der Beta-Tester:', tester_desc:'Jede Person, die diese Vereinbarung akzeptiert und über TestFlight Zugang erhalten hat.',
+  p_objet1:'Diese Vereinbarung regelt die Bedingungen, unter denen der Beta-Tester am Frühtest-Programm der App FitCoach AI vor dem offiziellen Start im App Store teilnimmt.',
+  p_objet2:'Der Beta-Zugang wird kostenlos und vorübergehend gewährt, ausschließlich über die TestFlight-App von Apple.',
+  dur1:'Der Beta-Testzeitraum beträgt maximal 90 Tage ab Erhalt der TestFlight-Einladung.',
+  dur2:'Der Zugang kann jederzeit von FitCoach AI ohne Vorankündigung oder Begründung widerrufen werden.',
+  dur3:'Der Beta-Tester kann das Programm jederzeit ohne Verpflichtung verlassen.',
+  dur4:'Nach Ablauf der Beta endet der kostenlose Zugang und die App wechselt in die kommerzielle Version.',
+  acc1:'Der Zugang ist streng persönlich und nicht übertragbar. Der TestFlight-Link darf nicht geteilt werden.',
+  acc2:'Die App ist für iPhone-Geräte mit iOS 17 oder höher reserviert.',
+  acc3:'Der Beta-Zugang ist auf 1 Gerät pro Tester begrenzt.',
+  acc4:'Die Nutzung zu kommerziellen oder beruflichen Zwecken ist während der Beta-Phase verboten.',
+  warn_share:'⚠️ Es ist strengstens verboten, die App oder ihren Inhalt in irgendeiner Form zu teilen, zu reproduzieren, weiterzuverkaufen oder zu verteilen.',
+  imp_email_title:'Wichtig — Apple ID E-Mail:',
+  imp_email_body:'Die TestFlight-Einladung wird an die angegebene E-Mail-Adresse gesendet. Diese muss identisch mit deiner Apple ID / App Store E-Mail sein, sonst kannst du die Einladung nicht annehmen.',
+  imp_tf_title:'Wichtig — TestFlight herunterladen:',
+  imp_tf_body:'Vor der Installation von FitCoach AI musst du TestFlight aus dem App Store herunterladen: → Öffne den App Store → Suche nach "TestFlight" → Installiere die kostenlose App von Apple.',
+  p_conf:'Durch die Teilnahme an der Beta verpflichtet sich der Tester:',
+  conf1:'Alle Informationen zur App, ihren Funktionen und Inhalten vertraulich zu behandeln.',
+  conf2:'Keine Screenshots, Videos oder detaillierten Beschreibungen der App ohne vorherige schriftliche Genehmigung zu veröffentlichen.',
+  conf3:'Die Existenz des Beta-Programms nicht an Dritte außerhalb des persönlichen Netzwerks weiterzugeben.',
+  conf4:'Nicht zu versuchen, den Quellcode der App zu dekompilieren, zu disassemblieren oder zu extrahieren.',
+  conf_exc:'💡 Ausnahme: Der Tester darf seine Beta-Teilnahme in sozialen Medien mit dem Hinweis "FitCoach AI Beta-Tester" erwähnen, wenn FitCoach AI dies ausdrücklich genehmigt.',
+  p_oblig:'Im Austausch für den kostenlosen Zugang verpflichtet sich der Tester:',
+  obl1:'Die App während der Beta-Phase regelmäßig zu nutzen (mindestens 3 Mal pro Woche).',
+  obl2:'Alle Bugs, Abstürze oder unerwartetes Verhalten über das bereitgestellte Formular oder per E-Mail zu melden.',
+  obl3:'Ehrliches und konstruktives Feedback zur Benutzererfahrung zu geben.',
+  obl4:'Auf Feedback-Fragebögen von FitCoach AI zu antworten (maximal 1 pro Woche).',
+  obl5:'FitCoach AI zu informieren, falls eine weitere Teilnahme nicht möglich ist.',
+  reward:'🎁 Im Austausch für deine aktive Teilnahme: vollständiger 90-Tage-Zugang, "Offizieller Beta-Tester"-Abzeichen in der App und Erwähnung in den Launch-Credits.',
+  data1:'Die gesammelte E-Mail wird ausschließlich für das Senden der TestFlight-Einladung und betabezogene Kommunikation verwendet.',
+  data2:'Gesundheits- und Ernährungsdaten in der App werden lokal auf dem Gerät gespeichert und nicht an FitCoach AI übertragen.',
+  data3:'Nachrichten an den KI-Coach werden über die Anthropic API gemäß deren Datenschutzrichtlinie verarbeitet.',
+  data4:'Tester-Daten werden niemals verkauft oder mit Dritten geteilt.',
+  data5:'Der Tester kann jederzeit die Löschung seiner Daten beantragen: support.fitcoachai@gmail.com',
+  p_liab:'Die Beta-App wird "wie besehen" ohne jegliche Garantie bereitgestellt. FitCoach AI haftet nicht für:',
+  liab1:'Datenverlust oder -beschädigung durch die Nutzung der Beta-Version.',
+  liab2:'Dienstunterbrechungen oder Fehlfunktionen während der Testphase.',
+  liab3:'Entscheidungen, die auf Basis der von der KI bereitgestellten Ernährungs- oder Fitnessratschläge getroffen werden.',
+  warn_medical:'⚠️ Die Ratschläge von FitCoach AI sind informativ und ersetzen keinesfalls professionellen medizinischen oder ernährungswissenschaftlichen Rat.',
+  res1:'FitCoach AI behält sich das Recht vor, den Zugang von Testern zu widerrufen, die diese Vereinbarung nicht einhalten.',
+  res2:'Bei Verletzung der Vertraulichkeit behält sich FitCoach AI das Recht vor, rechtliche Schritte einzuleiten.',
+  res3:'Der Tester kann sich jederzeit durch eine E-Mail an support.fitcoachai@gmail.com zurückziehen.',
+  p_law1:'Diese Vereinbarung unterliegt französischem Recht. Streitigkeiten werden den zuständigen Gerichten des Herausgebers vorgelegt.',
+  p_law2:'Bei mehrsprachigen Versionen ist die französische Version maßgeblich.',
+  sign_h:'✍️ Elektronische Unterschrift',
+  sign_intro:'Durch das Ausfüllen dieses Formulars bestätigst du, alle oben genannten Bedingungen gelesen, verstanden und akzeptiert zu haben. Diese Unterschrift hat Vertragswert.',
+  lbl_name:'Vor- und Nachname *', lbl_email:'Apple ID E-Mail * (identisch mit deinem App Store)', email_warn:'⚠️ Muss exakt dieselbe E-Mail wie deine Apple ID / App Store sein', lbl_date:'Heutiges Datum *',
+  check1:'Ich habe die Beta-Teilnahmebedingungen von FitCoach AI gelesen und akzeptiere sie. Ich verstehe, dass ich TestFlight aus dem App Store herunterladen muss.',
+  check2:'Ich verpflichte mich, die Vertraulichkeit der App zu wahren und den TestFlight-Link nicht zu teilen.',
+  check3:'Ich akzeptiere die Datenschutzrichtlinie und die Verarbeitung meiner E-Mail für Beta-Kommunikation.',
+  check4:'Ich verpflichte mich, ehrliches Feedback zu geben und gefundene Bugs zu melden.',
+  check5:'Ich bestätige, dass die angegebene E-Mail meine Apple ID ist und dass ich TestFlight kostenlos aus dem App Store heruntergeladen habe oder herunterladen werde.',
+  check6:'⭐ Ich verpflichte mich, FitCoach AI im App Store zu bewerten, sobald die App offiziell erscheint — das ist die beste Unterstützung für die App!',
+  sign_btn:'Unterzeichnen und Beta beitreten', sign_lock:'🔒 Zeitgestempelte und aufgezeichnete Unterschrift · Vertragswert',
+  sending:'Wird gesendet…',
+  succ_h:'Vereinbarung unterzeichnet!', succ_thanks:'Danke', succ_p1:'Deine Vereinbarung wurde aufgezeichnet.',
+  succ_p2:'Du erhältst deine TestFlight-Einladung an', succ_delay:'innerhalb von 24-48h.',
+  succ_p3:'Willkommen im FitCoach AI Beta-Team! ⚡',
+  succ_note:'📋 Eine Zusammenfassung deiner Vereinbarung wurde an deine E-Mail gesendet.'
+},
+es:{
+  hdr_badge:'🧪 Programa Beta Tester', hdr_title:'Acuerdo de participación', hdr_sub:'Leer y firmar antes del acceso TestFlight',
+  h2_1:'📋 1. Las partes', h2_2:'🎯 2. Objeto del acuerdo', h2_3:'⏱️ 3. Duración',
+  h2_4:'📲 4. Acceso y condiciones de uso', h2_5:'🔒 5. Confidencialidad',
+  h2_6:'✅ 6. Obligaciones del beta tester', h2_7:'🛡️ 7. Datos personales',
+  h2_8:'⚖️ 8. Limitación de responsabilidad', h2_9:'🚪 9. Rescisión', h2_10:'🌍 10. Ley aplicable',
+  p_parties:'El presente acuerdo se celebra entre:',
+  editor_lbl:'El editor:', dev_by:'desarrollado por', tester_lbl:'El beta tester:', tester_desc:'Cualquier persona que haya aceptado este acuerdo y recibido acceso a través de TestFlight.',
+  p_objet1:'Este acuerdo define las condiciones bajo las cuales el beta tester participa en el programa de prueba anticipada de la app FitCoach AI antes de su lanzamiento oficial en el App Store.',
+  p_objet2:'El acceso beta se concede de forma gratuita y temporal, exclusivamente a través de la aplicación TestFlight de Apple.',
+  dur1:'El período de beta test es de un máximo de 90 días desde la recepción de la invitación de TestFlight.',
+  dur2:'El acceso puede ser revocado en cualquier momento por FitCoach AI sin previo aviso ni justificación.',
+  dur3:'El beta tester puede retirarse del programa en cualquier momento sin obligación.',
+  dur4:'Al finalizar la beta, el acceso gratuito termina y la aplicación pasa a versión comercial.',
+  acc1:'El acceso es estrictamente personal e intransferible. El enlace de TestFlight no debe compartirse.',
+  acc2:'La aplicación está reservada para dispositivos iPhone con iOS 17 o superior.',
+  acc3:'El acceso beta está limitado a 1 dispositivo por tester.',
+  acc4:'El uso con fines comerciales o profesionales está prohibido durante la fase beta.',
+  warn_share:'⚠️ Está estrictamente prohibido compartir, reproducir, revender o distribuir la aplicación o su contenido de cualquier forma.',
+  imp_email_title:'Importante — Email Apple ID:',
+  imp_email_body:'La invitación de TestFlight se enviará al email proporcionado. Esta dirección debe ser idéntica a la de tu Apple ID / App Store, de lo contrario no podrás aceptar la invitación.',
+  imp_tf_title:'Importante — Descargar TestFlight:',
+  imp_tf_body:'Antes de instalar FitCoach AI, debes descargar TestFlight del App Store: → Abre el App Store → Busca "TestFlight" → Instala la app gratuita de Apple.',
+  p_conf:'Al participar en la beta, el tester se compromete a:',
+  conf1:'Mantener confidencial toda la información relativa a la aplicación, sus funcionalidades y contenido.',
+  conf2:'No publicar capturas de pantalla, vídeos o descripciones detalladas de la app sin consentimiento escrito previo.',
+  conf3:'No divulgar la existencia del programa beta a terceros fuera de su red personal cercana.',
+  conf4:'No intentar descompilar, desensamblar o extraer el código fuente de la aplicación.',
+  conf_exc:'💡 Excepción: el tester puede mencionar su participación en redes sociales indicando "Beta Tester FitCoach AI" si FitCoach AI lo autoriza expresamente.',
+  p_oblig:'A cambio del acceso gratuito, el tester se compromete a:',
+  obl1:'Usar la aplicación regularmente durante el período beta (mínimo 3 veces por semana).',
+  obl2:'Reportar cualquier bug, crash o comportamiento inesperado a través del formulario o por email.',
+  obl3:'Proporcionar comentarios honestos y constructivos sobre la experiencia de usuario.',
+  obl4:'Responder a los cuestionarios de feedback enviados por FitCoach AI (máximo 1 por semana).',
+  obl5:'Informar a FitCoach AI si no puede continuar probando.',
+  reward:'🎁 A cambio de tu participación activa: acceso completo 90 días, insignia "Beta Tester Oficial" en la app y mención en los créditos del lanzamiento.',
+  data1:'El email recopilado se usa únicamente para enviar la invitación de TestFlight y comunicaciones relacionadas con la beta.',
+  data2:'Los datos de salud y nutrición en la app se almacenan localmente en el dispositivo y no se transmiten a FitCoach AI.',
+  data3:'Los mensajes al coach IA se procesan a través de la API de Anthropic conforme a su política de privacidad.',
+  data4:'Los datos del tester nunca se venden ni se comparten con terceros.',
+  data5:'El tester puede solicitar la eliminación de sus datos en cualquier momento: support.fitcoachai@gmail.com',
+  p_liab:'La aplicación beta se proporciona "tal cual", sin garantía de ningún tipo. FitCoach AI no puede ser responsable de:',
+  liab1:'Pérdida o corrupción de datos relacionada con el uso de la versión beta.',
+  liab2:'Interrupciones o fallos del servicio durante la fase de prueba.',
+  liab3:'Cualquier decisión tomada basándose en los consejos nutricionales o de fitness proporcionados por la IA.',
+  warn_medical:'⚠️ Los consejos de FitCoach AI son informativos y no reemplazan en ningún caso el asesoramiento médico o nutricional profesional.',
+  res1:'FitCoach AI se reserva el derecho de revocar el acceso de cualquier tester que no cumpla este acuerdo.',
+  res2:'En caso de violación de la confidencialidad, FitCoach AI se reserva el derecho de emprender acciones legales.',
+  res3:'El tester puede retirarse en cualquier momento enviando un email a support.fitcoachai@gmail.com',
+  p_law1:'Este acuerdo se rige por la ley francesa. Cualquier disputa se someterá a los tribunales competentes de la jurisdicción del editor.',
+  p_law2:'En caso de versión multilingüe, la versión francesa prevalece.',
+  sign_h:'✍️ Firma electrónica',
+  sign_intro:'Al completar este formulario, confirmas haber leído, comprendido y aceptado todas las condiciones anteriores. Esta firma tiene valor contractual.',
+  lbl_name:'Nombre y Apellido *', lbl_email:'Email Apple ID * (igual que tu App Store)', email_warn:'⚠️ Debe ser exactamente el mismo email que tu Apple ID / App Store', lbl_date:'Fecha de hoy *',
+  check1:'He leído y acepto todos los términos de participación beta de FitCoach AI, y entiendo que debo descargar TestFlight del App Store para acceder a la app.',
+  check2:'Me comprometo a respetar la confidencialidad de la aplicación y a no compartir el enlace de TestFlight.',
+  check3:'Acepto la política de privacidad y el tratamiento de mi email para las comunicaciones beta.',
+  check4:'Me comprometo a proporcionar comentarios honestos y a reportar los bugs encontrados.',
+  check5:'Confirmo que el email proporcionado es mi Apple ID (usado en el App Store) y que tengo o descargaré TestFlight gratis del App Store.',
+  check6:'⭐ Me comprometo a valorar FitCoach AI en el App Store en cuanto salga oficialmente — ¡es la mejor manera de apoyar la app!',
+  sign_btn:'Firmar y unirse a la beta', sign_lock:'🔒 Firma con marca de tiempo y registrada · Valor contractual',
+  sending:'Enviando…',
+  succ_h:'¡Acuerdo firmado!', succ_thanks:'Gracias', succ_p1:'Tu acuerdo ha sido registrado.',
+  succ_p2:'Recibirás tu invitación de TestFlight en', succ_delay:'en 24-48h.',
+  succ_p3:'¡Bienvenido al equipo beta de FitCoach AI! ⚡',
+  succ_note:'📋 Un resumen de tu acuerdo ha sido enviado a tu dirección de email.'
+},
+it:{
+  hdr_badge:'🧪 Programma Beta Tester', hdr_title:'Accordo di partecipazione', hdr_sub:"Leggere e firmare prima dell'accesso TestFlight",
+  h2_1:'📋 1. Le parti', h2_2:"🎯 2. Oggetto dell'accordo", h2_3:'⏱️ 3. Durata',
+  h2_4:"📲 4. Accesso e condizioni d'uso", h2_5:'🔒 5. Riservatezza',
+  h2_6:'✅ 6. Obblighi del beta tester', h2_7:'🛡️ 7. Dati personali',
+  h2_8:'⚖️ 8. Limitazione di responsabilità', h2_9:'🚪 9. Risoluzione', h2_10:'🌍 10. Legge applicabile',
+  p_parties:'Il presente accordo è concluso tra:',
+  editor_lbl:"L'editore:", dev_by:'sviluppato da', tester_lbl:'Il beta tester:', tester_desc:"Qualsiasi persona che abbia accettato questo accordo e ricevuto accesso tramite TestFlight.",
+  p_objet1:"Questo accordo definisce le condizioni in cui il beta tester partecipa al programma di test anticipato dell'app FitCoach AI prima del suo lancio ufficiale sull'App Store.",
+  p_objet2:"L'accesso beta è concesso gratuitamente e temporaneamente, esclusivamente tramite l'app TestFlight di Apple.",
+  dur1:"Il periodo di beta test è di massimo 90 giorni dal ricevimento dell'invito TestFlight.",
+  dur2:"L'accesso può essere revocato in qualsiasi momento da FitCoach AI senza preavviso né giustificazione.",
+  dur3:'Il beta tester può ritirarsi dal programma in qualsiasi momento senza obbligo.',
+  dur4:"Al termine della beta, l'accesso gratuito termina e l'app diventa una versione commerciale.",
+  acc1:"L'accesso è strettamente personale e non trasferibile. Il link TestFlight non deve essere condiviso.",
+  acc2:"L'app è riservata ai dispositivi iPhone con iOS 17 o superiore.",
+  acc3:"L'accesso beta è limitato a 1 dispositivo per tester.",
+  acc4:"L'uso a fini commerciali o professionali è vietato durante la fase beta.",
+  warn_share:"⚠️ È severamente vietato condividere, riprodurre, rivendere o distribuire l'app o il suo contenuto in qualsiasi forma.",
+  imp_email_title:'Importante — Email Apple ID:',
+  imp_email_body:"L'invito TestFlight sarà inviato all'email fornita. Questo indirizzo deve essere identico al tuo Apple ID / App Store, altrimenti non potrai accettare l'invito.",
+  imp_tf_title:'Importante — Scarica TestFlight:',
+  imp_tf_body:'Prima di installare FitCoach AI, devi scaricare TestFlight dall\'App Store: → Apri l\'App Store → Cerca "TestFlight" → Installa l\'app gratuita di Apple.',
+  p_conf:'Partecipando alla beta, il tester si impegna a:',
+  conf1:"Mantenere riservate tutte le informazioni relative all'app, alle sue funzionalità e al suo contenuto.",
+  conf2:"Non pubblicare screenshot, video o descrizioni dettagliate dell'app senza previo consenso scritto.",
+  conf3:"Non divulgare l'esistenza del programma beta a terzi al di fuori della propria rete personale.",
+  conf4:"Non tentare di decompilare, disassemblare o estrarre il codice sorgente dell'app.",
+  conf_exc:'💡 Eccezione: il tester può menzionare la propria partecipazione sui social media indicando "Beta Tester FitCoach AI" se espressamente autorizzato da FitCoach AI.',
+  p_oblig:"In cambio dell'accesso gratuito, il tester si impegna a:",
+  obl1:'Usare l\'app regolarmente durante il periodo beta (minimo 3 volte a settimana).',
+  obl2:'Segnalare bug, crash o comportamenti imprevisti tramite il modulo o via email.',
+  obl3:'Fornire feedback onesto e costruttivo sull\'esperienza utente.',
+  obl4:'Rispondere ai questionari di feedback inviati da FitCoach AI (massimo 1 a settimana).',
+  obl5:'Informare FitCoach AI se non è possibile continuare a testare.',
+  reward:'🎁 In cambio della tua partecipazione attiva: accesso completo 90 giorni, badge "Beta Tester Ufficiale" nell\'app e menzione nei crediti del lancio.',
+  data1:"L'email raccolta viene utilizzata esclusivamente per inviare l'invito TestFlight e le comunicazioni legate alla beta.",
+  data2:"I dati di salute e nutrizione nell'app sono memorizzati localmente sul dispositivo e non trasmessi a FitCoach AI.",
+  data3:"I messaggi inviati al coach IA vengono elaborati tramite l'API Anthropic in conformità con la loro politica sulla privacy.",
+  data4:'I dati del tester non vengono mai venduti o condivisi con terzi.',
+  data5:'Il tester può richiedere la cancellazione dei propri dati in qualsiasi momento: support.fitcoachai@gmail.com',
+  p_liab:"L'app beta è fornita \"così com'è\", senza alcuna garanzia. FitCoach AI non può essere ritenuta responsabile per:",
+  liab1:"Perdita o corruzione dei dati dovuta all'uso della versione beta.",
+  liab2:'Interruzioni o malfunzionamenti del servizio durante la fase di test.',
+  liab3:"Qualsiasi decisione presa sulla base dei consigli nutrizionali o fitness forniti dall'IA.",
+  warn_medical:"⚠️ I consigli di FitCoach AI sono informativi e non sostituiscono in alcun caso il parere medico o nutrizionale professionale.",
+  res1:"FitCoach AI si riserva il diritto di revocare l'accesso di qualsiasi tester che non rispetti questo accordo.",
+  res2:'In caso di violazione della riservatezza, FitCoach AI si riserva il diritto di intraprendere azioni legali.',
+  res3:'Il tester può ritirarsi in qualsiasi momento inviando un email a support.fitcoachai@gmail.com',
+  p_law1:"Il presente accordo è soggetto alla legge francese. Qualsiasi controversia sarà sottoposta ai tribunali competenti della giurisdizione dell'editore.",
+  p_law2:'In caso di versione multilingue, la versione francese fa fede.',
+  sign_h:'✍️ Firma elettronica',
+  sign_intro:'Compilando questo modulo, confermi di aver letto, compreso e accettato tutte le condizioni sopra indicate. Questa firma ha valore contrattuale.',
+  lbl_name:'Nome e Cognome *', lbl_email:'Email Apple ID * (uguale al tuo App Store)', email_warn:'⚠️ Deve essere esattamente la stessa email del tuo Apple ID / App Store', lbl_date:'Data di oggi *',
+  check1:"Ho letto e accetto tutti i termini di partecipazione beta di FitCoach AI, e capisco che devo scaricare TestFlight dall'App Store per accedere all'app.",
+  check2:"Mi impegno a rispettare la riservatezza dell'app e a non condividere il link TestFlight.",
+  check3:"Accetto la politica sulla privacy e il trattamento della mia email per le comunicazioni beta.",
+  check4:'Mi impegno a fornire feedback onesto e a segnalare i bug riscontrati.',
+  check5:"Confermo che l'email fornita è il mio Apple ID (usato sull'App Store) e che ho o scaricherò TestFlight gratuitamente dall'App Store.",
+  check6:"⭐ Mi impegno a valutare FitCoach AI sull'App Store non appena sarà ufficialmente disponibile — è il modo migliore per supportare l'app!",
+  sign_btn:'Firma e unisciti alla beta', sign_lock:'🔒 Firma con timestamp registrata · Valore contrattuale',
+  sending:'Invio in corso…',
+  succ_h:'Accordo firmato!', succ_thanks:'Grazie', succ_p1:"Il tuo accordo è stato registrato.",
+  succ_p2:"Riceverai il tuo invito TestFlight a", succ_delay:"entro 24-48 ore.",
+  succ_p3:'Benvenuto nel team beta di FitCoach AI! ⚡',
+  succ_note:"📋 Un riepilogo del tuo accordo è stato inviato al tuo indirizzo email."
+}
 };
 
-function setLang(l) {
-  const t = BT[l] || BT.fr;
-  document.querySelectorAll('[data-t]').forEach(el => {
-    const k = el.getAttribute('data-t');
-    if (t[k]) el.textContent = t[k];
+function setLang(l){
+  var t=T[l]||T.fr;
+  document.querySelectorAll('[data-t]').forEach(function(el){
+    var k=el.getAttribute('data-t');
+    if(t[k]!==undefined) el.textContent=t[k];
   });
-  // Translate form elements
-  const el = (id) => document.getElementById(id);
-  if (el('label-email') && t.email_label) el('label-email').textContent = t.email_label;
-  if (el('email-warn') && t.email_warn)   el('email-warn').textContent  = t.email_warn;
-  if (el('label-check1') && t.check1_txt) el('label-check1').innerHTML = t.check1_txt;
-  if (el('label-check5') && t.check5_txt) el('label-check5').innerHTML = t.check5_txt;
-  if (el('signBtn') && t.sign_btn)        el('signBtn').textContent = t.sign_btn;
-  if (el('success-h') && t.success_h)    el('success-h').textContent = t.success_h;
-  if (el('success-note') && t.success_note) el('success-note').textContent = t.success_note;
-  // Update buttons
-  ['fr','en','es','de','it'].forEach(code => {
-    const btn = document.getElementById('btn-'+code);
-    if (!btn) return;
-    if (code === l) {
-      btn.style.background = 'rgba(108,99,255,.15)';
-      btn.style.borderColor = 'rgba(108,99,255,.4)';
-      btn.style.color = '#6C63FF';
-      btn.style.fontWeight = '700';
-    } else {
-      btn.style.background = 'transparent';
-      btn.style.borderColor = '#1E1E32';
-      btn.style.color = '#7878A0';
-      btn.style.fontWeight = '400';
-    }
+  ['fr','en','de','es','it'].forEach(function(c){
+    var b=document.getElementById('btn-'+c);
+    b.classList.toggle('active',c===l);
   });
-  document.documentElement.lang = l;
+  document.documentElement.lang=l;
 }
 
-// Auto-detect
-const detected = navigator.language.startsWith('en')?'en':navigator.language.startsWith('es')?'es':navigator.language.startsWith('de')?'de':navigator.language.startsWith('it')?'it':'fr';
-setLang(detected);
+var det=navigator.language.slice(0,2);
+setLang(['fr','en','de','es','it'].includes(det)?det:'fr');
 </script>
 </body>
 </html>
