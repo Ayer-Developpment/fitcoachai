@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FitCoach AI — Ton coach nutrition & fitness IA</title>
-<meta name="description" content="FitCoach AI — Ton coach nutrition & fitness personnel alimenté par l'IA. Recettes, séances maison, scan code-barres, suivi calories. Bientôt sur l'App Store.">
+<meta name="description" content="FitCoach AI — Personal nutrition & fitness coach powered by AI.">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--v:#6C63FF;--g:#00D4A4;--o:#FF8C3C;--r:#FF5050;
@@ -18,15 +18,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sa
 nav{position:fixed;top:0;width:100%;background:rgba(7,7,15,.9);backdrop-filter:blur(24px);
   -webkit-backdrop-filter:blur(24px);z-index:1000;border-bottom:1px solid rgba(255,255,255,.05)}
 .nav-inner{max-width:1100px;margin:0 auto;height:64px;display:flex;align-items:center;
-  justify-content:space-between;padding:0 24px}
+  justify-content:space-between;padding:0 24px;gap:16px}
 .logo{font-size:19px;font-weight:900;background:linear-gradient(135deg,var(--v),var(--g));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
-.nav-links{display:flex;gap:24px;align-items:center}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
-.nav-links a:hover{color:var(--text)}
-.nav-cta{background:linear-gradient(135deg,var(--v),var(--g));color:#fff!important;
-  padding:8px 20px;border-radius:100px;font-size:13px!important;font-weight:700!important}
-@media(max-width:640px){.nav-links a:not(.nav-cta){display:none}}
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;flex-shrink:0}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-cta{background:linear-gradient(135deg,var(--v),var(--g));color:#fff;
+  padding:8px 18px;border-radius:100px;font-size:13px;font-weight:700;
+  text-decoration:none;white-space:nowrap;cursor:pointer;border:none}
+
+/* Language selector */
+.lang-sel{position:relative}
+.lang-btn{display:flex;align-items:center;gap:6px;background:var(--card2);
+  border:1px solid var(--border);color:var(--text);padding:7px 12px;
+  border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;
+  white-space:nowrap}
+.lang-btn:hover{border-color:var(--v)}
+.lang-dropdown{position:absolute;top:calc(100% + 8px);right:0;
+  background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:6px;min-width:140px;display:none;z-index:100;
+  box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.lang-sel.open .lang-dropdown{display:block}
+.lang-option{display:flex;align-items:center;gap:8px;padding:8px 12px;
+  border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;transition:background .15s}
+.lang-option:hover{background:var(--card2)}
+.lang-option.active{color:var(--v);font-weight:700}
 
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;
@@ -39,16 +54,16 @@ nav{position:fixed;top:0;width:100%;background:rgba(7,7,15,.9);backdrop-filter:b
   background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.25);
   color:var(--v);padding:8px 20px;border-radius:100px;font-size:13px;
   font-weight:700;margin-bottom:28px;letter-spacing:.5px}
-.blink{width:7px;height:7px;border-radius:50%;background:var(--g);animation:blink 1.5s infinite}
+.blink{width:7px;height:7px;border-radius:50%;background:var(--g);animation:blink 1.5s infinite;flex-shrink:0}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-.hero h1{font-size:clamp(36px,6.5vw,76px);font-weight:900;line-height:1.05;
+.hero h1{font-size:clamp(34px,6vw,74px);font-weight:900;line-height:1.05;
   letter-spacing:-1.5px;margin-bottom:20px}
 .grad{background:linear-gradient(135deg,var(--v),var(--g));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hero p{font-size:clamp(15px,2.2vw,19px);color:var(--muted);line-height:1.7;
   max-width:580px;margin:0 auto 40px}
 .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:52px}
-.btn{padding:15px 32px;border-radius:14px;font-size:16px;font-weight:700;
+.btn{padding:14px 30px;border-radius:14px;font-size:15px;font-weight:700;
   text-decoration:none;display:inline-flex;align-items:center;gap:8px;
   transition:transform .2s,box-shadow .2s;cursor:pointer;border:none}
 .btn:hover{transform:translateY(-2px)}
@@ -56,56 +71,48 @@ nav{position:fixed;top:0;width:100%;background:rgba(7,7,15,.9);backdrop-filter:b
   box-shadow:0 8px 30px rgba(108,99,255,.35)}
 .btn-p:hover{box-shadow:0 12px 40px rgba(108,99,255,.5)}
 .btn-g{background:var(--card);color:var(--text);border:1px solid var(--border)}
-.stats{display:flex;gap:36px;justify-content:center;flex-wrap:wrap}
-.stat-n{font-size:26px;font-weight:900;background:linear-gradient(135deg,var(--v),var(--g));
+.stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap}
+.stat-n{font-size:24px;font-weight:900;background:linear-gradient(135deg,var(--v),var(--g));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .stat-l{font-size:12px;color:var(--muted);margin-top:2px;text-align:center}
 
 /* SECTIONS */
-.section{padding:96px 24px;max-width:1100px;margin:0 auto}
-.section.center{text-align:center}
+.section{padding:88px 24px;max-width:1100px;margin:0 auto}
 .sec-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:2px;
   text-transform:uppercase;color:var(--v);margin-bottom:14px}
-.sec-h{font-size:clamp(28px,4vw,46px);font-weight:900;letter-spacing:-1px;margin-bottom:16px}
-.sec-p{font-size:17px;color:var(--muted);line-height:1.6;max-width:560px}
+.sec-h{font-size:clamp(26px,4vw,44px);font-weight:900;letter-spacing:-1px;margin-bottom:14px}
+.sec-p{font-size:16px;color:var(--muted);line-height:1.6;max-width:540px}
 
 /* FEATURES */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-top:52px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:48px}
 .feat{background:var(--card);border:1px solid var(--border);border-radius:20px;
-  padding:28px;transition:border-color .25s,transform .25s}
+  padding:26px;transition:border-color .25s,transform .25s}
 .feat:hover{border-color:var(--v);transform:translateY(-3px)}
-.feat-icon{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;
-  justify-content:center;font-size:24px;margin-bottom:16px}
-.feat h3{font-size:17px;font-weight:800;margin-bottom:7px}
+.feat-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;
+  justify-content:center;font-size:22px;margin-bottom:14px}
+.feat h3{font-size:16px;font-weight:800;margin-bottom:6px}
 .feat p{color:var(--muted);font-size:14px;line-height:1.6}
 .feat-new{display:inline-block;font-size:9px;font-weight:800;color:var(--g);
   background:rgba(0,212,164,.1);border:1px solid rgba(0,212,164,.2);
-  padding:2px 8px;border-radius:6px;margin-bottom:8px;letter-spacing:1px}
+  padding:2px 8px;border-radius:6px;margin-bottom:7px;letter-spacing:1px}
 
 /* STEPS */
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:24px;margin-top:52px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;margin-top:48px}
 .step{text-align:center;padding:28px 16px}
-.step-num{width:46px;height:46px;border-radius:50%;
+.step-num{width:44px;height:44px;border-radius:50%;
   background:linear-gradient(135deg,var(--v),var(--g));
   display:flex;align-items:center;justify-content:center;
-  font-size:18px;font-weight:900;color:#fff;margin:0 auto 16px}
-.step h3{font-size:16px;font-weight:700;margin-bottom:7px}
+  font-size:17px;font-weight:900;color:#fff;margin:0 auto 14px}
+.step h3{font-size:15px;font-weight:700;margin-bottom:6px}
 .step p{font-size:13px;color:var(--muted);line-height:1.6}
 
-/* SCAN SHOWCASE */
-.scan-showcase{background:linear-gradient(135deg,rgba(0,212,164,.06),rgba(108,99,255,.04));
-  border:1px solid rgba(0,212,164,.15);border-radius:24px;
-  padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;
-  align-items:center;margin-top:52px}
-@media(max-width:680px){.scan-showcase{grid-template-columns:1fr}}
-.scan-phone{position:relative}
+/* SCAN */
+.scan-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:48px}
+@media(max-width:680px){.scan-grid{grid-template-columns:1fr}}
 .scan-phone-inner{background:#000;border-radius:32px;border:2px solid #1E1E32;
-  overflow:hidden;padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.5),
-  0 0 0 1px rgba(0,212,164,.1)}
+  overflow:hidden;padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 1px rgba(0,212,164,.1)}
 .cam-view{background:linear-gradient(160deg,#0a1a0f,#050e0a);border-radius:22px;
-  height:200px;position:relative;display:flex;align-items:center;justify-content:center}
-.barcode-svg{background:#fff;border-radius:6px;padding:6px}
+  height:190px;position:relative;display:flex;align-items:center;justify-content:center}
 .scan-line{position:absolute;left:10%;right:10%;height:2px;
   background:linear-gradient(90deg,transparent,var(--g),transparent);
   animation:scan 1.8s ease-in-out infinite;
@@ -117,71 +124,67 @@ nav{position:fixed;top:0;width:100%;background:rgba(7,7,15,.9);backdrop-filter:b
 .corner.bl{bottom:8px;left:8px;border-bottom:3px solid var(--g);border-left:3px solid var(--g);border-radius:0 0 0 2px}
 .corner.br{bottom:8px;right:8px;border-bottom:3px solid var(--g);border-right:3px solid var(--g);border-radius:0 0 2px 0}
 .result-card{background:rgba(0,0,0,.7);backdrop-filter:blur(10px);
-  border:1px solid rgba(0,212,164,.2);border-radius:14px;
-  padding:12px;margin-top:10px}
-.macro-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
-.macro-c{border-radius:8px;padding:8px 4px;text-align:center}
-.macro-v{font-size:15px;font-weight:900;line-height:1}
+  border:1px solid rgba(0,212,164,.2);border-radius:14px;padding:12px;margin-top:10px}
+.macro-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:8px 0}
+.macro-c{border-radius:8px;padding:7px 4px;text-align:center}
+.macro-v{font-size:14px;font-weight:900;line-height:1}
 .macro-l{font-size:8px;color:rgba(255,255,255,.4);margin-top:2px}
 .add-btn{background:linear-gradient(135deg,var(--g),var(--v));border-radius:10px;
-  padding:10px;text-align:center;font-size:13px;font-weight:800;color:#fff}
-.scan-features{display:flex;flex-direction:column;gap:16px}
-.scan-feat{display:flex;align-items:flex-start;gap:14px}
-.scan-feat-icon{width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  padding:9px;text-align:center;font-size:12px;font-weight:800;color:#fff}
+.scan-feats{display:flex;flex-direction:column;gap:14px}
+.scan-feat{display:flex;align-items:flex-start;gap:12px}
+.scan-feat-icon{width:42px;height:42px;border-radius:12px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;font-size:20px}
-.scan-feat h4{font-size:15px;font-weight:700;margin-bottom:4px}
+.scan-feat h4{font-size:14px;font-weight:700;margin-bottom:3px}
 .scan-feat p{font-size:13px;color:var(--muted);line-height:1.5}
 
 /* WAITLIST */
 .waitlist-wrap{background:linear-gradient(135deg,rgba(108,99,255,.08),rgba(0,212,164,.05));
   border:1px solid rgba(108,99,255,.2);border-radius:28px;
-  padding:60px 48px;text-align:center;position:relative;overflow:hidden}
-@media(max-width:640px){.waitlist-wrap{padding:40px 24px}}
+  padding:56px 44px;text-align:center;position:relative;overflow:hidden}
+@media(max-width:640px){.waitlist-wrap{padding:36px 20px}}
 .waitlist-wrap::before{content:'';position:absolute;top:-100px;right:-100px;
-  width:350px;height:350px;background:radial-gradient(circle,rgba(108,99,255,.12),transparent);
+  width:320px;height:320px;background:radial-gradient(circle,rgba(108,99,255,.12),transparent);
   border-radius:50%;pointer-events:none}
-.waitlist-wrap::after{content:'';position:absolute;bottom:-80px;left:-80px;
-  width:280px;height:280px;background:radial-gradient(circle,rgba(0,212,164,.08),transparent);
-  border-radius:50%;pointer-events:none}
-.wl-count{display:inline-flex;align-items:center;gap:8px;
+.wl-badge{display:inline-flex;align-items:center;gap:8px;
   background:rgba(0,212,164,.1);border:1px solid rgba(0,212,164,.2);
-  color:var(--g);padding:6px 16px;border-radius:100px;font-size:13px;font-weight:700;margin-bottom:20px}
-.tally-wrap{margin-top:32px;position:relative;z-index:2}
-.tally-wrap iframe{border:none;width:100%;max-width:560px;border-radius:16px;background:transparent}
-.perks{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:24px;position:relative;z-index:2}
+  color:var(--g);padding:6px 16px;border-radius:100px;font-size:13px;font-weight:700;margin-bottom:18px}
+.tally-wrap{margin-top:28px;position:relative;z-index:2}
+.tally-wrap iframe{border:none;width:100%;max-width:540px;border-radius:16px;background:transparent}
+.perks{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:22px;position:relative;z-index:2}
 .perk{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
 .perk-dot{width:6px;height:6px;border-radius:50%;background:var(--g);flex-shrink:0}
 
 /* PRICING */
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
-  gap:22px;max-width:680px;margin:52px auto 0}
-.price-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:34px}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;max-width:660px;margin:48px auto 0}
+.price-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px}
 .price-card.featured{border-color:var(--v);
   background:linear-gradient(135deg,rgba(108,99,255,.07),rgba(0,212,164,.03))}
 .price-badge{display:inline-block;background:linear-gradient(135deg,var(--v),var(--g));
   color:#fff;padding:4px 14px;border-radius:100px;font-size:11px;font-weight:800;
-  margin-bottom:18px;letter-spacing:.5px}
-.price-amount{font-size:48px;font-weight:900;color:var(--v);line-height:1}
-.price-amount span{font-size:17px;color:var(--muted);font-weight:400}
-.price-save{color:var(--g);font-size:13px;font-weight:700;margin:6px 0 20px}
-.price-card ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:26px}
-.price-card li{font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px}
+  margin-bottom:16px}
+.price-amount{font-size:46px;font-weight:900;color:var(--v);line-height:1}
+.price-amount span{font-size:16px;color:var(--muted);font-weight:400}
+.price-save{color:var(--g);font-size:13px;font-weight:700;margin:6px 0 18px}
+.price-card ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.price-card li{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
 .price-card li::before{content:'✓';color:var(--g);font-weight:800;flex-shrink:0}
 
 /* FOOTER */
-footer{background:var(--card);border-top:1px solid var(--border);padding:40px 24px}
+footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24px}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;
-  justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
 .footer-links{display:flex;flex-wrap:wrap;gap:4px}
 .footer-links a{color:var(--muted);text-decoration:none;font-size:13px;
-  padding:4px 10px;border-radius:6px;transition:color .2s}
+  padding:4px 10px;border-radius:6px;transition:color .2s;cursor:pointer}
 .footer-links a:hover{color:var(--text)}
 
-/* LEGAL PAGES */
+/* LEGAL */
 .legal{display:none;padding:110px 24px 80px;max-width:800px;margin:0 auto}
-.legal h1{font-size:36px;font-weight:900;margin-bottom:6px}
-.legal .date{color:var(--muted);font-size:13px;margin-bottom:40px}
-.legal h2{font-size:19px;font-weight:700;margin:32px 0 10px;color:var(--v)}
+.legal h1{font-size:32px;font-weight:900;margin-bottom:6px}
+.legal .date{color:var(--muted);font-size:13px;margin-bottom:36px}
+.legal h2{font-size:18px;font-weight:700;margin:28px 0 10px;color:var(--v)}
 .legal p,.legal li{color:var(--muted);line-height:1.8;margin-bottom:10px;font-size:15px}
 .legal ul{padding-left:20px}
 .legal a{color:var(--v)}
@@ -192,17 +195,28 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:40px 24
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a class="logo" href="#" onclick="showPage('home')">⚡ FitCoach AI</a>
-    <div class="nav-links">
-      <a href="#" onclick="showPage('home');setTimeout(function(){document.getElementById('features').scrollIntoView({behavior:'smooth'})},100);return false;">Fonctionnalités</a>
-      <a href="#" onclick="showPage('home');setTimeout(function(){document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})},100);return false;">Liste d'attente</a>
-      <a href="#" onclick="showPage('support')">Support</a>
-      <a href="#" class="nav-cta" onclick="showPage('home');setTimeout(function(){document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})},100);return false;">🔔 Me notifier</a>
+    <a class="logo" href="#" onclick="goHome()">⚡ FitCoach AI</a>
+    <div class="nav-right">
+      <!-- Language selector -->
+      <div class="lang-sel" id="langSel">
+        <button class="lang-btn" onclick="toggleLang()">
+          <span id="langFlag">🇫🇷</span>
+          <span id="langCode">FR</span>
+          <span style="font-size:10px;opacity:.6">▾</span>
+        </button>
+        <div class="lang-dropdown" id="langDropdown">
+          <div class="lang-option active" onclick="setLang('fr')">🇫🇷 Français</div>
+          <div class="lang-option" onclick="setLang('en')">🇬🇧 English</div>
+          <div class="lang-option" onclick="setLang('es')">🇪🇸 Español</div>
+          <div class="lang-option" onclick="setLang('de')">🇩🇪 Deutsch</div>
+        </div>
+      </div>
+      <button class="nav-cta" onclick="scrollTo('waitlist')" data-t="nav_cta">🔔 Me notifier</button>
     </div>
   </div>
 </nav>
 
-<!-- ══ HOME ══ -->
+<!-- HOME -->
 <div id="page-home">
 
 <!-- HERO -->
@@ -212,235 +226,125 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:40px 24
     <div class="orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,164,.12),transparent);bottom:-100px;right:-100px;animation-duration:4.5s;animation-delay:1s"></div>
   </div>
   <div class="hero-content">
-    <div class="launch-badge"><div class="blink"></div> Lancement bientôt sur l'App Store</div>
-    <h1>Ton coach nutrition<br>& fitness <span class="grad">alimenté par l'IA</span></h1>
-    <p>FitCoach AI analyse tes repas, scanne tes produits, génère tes séances et te motive chaque jour. Ton coach personnel, disponible 24h/24.</p>
+    <div class="launch-badge"><div class="blink"></div><span data-t="badge"></span></div>
+    <h1 data-t="hero_h1"></h1>
+    <p data-t="hero_p"></p>
     <div class="hero-btns">
-      <a href="#" class="btn btn-p" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'});return false;">🔔 Être notifié au lancement</a>
-      <a href="#" class="btn btn-g" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'});return false;">Découvrir l'app</a>
+      <button class="btn btn-p" onclick="scrollTo('waitlist')" data-t="hero_cta1"></button>
+      <button class="btn btn-g" onclick="scrollTo('features')" data-t="hero_cta2"></button>
     </div>
     <div class="stats">
-      <div class="stat"><div class="stat-n">7 jours</div><div class="stat-l">Essai gratuit</div></div>
-      <div class="stat"><div class="stat-n">69,99€</div><div class="stat-l">Par an · 5,83€/mois</div></div>
-      <div class="stat"><div class="stat-n">3M+</div><div class="stat-l">Produits scannables</div></div>
-      <div class="stat"><div class="stat-n">200+</div><div class="stat-l">Exercices illustrés</div></div>
+      <div class="stat"><div class="stat-n">7</div><div class="stat-l" data-t="stat1"></div></div>
+      <div class="stat"><div class="stat-n">69,99€</div><div class="stat-l" data-t="stat2"></div></div>
+      <div class="stat"><div class="stat-n">3M+</div><div class="stat-l" data-t="stat3"></div></div>
+      <div class="stat"><div class="stat-n">200+</div><div class="stat-l" data-t="stat4"></div></div>
     </div>
   </div>
 </div>
 
 <!-- FEATURES -->
 <section class="section" id="features">
-  <div class="sec-tag">✨ Fonctionnalités</div>
-  <div class="sec-h">Tout ce dont tu as besoin</div>
-  <div class="sec-p">Une seule app pour la nutrition, le fitness et le coaching IA.</div>
+  <div class="sec-tag" data-t="feat_tag"></div>
+  <div class="sec-h" data-t="feat_h"></div>
+  <div class="sec-p" data-t="feat_p"></div>
   <div class="grid">
-    <div class="feat">
-      <div class="feat-icon" style="background:rgba(108,99,255,.12)">🤖</div>
-      <h3>Coach IA personnel</h3>
-      <p>Un coach qui te connaît par prénom, comprend tes objectifs et répond en 1 seconde. Disponible 24h/24, 7j/7.</p>
-    </div>
-    <div class="feat">
-      <div class="feat-icon" style="background:rgba(0,212,164,.12)">📷</div>
-      <div class="feat-new">NOUVEAU</div>
-      <h3>Scan code-barres produits</h3>
-      <p>Scanne n'importe quel produit du supermarché. Calories, protéines, glucides, lipides et Nutri-Score instantanément.</p>
-    </div>
-    <div class="feat">
-      <div class="feat-icon" style="background:rgba(255,140,60,.12)">🍽️</div>
-      <h3>Recettes générées par l'IA</h3>
-      <p>3 recettes ultra-variées en quelques secondes depuis 15 cuisines du monde. Adaptées à tes allergies.</p>
-    </div>
-    <div class="feat">
-      <div class="feat-icon" style="background:rgba(108,99,255,.12)">💪</div>
-      <h3>Séances maison sur-mesure</h3>
-      <p>200+ exercices illustrés en 3 étapes avec flèches directionnelles. Jamais les mêmes, variés à chaque fois.</p>
-    </div>
-    <div class="feat">
-      <div class="feat-icon" style="background:rgba(255,140,60,.12)">📸</div>
-      <h3>Scan photo des repas</h3>
-      <p>Prends une photo de ton assiette — l'IA analyse les calories et macros instantanément. Zéro saisie manuelle.</p>
-    </div>
-    <div class="feat">
-      <div class="feat-icon" style="background:rgba(255,80,80,.12)">❤️</div>
-      <h3>Sync Apple Santé</h3>
-      <p>Pas, calories brûlées, fréquence cardiaque et poids synchronisés automatiquement avec Apple Santé.</p>
-    </div>
-    <div class="feat">
-      <div class="feat-icon" style="background:rgba(255,80,80,.12)">🔥</div>
-      <h3>Streak & 11 badges</h3>
-      <p>Gamification complète pour rester motivé. Streak quotidien, badges débloquables, bilan hebdomadaire IA.</p>
-    </div>
-    <div class="feat">
-      <div class="feat-icon" style="background:rgba(0,212,164,.12)">🎙️</div>
-      <h3>Coach vocal pendant la séance</h3>
-      <p>Parle à ton coach en faisant tes exercices. Il répond à voix haute et adapte la séance en temps réel.</p>
-    </div>
-    <div class="feat">
-      <div class="feat-icon" style="background:rgba(108,99,255,.12)">☁️</div>
-      <h3>Sync iCloud multi-appareils</h3>
-      <p>Tes données synchronisées sur tous tes appareils Apple. Commence sur iPhone, continue sur iPad.</p>
-    </div>
+    <div class="feat"><div class="feat-icon" style="background:rgba(108,99,255,.12)">🤖</div><h3 data-t="f1_h"></h3><p data-t="f1_p"></p></div>
+    <div class="feat"><div class="feat-icon" style="background:rgba(0,212,164,.12)">📷</div><div class="feat-new">NEW</div><h3 data-t="f2_h"></h3><p data-t="f2_p"></p></div>
+    <div class="feat"><div class="feat-icon" style="background:rgba(255,140,60,.12)">🍽️</div><h3 data-t="f3_h"></h3><p data-t="f3_p"></p></div>
+    <div class="feat"><div class="feat-icon" style="background:rgba(108,99,255,.12)">💪</div><h3 data-t="f4_h"></h3><p data-t="f4_p"></p></div>
+    <div class="feat"><div class="feat-icon" style="background:rgba(255,140,60,.12)">📸</div><h3 data-t="f5_h"></h3><p data-t="f5_p"></p></div>
+    <div class="feat"><div class="feat-icon" style="background:rgba(255,80,80,.12)">❤️</div><h3 data-t="f6_h"></h3><p data-t="f6_p"></p></div>
+    <div class="feat"><div class="feat-icon" style="background:rgba(255,80,80,.12)">🔥</div><h3 data-t="f7_h"></h3><p data-t="f7_p"></p></div>
+    <div class="feat"><div class="feat-icon" style="background:rgba(0,212,164,.12)">🎙️</div><h3 data-t="f8_h"></h3><p data-t="f8_p"></p></div>
+    <div class="feat"><div class="feat-icon" style="background:rgba(108,99,255,.12)">☁️</div><h3 data-t="f9_h"></h3><p data-t="f9_p"></p></div>
   </div>
 </section>
 
-<!-- SCAN SHOWCASE -->
+<!-- SCAN -->
 <section class="section" style="padding-top:0">
-  <div class="sec-tag" style="color:var(--g)">📷 Nouveau</div>
-  <div class="sec-h">Scan code-barres<br><span class="grad">en 1 seconde</span></div>
-  <div class="scan-showcase">
-    <!-- Phone mockup -->
-    <div class="scan-phone">
+  <div class="sec-tag" style="color:var(--g)" data-t="scan_tag"></div>
+  <div class="sec-h" data-t="scan_h"></div>
+  <div class="scan-grid">
+    <div>
       <div class="scan-phone-inner">
         <div class="cam-view">
-          <div class="barcode-svg">
-            <svg width="130" height="60" viewBox="0 0 130 60">
-              <rect width="130" height="60" fill="white"/>
-              <rect x="8"  y="4" width="2"  height="46" fill="#000"/>
-              <rect x="12" y="4" width="1"  height="46" fill="#000"/>
-              <rect x="15" y="4" width="3"  height="46" fill="#000"/>
-              <rect x="20" y="4" width="1"  height="46" fill="#000"/>
-              <rect x="23" y="4" width="2"  height="46" fill="#000"/>
-              <rect x="27" y="4" width="1"  height="46" fill="#000"/>
-              <rect x="30" y="4" width="3"  height="46" fill="#000"/>
-              <rect x="35" y="4" width="1"  height="46" fill="#000"/>
-              <rect x="38" y="4" width="2"  height="46" fill="#000"/>
-              <rect x="43" y="4" width="1"  height="38" fill="#000"/>
-              <rect x="46" y="4" width="2"  height="38" fill="#000"/>
-              <rect x="50" y="4" width="3"  height="38" fill="#000"/>
-              <rect x="55" y="4" width="1"  height="38" fill="#000"/>
-              <rect x="58" y="4" width="2"  height="38" fill="#000"/>
-              <rect x="62" y="4" width="1"  height="46" fill="#000"/>
-              <rect x="65" y="4" width="1"  height="46" fill="#000"/>
-              <rect x="69" y="4" width="2"  height="38" fill="#000"/>
-              <rect x="73" y="4" width="1"  height="38" fill="#000"/>
-              <rect x="76" y="4" width="3"  height="38" fill="#000"/>
-              <rect x="81" y="4" width="1"  height="38" fill="#000"/>
-              <rect x="84" y="4" width="2"  height="38" fill="#000"/>
-              <rect x="88" y="4" width="1"  height="38" fill="#000"/>
-              <rect x="91" y="4" width="3"  height="38" fill="#000"/>
-              <rect x="96" y="4" width="1"  height="46" fill="#000"/>
-              <rect x="99" y="4" width="2"  height="46" fill="#000"/>
-              <rect x="103" y="4" width="1" height="46" fill="#000"/>
-              <rect x="106" y="4" width="3" height="46" fill="#000"/>
-              <rect x="111" y="4" width="1" height="46" fill="#000"/>
-              <rect x="114" y="4" width="2" height="46" fill="#000"/>
-              <rect x="118" y="4" width="1" height="46" fill="#000"/>
-              <text x="65" y="57" fill="#000" font-size="7" text-anchor="middle" font-family="monospace">3 017620 422003</text>
+          <div style="background:#fff;border-radius:6px;padding:5px">
+            <svg width="120" height="55" viewBox="0 0 120 55">
+              <rect width="120" height="55" fill="white"/>
+              <rect x="7"  y="3" width="2"  height="42" fill="#000"/><rect x="11" y="3" width="1"  height="42" fill="#000"/>
+              <rect x="14" y="3" width="3"  height="42" fill="#000"/><rect x="19" y="3" width="1"  height="42" fill="#000"/>
+              <rect x="22" y="3" width="2"  height="42" fill="#000"/><rect x="26" y="3" width="1"  height="42" fill="#000"/>
+              <rect x="29" y="3" width="3"  height="42" fill="#000"/><rect x="34" y="3" width="1"  height="42" fill="#000"/>
+              <rect x="37" y="3" width="2"  height="42" fill="#000"/><rect x="41" y="3" width="1"  height="34" fill="#000"/>
+              <rect x="44" y="3" width="2"  height="34" fill="#000"/><rect x="48" y="3" width="3"  height="34" fill="#000"/>
+              <rect x="53" y="3" width="1"  height="34" fill="#000"/><rect x="56" y="3" width="2"  height="34" fill="#000"/>
+              <rect x="60" y="3" width="1"  height="42" fill="#000"/><rect x="63" y="3" width="1"  height="42" fill="#000"/>
+              <rect x="67" y="3" width="2"  height="34" fill="#000"/><rect x="71" y="3" width="1"  height="34" fill="#000"/>
+              <rect x="74" y="3" width="3"  height="34" fill="#000"/><rect x="79" y="3" width="1"  height="34" fill="#000"/>
+              <rect x="82" y="3" width="2"  height="34" fill="#000"/><rect x="86" y="3" width="1"  height="34" fill="#000"/>
+              <rect x="89" y="3" width="3"  height="34" fill="#000"/><rect x="94" y="3" width="1"  height="42" fill="#000"/>
+              <rect x="97" y="3" width="2"  height="42" fill="#000"/><rect x="101" y="3" width="1" height="42" fill="#000"/>
+              <rect x="104" y="3" width="3" height="42" fill="#000"/><rect x="109" y="3" width="1" height="42" fill="#000"/>
+              <rect x="112" y="3" width="2" height="42" fill="#000"/>
+              <text x="60" y="52" fill="#000" font-size="6" text-anchor="middle" font-family="monospace">3 017620 422003</text>
             </svg>
           </div>
-          <div class="corner tl"></div>
-          <div class="corner tr"></div>
-          <div class="corner bl"></div>
-          <div class="corner br"></div>
+          <div class="corner tl"></div><div class="corner tr"></div>
+          <div class="corner bl"></div><div class="corner br"></div>
           <div class="scan-line"></div>
-          <div style="position:absolute;bottom:6px;width:100%;text-align:center;font-size:10px;color:var(--g);font-weight:700;letter-spacing:1px">SCANNING...</div>
+          <div style="position:absolute;bottom:6px;width:100%;text-align:center;font-size:9px;color:var(--g);font-weight:700;letter-spacing:1px">SCANNING...</div>
         </div>
         <div class="result-card">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-            <div style="font-size:22px">🥛</div>
-            <div style="flex:1">
-              <div style="font-size:13px;font-weight:800">Yaourt grec nature</div>
-              <div style="font-size:10px;color:var(--muted)">Danone · Pour 100g</div>
-            </div>
-            <div style="background:linear-gradient(135deg,#1a7a3a,#00a050);border-radius:8px;padding:5px 9px;text-align:center">
-              <div style="font-size:7px;color:rgba(255,255,255,.7);font-weight:700">NUTRI</div>
-              <div style="font-size:17px;font-weight:900;color:#fff;line-height:1">A</div>
-            </div>
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:9px">
+            <div style="font-size:20px">🥛</div>
+            <div style="flex:1"><div style="font-size:12px;font-weight:800" data-t="scan_product"></div><div style="font-size:9px;color:var(--muted)">Danone · 100g</div></div>
+            <div style="background:linear-gradient(135deg,#1a7a3a,#00a050);border-radius:8px;padding:4px 8px;text-align:center"><div style="font-size:7px;color:rgba(255,255,255,.7);font-weight:700">NUTRI</div><div style="font-size:16px;font-weight:900;color:#fff;line-height:1">A</div></div>
           </div>
           <div class="macro-grid">
-            <div class="macro-c" style="background:rgba(108,99,255,.12);border:1px solid rgba(108,99,255,.2)">
-              <div class="macro-v" style="color:var(--v)">97</div><div class="macro-l">🔥 kcal</div>
-            </div>
-            <div class="macro-c" style="background:rgba(0,212,164,.12);border:1px solid rgba(0,212,164,.2)">
-              <div class="macro-v" style="color:var(--g)">9g</div><div class="macro-l">🥩 prot</div>
-            </div>
-            <div class="macro-c" style="background:rgba(255,140,60,.12);border:1px solid rgba(255,140,60,.2)">
-              <div class="macro-v" style="color:var(--o)">4g</div><div class="macro-l">🍞 gluc</div>
-            </div>
-            <div class="macro-c" style="background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.2)">
-              <div class="macro-v" style="color:#A78BFA">0g</div><div class="macro-l">🧈 lip</div>
-            </div>
+            <div class="macro-c" style="background:rgba(108,99,255,.12);border:1px solid rgba(108,99,255,.2)"><div class="macro-v" style="color:var(--v)">97</div><div class="macro-l">🔥 kcal</div></div>
+            <div class="macro-c" style="background:rgba(0,212,164,.12);border:1px solid rgba(0,212,164,.2)"><div class="macro-v" style="color:var(--g)">9g</div><div class="macro-l">🥩 prot</div></div>
+            <div class="macro-c" style="background:rgba(255,140,60,.12);border:1px solid rgba(255,140,60,.2)"><div class="macro-v" style="color:var(--o)">4g</div><div class="macro-l">🍞 carbs</div></div>
+            <div class="macro-c" style="background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.2)"><div class="macro-v" style="color:#A78BFA">0g</div><div class="macro-l">🧈 fat</div></div>
           </div>
-          <div class="add-btn">✅ Ajouter au journal</div>
+          <div class="add-btn" data-t="scan_add"></div>
         </div>
       </div>
     </div>
-    <!-- Features list -->
-    <div class="scan-features">
-      <div class="scan-feat">
-        <div class="scan-feat-icon" style="background:rgba(0,212,164,.1)">📦</div>
-        <div>
-          <h4>3 millions de produits</h4>
-          <p>Base de données Open Food Facts — la plus grande base alimentaire open source au monde.</p>
-        </div>
-      </div>
-      <div class="scan-feat">
-        <div class="scan-feat-icon" style="background:rgba(108,99,255,.1)">⚡</div>
-        <div>
-          <h4>Résultat en 1 seconde</h4>
-          <p>Scanne le code-barres, les macros s'affichent immédiatement. Pas d'attente, pas de saisie.</p>
-        </div>
-      </div>
-      <div class="scan-feat">
-        <div class="scan-feat-icon" style="background:rgba(255,80,80,.1)">🏷️</div>
-        <div>
-          <h4>Nutri-Score A à E</h4>
-          <p>Qualité nutritionnelle affichée instantanément pour chaque produit scanné.</p>
-        </div>
-      </div>
-      <div class="scan-feat">
-        <div class="scan-feat-icon" style="background:rgba(255,140,60,.1)">📔</div>
-        <div>
-          <h4>Ajout en 1 tap au journal</h4>
-          <p>Le repas est enregistré dans ton bilan journalier. Calories et macros mis à jour en temps réel.</p>
-        </div>
-      </div>
+    <div class="scan-feats">
+      <div class="scan-feat"><div class="scan-feat-icon" style="background:rgba(0,212,164,.1)">📦</div><div><h4 data-t="sf1_h"></h4><p data-t="sf1_p"></p></div></div>
+      <div class="scan-feat"><div class="scan-feat-icon" style="background:rgba(108,99,255,.1)">⚡</div><div><h4 data-t="sf2_h"></h4><p data-t="sf2_p"></p></div></div>
+      <div class="scan-feat"><div class="scan-feat-icon" style="background:rgba(255,80,80,.1)">🏷️</div><div><h4 data-t="sf3_h"></h4><p data-t="sf3_p"></p></div></div>
+      <div class="scan-feat"><div class="scan-feat-icon" style="background:rgba(255,140,60,.1)">📔</div><div><h4 data-t="sf4_h"></h4><p data-t="sf4_p"></p></div></div>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
+<!-- STEPS -->
 <section class="section" style="padding-top:40px">
-  <div class="sec-tag">🚀 Comment ça marche</div>
-  <div class="sec-h">Prêt en 3 minutes</div>
+  <div class="sec-tag" data-t="steps_tag"></div>
+  <div class="sec-h" data-t="steps_h"></div>
   <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <h3>Crée ton profil</h3>
-      <p>Prénom, objectifs et préférences en 2 minutes. L'IA calcule tes besoins nutritionnels.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <h3>Parle à ton coach</h3>
-      <p>Dis ce que tu as mangé, scanne tes produits ou demande une séance. Répond en 1 seconde.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <h3>Atteins tes objectifs</h3>
-      <p>Suis tes progrès chaque jour. Le coach s'adapte et te motive avec des conseils personnalisés.</p>
-    </div>
+    <div class="step"><div class="step-num">1</div><h3 data-t="s1_h"></h3><p data-t="s1_p"></p></div>
+    <div class="step"><div class="step-num">2</div><h3 data-t="s2_h"></h3><p data-t="s2_p"></p></div>
+    <div class="step"><div class="step-num">3</div><h3 data-t="s3_h"></h3><p data-t="s3_p"></p></div>
   </div>
 </section>
 
 <!-- WAITLIST -->
 <section class="section" id="waitlist" style="padding-top:0">
   <div class="waitlist-wrap">
-    <div class="wl-count"><div class="blink"></div>Lancement bientôt</div>
-    <h2 style="font-size:clamp(24px,4vw,40px);font-weight:900;letter-spacing:-1px;margin-bottom:12px;position:relative;z-index:2">
-      Sois parmi les premiers<br>à découvrir FitCoach AI
-    </h2>
-    <p style="color:var(--muted);font-size:16px;max-width:480px;margin:0 auto;line-height:1.6;position:relative;z-index:2">
-      Entre ton email ci-dessous. Tu seras notifié en avant-première et tu bénéficieras de l'essai gratuit 7 jours.
-    </p>
+    <div class="wl-badge"><div class="blink"></div><span data-t="wl_badge"></span></div>
+    <h2 style="font-size:clamp(22px,4vw,38px);font-weight:900;letter-spacing:-1px;margin-bottom:12px;position:relative;z-index:2" data-t="wl_h"></h2>
+    <p style="color:var(--muted);font-size:15px;max-width:460px;margin:0 auto;line-height:1.6;position:relative;z-index:2" data-t="wl_p"></p>
     <div class="tally-wrap">
       <iframe data-tally-src="https://tally.so/embed/D4Y2db?alignLeft=0&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-        loading="lazy" width="100%" height="180" title="FitCoachAI — Liste d'attente"></iframe>
+        loading="lazy" width="100%" height="200" title="FitCoachAI waitlist"></iframe>
     </div>
     <div class="perks">
-      <div class="perk"><div class="perk-dot"></div>100% gratuit · sans spam</div>
-      <div class="perk"><div class="perk-dot"></div>Notifié en avant-première</div>
-      <div class="perk"><div class="perk-dot"></div>7 jours d'essai offerts</div>
-      <div class="perk"><div class="perk-dot"></div>Désabonnement 1 clic</div>
+      <div class="perk"><div class="perk-dot"></div><span data-t="perk1"></span></div>
+      <div class="perk"><div class="perk-dot"></div><span data-t="perk2"></span></div>
+      <div class="perk"><div class="perk-dot"></div><span data-t="perk3"></span></div>
+      <div class="perk"><div class="perk-dot"></div><span data-t="perk4"></span></div>
     </div>
   </div>
 </section>
@@ -448,105 +352,61 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:40px 24
 <!-- PRICING -->
 <section class="section" id="pricing" style="padding-top:40px">
   <div style="text-align:center">
-    <div class="sec-tag">💰 Tarifs</div>
-    <div class="sec-h">Simple et transparent</div>
-    <div class="sec-p" style="margin:0 auto">Commence gratuitement, sans carte bancaire.</div>
+    <div class="sec-tag" data-t="price_tag"></div>
+    <div class="sec-h" data-t="price_h"></div>
+    <div class="sec-p" style="margin:0 auto" data-t="price_p"></div>
   </div>
   <div class="pricing-grid">
     <div class="price-card">
-      <div class="price-amount">Gratuit<span style="font-size:15px;display:block;margin-top:4px">/7 jours</span></div>
-      <p style="color:var(--muted);font-size:13px;margin:10px 0 20px">Accès complet, sans carte</p>
+      <div class="price-amount" data-t="free_title"></div>
+      <p style="color:var(--muted);font-size:13px;margin:8px 0 18px" data-t="free_sub"></p>
       <ul>
-        <li>Coach IA 6 messages/jour</li>
-        <li>3 recettes générées/jour</li>
-        <li>3 séances générées/jour</li>
-        <li>Scan code-barres</li>
-        <li>Scan photo repas</li>
-        <li>Sync Apple Santé</li>
-        <li>Streak & badges</li>
+        <li data-t="free_f1"></li><li data-t="free_f2"></li><li data-t="free_f3"></li>
+        <li data-t="free_f4"></li><li data-t="free_f5"></li><li data-t="free_f6"></li>
       </ul>
-      <a href="#" class="btn btn-g" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'});return false;" style="width:100%;justify-content:center;font-size:14px">Être notifié au lancement</a>
+      <button class="btn btn-g" style="width:100%;justify-content:center;font-size:14px" onclick="scrollTo('waitlist')" data-t="free_btn"></button>
     </div>
     <div class="price-card featured">
-      <div class="price-badge">🔥 Le plus populaire</div>
+      <div class="price-badge" data-t="pro_badge"></div>
       <div class="price-amount" style="color:var(--v)">69,99€<span>/an</span></div>
-      <div class="price-save">5,83€/mois · -55% vs mensuel</div>
+      <div class="price-save" data-t="pro_save"></div>
       <ul>
-        <li>Coach IA 50 messages/jour</li>
-        <li>Recettes illimitées</li>
-        <li>Séances illimitées</li>
-        <li>Programme multi-semaines IA</li>
-        <li>Coach vocal pendant séance</li>
-        <li>Sync iCloud multi-appareils</li>
-        <li>200+ exercices illustrés</li>
-        <li>Suivi sur 90 jours</li>
-        <li>Support prioritaire</li>
+        <li data-t="pro_f1"></li><li data-t="pro_f2"></li><li data-t="pro_f3"></li>
+        <li data-t="pro_f4"></li><li data-t="pro_f5"></li><li data-t="pro_f6"></li>
+        <li data-t="pro_f7"></li><li data-t="pro_f8"></li>
       </ul>
-      <a href="#" class="btn btn-p" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'});return false;" style="width:100%;justify-content:center;font-size:14px">Être notifié au lancement</a>
+      <button class="btn btn-p" style="width:100%;justify-content:center;font-size:14px" onclick="scrollTo('waitlist')" data-t="pro_btn"></button>
     </div>
   </div>
-  <p style="text-align:center;color:var(--muted);font-size:13px;margin-top:20px">
-    Option mensuelle à 12,99€/mois · Annulation à tout moment via Réglages iOS
-  </p>
+  <p style="text-align:center;color:var(--muted);font-size:13px;margin-top:18px" data-t="price_note"></p>
 </section>
+</div>
 
-</div><!-- end home -->
-
-<!-- SUPPORT -->
+<!-- LEGAL PAGES -->
 <div id="page-support" class="legal">
-  <h1>Support</h1>
-  <p class="date">Mise à jour : juin 2026</p>
-  <h2>📧 Contact</h2>
+  <h1 data-t="sup_h1"></h1><p class="date">2026</p>
+  <h2 data-t="sup_contact_h"></h2>
   <p><strong>Email :</strong> <a href="mailto:support.fitcoachai@gmail.com">support.fitcoachai@gmail.com</a></p>
-  <p>Réponse sous 24-48h en semaine.</p>
-  <h2>❓ Questions fréquentes</h2>
-  <p><strong>Comment annuler mon abonnement ?</strong><br>Réglages iOS → Apple ID → Abonnements → FitCoach AI → Annuler.</p>
-  <p><strong>Le scan code-barres ne trouve pas mon produit ?</strong><br>La base Open Food Facts contient 3M+ produits. Si le tien est absent, ajoute les infos manuellement dans le chat coach.</p>
-  <p><strong>L'IA ne répond pas ?</strong><br>Vérifie ta connexion. Ferme et relance l'app. Si ça persiste, contacte-nous.</p>
-  <p><strong>Comment restaurer mes achats ?</strong><br>Réglages de l'app → Restaurer mes achats. Utilise le même Apple ID.</p>
-  <h2>🔧 Signaler un bug</h2>
-  <p>Email : <a href="mailto:support.fitcoachai@gmail.com">support.fitcoachai@gmail.com</a> avec description + version iOS.</p>
+  <p data-t="sup_response"></p>
+  <h2>FAQ</h2>
+  <p data-t="sup_faq1"></p>
+  <p data-t="sup_faq2"></p>
 </div>
-
-<!-- PRIVACY -->
 <div id="page-privacy" class="legal">
-  <h1>Politique de confidentialité</h1>
-  <p class="date">Mise à jour : juin 2026</p>
-  <h2>1. Données collectées</h2>
-  <ul>
-    <li>Profil : prénom, âge, poids, taille, objectifs (stockés localement)</li>
-    <li>Nutrition : repas, calories, produits scannés (stockés localement)</li>
-    <li>Entraînement : séances et exercices (stockés localement)</li>
-    <li>Messages coach IA (transmis à l'API Anthropic pour traitement)</li>
-    <li>Email si inscription liste d'attente (via Tally)</li>
-  </ul>
-  <h2>2. Utilisation</h2>
-  <ul>
-    <li>Personnaliser les conseils du coach IA</li>
-    <li>Calculer tes objectifs nutritionnels</li>
-    <li>Afficher ton historique et tes progrès</li>
-    <li>Gérer ton abonnement via Apple</li>
-  </ul>
-  <h2>3. Partage</h2>
-  <p>Nous ne vendons jamais tes données. Messages via <a href="https://anthropic.com/privacy">Anthropic</a>. Paiements via Apple. Liste d'attente via <a href="https://tally.so/privacy">Tally</a>. Scan produits via <a href="https://world.openfoodfacts.org">Open Food Facts</a>.</p>
-  <h2>4. Tes droits (RGPD)</h2>
-  <p>Contact : <a href="mailto:support.fitcoachai@gmail.com">support.fitcoachai@gmail.com</a></p>
+  <h1 data-t="priv_h1"></h1><p class="date">2026</p>
+  <h2 data-t="priv_h2"></h2>
+  <ul><li data-t="priv_l1"></li><li data-t="priv_l2"></li><li data-t="priv_l3"></li><li data-t="priv_l4"></li></ul>
+  <h2 data-t="priv_h3"></h2>
+  <p data-t="priv_p3"></p>
+  <h2>RGPD</h2>
+  <p><a href="mailto:support.fitcoachai@gmail.com">support.fitcoachai@gmail.com</a></p>
 </div>
-
-<!-- TERMS -->
 <div id="page-terms" class="legal">
-  <h1>Conditions d'utilisation</h1>
-  <p class="date">Mise à jour : juin 2026</p>
-  <h2>1. Service</h2>
-  <p>FitCoach AI est une app mobile de coaching fitness et nutrition IA. Les conseils sont informatifs et ne remplacent pas un avis médical.</p>
-  <h2>2. Abonnement</h2>
-  <ul>
-    <li>Essai gratuit 7 jours sans engagement</li>
-    <li>Renouvellement automatique sauf annulation 24h avant</li>
-    <li>69,99€/an ou 12,99€/mois</li>
-    <li>Annulation via Réglages iOS</li>
-  </ul>
-  <h2>3. Contact</h2>
+  <h1 data-t="terms_h1"></h1><p class="date">2026</p>
+  <h2 data-t="terms_h2"></h2><p data-t="terms_p2"></p>
+  <h2 data-t="terms_h3"></h2>
+  <ul><li data-t="terms_l1"></li><li data-t="terms_l2"></li><li data-t="terms_l3"></li></ul>
+  <h2>Contact</h2>
   <p><a href="mailto:support.fitcoachai@gmail.com">support.fitcoachai@gmail.com</a></p>
 </div>
 
@@ -555,22 +415,264 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:40px 24
   <div class="footer-inner">
     <div>
       <div style="font-size:17px;font-weight:900;background:linear-gradient(135deg,var(--v),var(--g));-webkit-background-clip:text;-webkit-text-fill-color:transparent">⚡ FitCoach AI</div>
-      <div style="color:var(--muted);font-size:12px;margin-top:5px">© 2026 FitCoach AI · Tous droits réservés</div>
+      <div style="color:var(--muted);font-size:12px;margin-top:5px">© 2026 FitCoach AI</div>
     </div>
     <div class="footer-links">
-      <a href="#" onclick="showPage('home')">Accueil</a>
-      <a href="#" onclick="showPage('support')">Support</a>
-      <a href="#" onclick="showPage('privacy')">Confidentialité</a>
-      <a href="#" onclick="showPage('terms')">Conditions</a>
+      <a onclick="goHome()">Accueil</a>
+      <a onclick="showPage('support')" data-t="foot_support"></a>
+      <a onclick="showPage('privacy')" data-t="foot_privacy"></a>
+      <a onclick="showPage('terms')" data-t="foot_terms"></a>
       <a href="mailto:support.fitcoachai@gmail.com">Contact</a>
     </div>
   </div>
 </footer>
 
 <script>
-// Tally embed
-var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function(e){e.src=e.dataset.tallySrc})};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w;s.onload=v;s.onerror=v;d.body.appendChild(s);}
+// ── TRANSLATIONS ──────────────────────────────────────────────────────────────
+const T = {
+  fr:{
+    badge:"Lancement bientôt sur l'App Store",
+    nav_cta:"🔔 Me notifier",
+    hero_h1:"Ton coach nutrition<br>& fitness <span class='grad'>alimenté par l'IA</span>",
+    hero_p:"FitCoach AI analyse tes repas, scanne tes produits, génère tes séances et te motive chaque jour.",
+    hero_cta1:"🔔 Être notifié au lancement",hero_cta2:"Découvrir l'app",
+    stat1:"jours d'essai gratuit",stat2:"Par an · 5,83€/mois",stat3:"Produits scannables",stat4:"Exercices illustrés",
+    feat_tag:"✨ Fonctionnalités",feat_h:"Tout ce dont tu as besoin",feat_p:"Une seule app pour la nutrition, le fitness et le coaching IA.",
+    f1_h:"Coach IA personnel",f1_p:"Un coach qui te connaît par prénom et répond en 1 seconde. Disponible 24h/24, 7j/7.",
+    f2_h:"Scan code-barres produits",f2_p:"Scanne n'importe quel produit du supermarché. Calories, protéines, glucides, lipides et Nutri-Score instantanément.",
+    f3_h:"Recettes générées par l'IA",f3_p:"3 recettes ultra-variées depuis 15 cuisines du monde. Adaptées à tes allergies.",
+    f4_h:"Séances maison sur-mesure",f4_p:"200+ exercices illustrés en 3 étapes avec flèches directionnelles.",
+    f5_h:"Scan photo des repas",f5_p:"Prends une photo de ton assiette — l'IA analyse les macros instantanément.",
+    f6_h:"Sync Apple Santé",f6_p:"Pas, calories brûlées, fréquence cardiaque et poids synchronisés automatiquement.",
+    f7_h:"Streak & 11 badges",f7_p:"Gamification complète pour rester motivé. Streak quotidien et badges débloquables.",
+    f8_h:"Coach vocal pendant la séance",f8_p:"Parle à ton coach en faisant tes exercices. Il répond à voix haute.",
+    f9_h:"Sync iCloud multi-appareils",f9_p:"Tes données synchronisées sur tous tes appareils Apple.",
+    scan_tag:"📷 Nouveau",scan_h:"Scan code-barres<br><span class='grad'>en 1 seconde</span>",
+    scan_product:"Yaourt grec nature",scan_add:"✅ Ajouter au journal",
+    sf1_h:"3 millions de produits",sf1_p:"Base Open Food Facts — la plus grande base alimentaire open source au monde.",
+    sf2_h:"Résultat en 1 seconde",sf2_p:"Scanne le code-barres, les macros s'affichent immédiatement.",
+    sf3_h:"Nutri-Score A à E",sf3_p:"Qualité nutritionnelle affichée instantanément pour chaque produit.",
+    sf4_h:"Ajout en 1 tap au journal",sf4_p:"Calories et macros mis à jour en temps réel dans ton bilan.",
+    steps_tag:"🚀 Comment ça marche",steps_h:"Prêt en 3 minutes",
+    s1_h:"Crée ton profil",s1_p:"Prénom, objectifs et préférences en 2 minutes. L'IA calcule tes besoins nutritionnels.",
+    s2_h:"Parle à ton coach",s2_p:"Dis ce que tu as mangé, scanne tes produits ou demande une séance. Répond en 1 seconde.",
+    s3_h:"Atteins tes objectifs",s3_p:"Suis tes progrès chaque jour. Le coach s'adapte et te motive.",
+    wl_badge:"Lancement bientôt",wl_h:"Sois parmi les premiers<br>à découvrir FitCoach AI",
+    wl_p:"Entre ton email ci-dessous. Tu seras notifié en avant-première et tu bénéficieras de l'essai gratuit 7 jours.",
+    perk1:"100% gratuit · sans spam",perk2:"Notifié en avant-première",perk3:"7 jours d'essai offerts",perk4:"Désabonnement 1 clic",
+    price_tag:"💰 Tarifs",price_h:"Simple et transparent",price_p:"Commence gratuitement, sans carte bancaire.",
+    free_title:"Gratuit<span style='font-size:15px;display:block;margin-top:4px'>/7 jours</span>",free_sub:"Accès complet, sans carte",
+    free_f1:"Coach IA 6 messages/jour",free_f2:"3 recettes/jour",free_f3:"3 séances/jour",
+    free_f4:"Scan code-barres",free_f5:"Scan photo repas",free_f6:"Sync Apple Santé",
+    free_btn:"Être notifié au lancement",
+    pro_badge:"🔥 Le plus populaire",pro_save:"5,83€/mois · -55% vs mensuel",
+    pro_f1:"Coach IA 50 messages/jour",pro_f2:"Recettes illimitées",pro_f3:"Séances illimitées",
+    pro_f4:"Programme multi-semaines IA",pro_f5:"Coach vocal",pro_f6:"iCloud multi-appareils",
+    pro_f7:"200+ exercices illustrés",pro_f8:"Support prioritaire",
+    pro_btn:"Être notifié au lancement",price_note:"Option mensuelle 12,99€/mois · Annulation à tout moment via Réglages iOS",
+    sup_h1:"Support",sup_contact_h:"📧 Contact",sup_response:"Réponse sous 24-48h en semaine.",
+    sup_faq1:"Comment annuler ? → Réglages iOS → Apple ID → Abonnements → FitCoach AI → Annuler.",
+    sup_faq2:"Produit non trouvé au scan ? → Ajoute les infos manuellement dans le chat coach.",
+    priv_h1:"Politique de confidentialité",priv_h2:"Données collectées",
+    priv_l1:"Profil : prénom, âge, poids, objectifs (local)",priv_l2:"Repas et macros (local)",
+    priv_l3:"Messages coach IA (transmis à Anthropic)",priv_l4:"Email liste d'attente (via Tally)",
+    priv_h3:"Partage",priv_p3:"Nous ne vendons jamais tes données. Messages via Anthropic. Paiements via Apple. Scan via Open Food Facts.",
+    terms_h1:"Conditions d'utilisation",terms_h2:"Service",terms_p2:"FitCoach AI est une app de coaching IA. Les conseils sont informatifs et ne remplacent pas un avis médical.",
+    terms_h3:"Abonnement",terms_l1:"Essai gratuit 7 jours",terms_l2:"69,99€/an ou 12,99€/mois",terms_l3:"Annulation via Réglages iOS",
+    foot_support:"Support",foot_privacy:"Confidentialité",foot_terms:"Conditions"
+  },
+  en:{
+    badge:"Coming soon to the App Store",
+    nav_cta:"🔔 Notify me",
+    hero_h1:"Your personal nutrition<br>& fitness coach <span class='grad'>powered by AI</span>",
+    hero_p:"FitCoach AI analyzes your meals, scans your products, generates your workouts and motivates you every day.",
+    hero_cta1:"🔔 Get notified at launch",hero_cta2:"Discover the app",
+    stat1:"days free trial",stat2:"Per year · €5.83/mo",stat3:"Scannable products",stat4:"Illustrated exercises",
+    feat_tag:"✨ Features",feat_h:"Everything you need",feat_p:"One app for nutrition, fitness and AI coaching.",
+    f1_h:"Personal AI Coach",f1_p:"A coach who knows you by name and replies in 1 second. Available 24/7.",
+    f2_h:"Product barcode scan",f2_p:"Scan any supermarket product. Calories, protein, carbs, fat and Nutri-Score instantly.",
+    f3_h:"AI-generated recipes",f3_p:"3 ultra-varied recipes from 15 world cuisines. Tailored to your allergies.",
+    f4_h:"Custom home workouts",f4_p:"200+ exercises illustrated in 3 steps with directional arrows.",
+    f5_h:"Meal photo scan",f5_p:"Take a photo of your plate — AI analyzes macros instantly.",
+    f6_h:"Apple Health sync",f6_p:"Steps, calories burned, heart rate and weight synced automatically.",
+    f7_h:"Streak & 11 badges",f7_p:"Full gamification to stay motivated. Daily streak and unlockable badges.",
+    f8_h:"Voice coach during workout",f8_p:"Talk to your coach while exercising. It replies out loud.",
+    f9_h:"iCloud multi-device sync",f9_p:"Your data synced across all your Apple devices.",
+    scan_tag:"📷 New",scan_h:"Barcode scan<br><span class='grad'>in 1 second</span>",
+    scan_product:"Greek yogurt",scan_add:"✅ Add to journal",
+    sf1_h:"3 million products",sf1_p:"Open Food Facts database — the world's largest open food database.",
+    sf2_h:"Result in 1 second",sf2_p:"Scan the barcode, macros appear instantly.",
+    sf3_h:"Nutri-Score A to E",sf3_p:"Nutritional quality displayed instantly for every scanned product.",
+    sf4_h:"Add to journal in 1 tap",sf4_p:"Calories and macros updated in real time in your daily log.",
+    steps_tag:"🚀 How it works",steps_h:"Ready in 3 minutes",
+    s1_h:"Create your profile",s1_p:"Name, goals and preferences in 2 minutes. AI calculates your nutritional needs.",
+    s2_h:"Talk to your coach",s2_p:"Tell what you ate, scan products or request a workout. Replies in 1 second.",
+    s3_h:"Reach your goals",s3_p:"Track your progress every day. The coach adapts and motivates you.",
+    wl_badge:"Launching soon",wl_h:"Be among the first<br>to discover FitCoach AI",
+    wl_p:"Enter your email below. You'll be notified first and benefit from the 7-day free trial.",
+    perk1:"100% free · no spam",perk2:"First to be notified",perk3:"7 days free trial",perk4:"Unsubscribe in 1 click",
+    price_tag:"💰 Pricing",price_h:"Simple and transparent",price_p:"Start for free, no credit card required.",
+    free_title:"Free<span style='font-size:15px;display:block;margin-top:4px'>/7 days</span>",free_sub:"Full access, no card",
+    free_f1:"AI coach 6 messages/day",free_f2:"3 recipes/day",free_f3:"3 workouts/day",
+    free_f4:"Barcode scan",free_f5:"Meal photo scan",free_f6:"Apple Health sync",
+    free_btn:"Get notified at launch",
+    pro_badge:"🔥 Most popular",pro_save:"€5.83/month · -55% vs monthly",
+    pro_f1:"AI coach 50 messages/day",pro_f2:"Unlimited recipes",pro_f3:"Unlimited workouts",
+    pro_f4:"AI multi-week program",pro_f5:"Voice coach",pro_f6:"iCloud multi-device",
+    pro_f7:"200+ illustrated exercises",pro_f8:"Priority support",
+    pro_btn:"Get notified at launch",price_note:"Monthly option €12.99/month · Cancel anytime via iOS Settings",
+    sup_h1:"Support",sup_contact_h:"📧 Contact",sup_response:"Response within 24-48h on weekdays.",
+    sup_faq1:"How to cancel? → iOS Settings → Apple ID → Subscriptions → FitCoach AI → Cancel.",
+    sup_faq2:"Product not found when scanning? → Add info manually in the coach chat.",
+    priv_h1:"Privacy Policy",priv_h2:"Data collected",
+    priv_l1:"Profile: name, age, weight, goals (local)",priv_l2:"Meals and macros (local)",
+    priv_l3:"Coach messages (sent to Anthropic)",priv_l4:"Email waitlist (via Tally)",
+    priv_h3:"Sharing",priv_p3:"We never sell your data. Messages via Anthropic. Payments via Apple. Scan via Open Food Facts.",
+    terms_h1:"Terms of Use",terms_h2:"Service",terms_p2:"FitCoach AI is an AI coaching app. Advice is informational and does not replace medical advice.",
+    terms_h3:"Subscription",terms_l1:"7-day free trial",terms_l2:"€69.99/year or €12.99/month",terms_l3:"Cancel via iOS Settings",
+    foot_support:"Support",foot_privacy:"Privacy",foot_terms:"Terms"
+  },
+  es:{
+    badge:"Próximamente en el App Store",
+    nav_cta:"🔔 Notificarme",
+    hero_h1:"Tu coach personal de nutrición<br>& fitness <span class='grad'>impulsado por IA</span>",
+    hero_p:"FitCoach AI analiza tus comidas, escanea tus productos, genera tus entrenamientos y te motiva cada día.",
+    hero_cta1:"🔔 Ser notificado al lanzamiento",hero_cta2:"Descubrir la app",
+    stat1:"días de prueba gratis",stat2:"Por año · 5,83€/mes",stat3:"Productos escaneables",stat4:"Ejercicios ilustrados",
+    feat_tag:"✨ Funcionalidades",feat_h:"Todo lo que necesitas",feat_p:"Una sola app para nutrición, fitness y coaching IA.",
+    f1_h:"Coach IA personal",f1_p:"Un coach que te conoce por nombre y responde en 1 segundo. Disponible 24/7.",
+    f2_h:"Escaneo de código de barras",f2_p:"Escanea cualquier producto del supermercado. Calorías, proteínas, carbohidratos y Nutri-Score al instante.",
+    f3_h:"Recetas generadas por IA",f3_p:"3 recetas ultra-variadas de 15 cocinas del mundo. Adaptadas a tus alergias.",
+    f4_h:"Entrenamientos en casa",f4_p:"200+ ejercicios ilustrados en 3 pasos con flechas direccionales.",
+    f5_h:"Escaneo de foto de comida",f5_p:"Toma una foto de tu plato — la IA analiza las macros al instante.",
+    f6_h:"Sync Apple Salud",f6_p:"Pasos, calorías quemadas, frecuencia cardíaca y peso sincronizados automáticamente.",
+    f7_h:"Racha & 11 insignias",f7_p:"Gamificación completa para mantenerte motivado.",
+    f8_h:"Coach de voz durante el entrenamiento",f8_p:"Habla con tu coach mientras haces ejercicio. Responde en voz alta.",
+    f9_h:"Sync iCloud multidispositivo",f9_p:"Tus datos sincronizados en todos tus dispositivos Apple.",
+    scan_tag:"📷 Nuevo",scan_h:"Escaneo de código<br><span class='grad'>en 1 segundo</span>",
+    scan_product:"Yogur griego natural",scan_add:"✅ Añadir al diario",
+    sf1_h:"3 millones de productos",sf1_p:"Base de datos Open Food Facts.",
+    sf2_h:"Resultado en 1 segundo",sf2_p:"Escanea el código, las macros aparecen al instante.",
+    sf3_h:"Nutri-Score A a E",sf3_p:"Calidad nutricional mostrada al instante.",
+    sf4_h:"Añadir al diario en 1 tap",sf4_p:"Calorías y macros actualizados en tiempo real.",
+    steps_tag:"🚀 Cómo funciona",steps_h:"Listo en 3 minutos",
+    s1_h:"Crea tu perfil",s1_p:"Nombre, objetivos y preferencias en 2 minutos.",
+    s2_h:"Habla con tu coach",s2_p:"Di lo que comiste, escanea productos o pide un entrenamiento.",
+    s3_h:"Alcanza tus objetivos",s3_p:"Sigue tu progreso cada día. El coach se adapta y te motiva.",
+    wl_badge:"Lanzamiento próximo",wl_h:"Sé de los primeros<br>en descubrir FitCoach AI",
+    wl_p:"Ingresa tu email. Serás notificado primero y tendrás acceso a la prueba gratuita de 7 días.",
+    perk1:"100% gratis · sin spam",perk2:"Notificado primero",perk3:"7 días de prueba gratis",perk4:"Cancelar en 1 clic",
+    price_tag:"💰 Precios",price_h:"Simple y transparente",price_p:"Empieza gratis, sin tarjeta.",
+    free_title:"Gratis<span style='font-size:15px;display:block;margin-top:4px'>/7 días</span>",free_sub:"Acceso completo, sin tarjeta",
+    free_f1:"Coach IA 6 mensajes/día",free_f2:"3 recetas/día",free_f3:"3 entrenamientos/día",
+    free_f4:"Escaneo de código de barras",free_f5:"Escaneo de foto",free_f6:"Sync Apple Salud",
+    free_btn:"Ser notificado al lanzamiento",
+    pro_badge:"🔥 Más popular",pro_save:"5,83€/mes · -55% vs mensual",
+    pro_f1:"Coach IA 50 mensajes/día",pro_f2:"Recetas ilimitadas",pro_f3:"Entrenamientos ilimitados",
+    pro_f4:"Programa IA multi-semanas",pro_f5:"Coach de voz",pro_f6:"iCloud multidispositivo",
+    pro_f7:"200+ ejercicios ilustrados",pro_f8:"Soporte prioritario",
+    pro_btn:"Ser notificado al lanzamiento",price_note:"Opción mensual 12,99€/mes · Cancelar en Configuración iOS",
+    sup_h1:"Soporte",sup_contact_h:"📧 Contacto",sup_response:"Respuesta en 24-48h días hábiles.",
+    sup_faq1:"¿Cómo cancelar? → Configuración iOS → Apple ID → Suscripciones → FitCoach AI → Cancelar.",
+    sup_faq2:"¿Producto no encontrado? → Añade la info manualmente en el chat del coach.",
+    priv_h1:"Política de privacidad",priv_h2:"Datos recopilados",
+    priv_l1:"Perfil: nombre, edad, peso (local)",priv_l2:"Comidas y macros (local)",
+    priv_l3:"Mensajes del coach (enviados a Anthropic)",priv_l4:"Email lista de espera (via Tally)",
+    priv_h3:"Compartir",priv_p3:"Nunca vendemos tus datos.",
+    terms_h1:"Términos de uso",terms_h2:"Servicio",terms_p2:"FitCoach AI es una app de coaching IA. Los consejos son informativos.",
+    terms_h3:"Suscripción",terms_l1:"Prueba gratuita 7 días",terms_l2:"69,99€/año o 12,99€/mes",terms_l3:"Cancelar en Configuración iOS",
+    foot_support:"Soporte",foot_privacy:"Privacidad",foot_terms:"Términos"
+  },
+  de:{
+    badge:"Demnächst im App Store",
+    nav_cta:"🔔 Benachrichtigen",
+    hero_h1:"Dein persönlicher Ernährungs-<br>& Fitness-Coach <span class='grad'>powered by KI</span>",
+    hero_p:"FitCoach AI analysiert deine Mahlzeiten, scannt deine Produkte, erstellt deine Workouts und motiviert dich täglich.",
+    hero_cta1:"🔔 Beim Launch benachrichtigen",hero_cta2:"App entdecken",
+    stat1:"Tage kostenlos testen",stat2:"Pro Jahr · 5,83€/Monat",stat3:"Scannbare Produkte",stat4:"Illustrierte Übungen",
+    feat_tag:"✨ Funktionen",feat_h:"Alles, was du brauchst",feat_p:"Eine App für Ernährung, Fitness und KI-Coaching.",
+    f1_h:"Persönlicher KI-Coach",f1_p:"Ein Coach, der dich beim Namen kennt und in 1 Sekunde antwortet. 24/7 verfügbar.",
+    f2_h:"Barcode-Scanner",f2_p:"Scanne jedes Supermarkt-Produkt. Kalorien, Protein, Kohlenhydrate und Nutri-Score sofort.",
+    f3_h:"KI-generierte Rezepte",f3_p:"3 abwechslungsreiche Rezepte aus 15 Weltküchen. Angepasst an deine Allergien.",
+    f4_h:"Maßgeschneiderte Heimworkouts",f4_p:"200+ Übungen in 3 Schritten illustriert mit Richtungspfeilen.",
+    f5_h:"Mahlzeiten-Foto-Scan",f5_p:"Foto deines Tellers — KI analysiert die Makros sofort.",
+    f6_h:"Apple Gesundheit Sync",f6_p:"Schritte, verbrannte Kalorien, Herzfrequenz und Gewicht automatisch synchronisiert.",
+    f7_h:"Streak & 11 Abzeichen",f7_p:"Vollständige Gamification, um motiviert zu bleiben.",
+    f8_h:"Sprach-Coach beim Training",f8_p:"Sprich mit deinem Coach während der Übungen. Er antwortet laut.",
+    f9_h:"iCloud Multi-Gerät Sync",f9_p:"Deine Daten auf allen Apple-Geräten synchronisiert.",
+    scan_tag:"📷 Neu",scan_h:"Barcode-Scan<br><span class='grad'>in 1 Sekunde</span>",
+    scan_product:"Griechischer Joghurt",scan_add:"✅ Zum Tagebuch hinzufügen",
+    sf1_h:"3 Millionen Produkte",sf1_p:"Open Food Facts — die größte Open-Source-Lebensmitteldatenbank.",
+    sf2_h:"Ergebnis in 1 Sekunde",sf2_p:"Barcode scannen, Makros erscheinen sofort.",
+    sf3_h:"Nutri-Score A bis E",sf3_p:"Nährwertqualität sofort für jedes gescannte Produkt angezeigt.",
+    sf4_h:"In 1 Tap zum Tagebuch",sf4_p:"Kalorien und Makros in Echtzeit aktualisiert.",
+    steps_tag:"🚀 So funktioniert es",steps_h:"In 3 Minuten bereit",
+    s1_h:"Profil erstellen",s1_p:"Name, Ziele und Vorlieben in 2 Minuten. KI berechnet deinen Nährstoffbedarf.",
+    s2_h:"Mit dem Coach sprechen",s2_p:"Sag was du gegessen hast, scanne Produkte oder fordere ein Workout an.",
+    s3_h:"Ziele erreichen",s3_p:"Verfolge deinen Fortschritt täglich. Der Coach passt sich an.",
+    wl_badge:"Start demnächst",wl_h:"Sei einer der Ersten,<br>die FitCoach AI entdecken",
+    wl_p:"Gib deine E-Mail ein. Du wirst zuerst benachrichtigt und erhältst die kostenlose 7-Tage-Testversion.",
+    perk1:"100% kostenlos · kein Spam",perk2:"Als Erster benachrichtigt",perk3:"7 Tage gratis testen",perk4:"Abmeldung in 1 Klick",
+    price_tag:"💰 Preise",price_h:"Einfach und transparent",price_p:"Kostenlos starten, keine Kreditkarte erforderlich.",
+    free_title:"Kostenlos<span style='font-size:15px;display:block;margin-top:4px'>/7 Tage</span>",free_sub:"Voller Zugang, ohne Karte",
+    free_f1:"KI-Coach 6 Nachrichten/Tag",free_f2:"3 Rezepte/Tag",free_f3:"3 Workouts/Tag",
+    free_f4:"Barcode-Scanner",free_f5:"Mahlzeiten-Foto-Scan",free_f6:"Apple Gesundheit Sync",
+    free_btn:"Beim Launch benachrichtigen",
+    pro_badge:"🔥 Beliebteste Wahl",pro_save:"5,83€/Monat · -55% vs. monatlich",
+    pro_f1:"KI-Coach 50 Nachrichten/Tag",pro_f2:"Unbegrenzte Rezepte",pro_f3:"Unbegrenzte Workouts",
+    pro_f4:"KI Multi-Wochen-Programm",pro_f5:"Sprach-Coach",pro_f6:"iCloud Multi-Gerät",
+    pro_f7:"200+ illustrierte Übungen",pro_f8:"Prioritätssupport",
+    pro_btn:"Beim Launch benachrichtigen",price_note:"Monatsoption 12,99€/Monat · Jederzeit über iOS-Einstellungen kündigen",
+    sup_h1:"Support",sup_contact_h:"📧 Kontakt",sup_response:"Antwort innerhalb von 24-48 Stunden.",
+    sup_faq1:"Wie kündigen? → iOS-Einstellungen → Apple ID → Abonnements → FitCoach AI → Kündigen.",
+    sup_faq2:"Produkt nicht gefunden? → Infos manuell im Coach-Chat eingeben.",
+    priv_h1:"Datenschutzrichtlinie",priv_h2:"Gesammelte Daten",
+    priv_l1:"Profil: Name, Alter, Gewicht (lokal)",priv_l2:"Mahlzeiten und Makros (lokal)",
+    priv_l3:"Coach-Nachrichten (an Anthropic übermittelt)",priv_l4:"E-Mail Warteliste (via Tally)",
+    priv_h3:"Weitergabe",priv_p3:"Wir verkaufen deine Daten niemals.",
+    terms_h1:"Nutzungsbedingungen",terms_h2:"Dienst",terms_p2:"FitCoach AI ist eine KI-Coaching-App. Die Ratschläge sind informativ und ersetzen keinen medizinischen Rat.",
+    terms_h3:"Abonnement",terms_l1:"7 Tage kostenlos testen",terms_l2:"69,99€/Jahr oder 12,99€/Monat",terms_l3:"Kündigung über iOS-Einstellungen",
+    foot_support:"Support",foot_privacy:"Datenschutz",foot_terms:"AGB"
+  }
+};
 
+const FLAGS = {fr:'🇫🇷',en:'🇬🇧',es:'🇪🇸',de:'🇩🇪'};
+let currentLang = navigator.language.startsWith('en')?'en':navigator.language.startsWith('es')?'es':navigator.language.startsWith('de')?'de':'fr';
+
+function applyLang(l){
+  currentLang = l;
+  const t = T[l];
+  document.documentElement.lang = l;
+  document.getElementById('langFlag').textContent = FLAGS[l];
+  document.getElementById('langCode').textContent = l.toUpperCase();
+  // Update all [data-t] elements
+  document.querySelectorAll('[data-t]').forEach(el=>{
+    const key = el.getAttribute('data-t');
+    if(t[key] !== undefined) el.innerHTML = t[key];
+  });
+  // Update lang options
+  document.querySelectorAll('.lang-option').forEach(el=>{
+    el.classList.toggle('active', el.textContent.toLowerCase().includes(l==='fr'?'français':l==='en'?'english':l==='es'?'español':'deutsch'));
+  });
+  // Update meta
+  const metas = {fr:"FitCoach AI — Ton coach nutrition & fitness IA",en:"FitCoach AI — Your AI nutrition & fitness coach",es:"FitCoach AI — Tu coach de nutrición & fitness IA",de:"FitCoach AI — Dein KI Ernährungs- & Fitness-Coach"};
+  document.title = metas[l];
+}
+
+function setLang(l){ applyLang(l); toggleLang(); }
+function toggleLang(){
+  document.getElementById('langSel').classList.toggle('open');
+}
+document.addEventListener('click',function(e){
+  if(!document.getElementById('langSel').contains(e.target))
+    document.getElementById('langSel').classList.remove('open');
+});
+
+function scrollTo(id){
+  showPage('home');
+  setTimeout(function(){ var el=document.getElementById(id); if(el)el.scrollIntoView({behavior:'smooth'}); },120);
+}
+function goHome(){ showPage('home'); window.scrollTo(0,0); }
 function showPage(name){
   ['home','support','privacy','terms'].forEach(function(p){
     var el=document.getElementById('page-'+p);
@@ -579,12 +681,12 @@ function showPage(name){
   var el=document.getElementById('page-'+name);
   if(el){el.style.display='block';window.scrollTo(0,0);}
 }
-window.addEventListener('hashchange',function(){
-  var h=location.hash.replace('#','');
-  if(['support','privacy','terms'].includes(h))showPage(h);
-});
-if(['support','privacy','terms'].includes(location.hash.replace('#','')))
-  showPage(location.hash.replace('#',''));
+
+// Tally
+var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function(e){e.src=e.dataset.tallySrc})};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w;s.onload=v;s.onerror=v;d.body.appendChild(s);}
+
+// Init
+applyLang(currentLang);
 </script>
 </body>
 </html>
