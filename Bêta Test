@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitCoach AI — Accord Bêta Testeur</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
+  background:#07070F;color:#E8E8F0;min-height:100vh;padding:40px 20px 60px}
+.container{max-width:720px;margin:0 auto}
+.header{text-align:center;margin-bottom:40px}
+.logo{font-size:22px;font-weight:900;background:linear-gradient(135deg,#6C63FF,#00D4A4);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.badge{display:inline-block;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.3);
+  color:#FF5050;padding:6px 16px;border-radius:100px;font-size:12px;font-weight:700;margin-bottom:16px}
+h1{font-size:26px;font-weight:900;margin-bottom:8px}
+.date{font-size:13px;color:#7878A0;margin-bottom:4px}
+.version{font-size:12px;color:#7878A0}
+
+.section{background:#11111C;border:1px solid #1E1E32;border-radius:16px;
+  padding:24px;margin-bottom:16px}
+.section h2{font-size:16px;font-weight:800;color:#6C63FF;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px}
+.section p{color:#9090B0;font-size:14px;line-height:1.7;margin-bottom:10px}
+.section p:last-child{margin-bottom:0}
+.section ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.section li{color:#9090B0;font-size:14px;line-height:1.6;
+  display:flex;align-items:flex-start;gap:8px}
+.section li::before{content:'›';color:#6C63FF;font-weight:900;flex-shrink:0;margin-top:1px}
+.highlight{background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.2);
+  border-radius:10px;padding:12px 14px;margin:10px 0;font-size:13px;color:#E8E8F0}
+.warning{background:rgba(255,80,80,.06);border:1px solid rgba(255,80,80,.2);
+  border-radius:10px;padding:12px 14px;margin:10px 0;font-size:13px;color:#FF8080}
+.green-box{background:rgba(0,212,164,.06);border:1px solid rgba(0,212,164,.2);
+  border-radius:10px;padding:12px 14px;margin:10px 0;font-size:13px;color:#00D4A4}
+
+/* Signature block */
+.sign-section{background:linear-gradient(135deg,rgba(108,99,255,.08),rgba(0,212,164,.04));
+  border:1px solid rgba(108,99,255,.25);border-radius:20px;padding:28px;margin-top:24px}
+.sign-section h2{font-size:18px;font-weight:900;margin-bottom:6px}
+.sign-section p{color:#9090B0;font-size:14px;margin-bottom:20px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;font-weight:700;color:#7878A0;
+  text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.form-group input{width:100%;background:#0D0D1A;border:1px solid #1E1E32;
+  border-radius:10px;padding:12px 14px;color:#E8E8F0;font-size:14px;
+  font-family:inherit;outline:none;transition:border-color .2s}
+.form-group input:focus{border-color:#6C63FF}
+.form-group input::placeholder{color:#4A4A6A}
+.checkbox-wrap{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;
+  background:#0D0D1A;border:1px solid #1E1E32;border-radius:10px;padding:12px}
+.checkbox-wrap input[type=checkbox]{width:18px;height:18px;cursor:pointer;
+  accent-color:#6C63FF;flex-shrink:0;margin-top:2px}
+.checkbox-wrap label{font-size:13px;color:#9090B0;line-height:1.5;cursor:pointer}
+.checkbox-wrap label a{color:#6C63FF;text-decoration:none}
+.sign-btn{width:100%;padding:16px;border-radius:14px;border:none;
+  background:linear-gradient(135deg,#6C63FF,#00D4A4);
+  color:#fff;font-size:16px;font-weight:800;cursor:pointer;
+  box-shadow:0 8px 24px rgba(108,99,255,.3);transition:transform .2s,box-shadow .2s;
+  display:flex;align-items:center;justify-content:center;gap:8px}
+.sign-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(108,99,255,.4)}
+.sign-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* Success */
+.success{display:none;text-align:center;padding:32px 20px}
+.success-icon{font-size:60px;margin-bottom:16px}
+.success h3{font-size:22px;font-weight:900;margin-bottom:8px;color:#00D4A4}
+.success p{color:#9090B0;font-size:14px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo">⚡ FitCoach AI</div>
+    <div class="badge">🧪 Programme Bêta Testeur</div>
+    <h1>Accord de participation</h1>
+    <div class="date">Version 1.0 — Juin 2026</div>
+    <div class="version">À lire et signer avant l'accès TestFlight</div>
+  </div>
+
+  <!-- 1. PARTIES -->
+  <div class="section">
+    <h2>📋 1. Les parties</h2>
+    <p>Le présent accord est conclu entre :</p>
+    <div class="highlight">
+      <strong>L'éditeur :</strong> FitCoach AI, développé par Lucas Ayer<br>
+      Contact : support.fitcoachai@gmail.com<br><br>
+      <strong>Le bêta testeur :</strong> Toute personne ayant accepté cet accord et reçu un accès via TestFlight.
+    </div>
+  </div>
+
+  <!-- 2. OBJET -->
+  <div class="section">
+    <h2>🎯 2. Objet de l'accord</h2>
+    <p>Cet accord définit les conditions dans lesquelles le bêta testeur participe au programme de test anticipé de l'application <strong>FitCoach AI</strong> avant son lancement officiel sur l'App Store.</p>
+    <p>L'accès bêta est accordé à titre <strong>gratuit et temporaire</strong>, exclusivement via l'application <strong>TestFlight</strong> d'Apple.</p>
+  </div>
+
+  <!-- 3. DURÉE -->
+  <div class="section">
+    <h2>⏱️ 3. Durée de la participation</h2>
+    <ul>
+      <li>La période de bêta test est de <strong>90 jours maximum</strong> à compter de la réception de l'invitation TestFlight.</li>
+      <li>L'accès peut être révoqué à tout moment par FitCoach AI sans préavis ni justification.</li>
+      <li>Le bêta testeur peut se retirer du programme à tout moment sans obligation.</li>
+      <li>À l'issue de la bêta, l'accès gratuit prend fin et l'application passe en version commerciale.</li>
+    </ul>
+  </div>
+
+  <!-- 4. ACCÈS -->
+  <div class="section">
+    <h2>📲 4. Accès et conditions d'utilisation</h2>
+    <ul>
+      <li>L'accès est <strong>strictement personnel et non transférable</strong>. Le lien TestFlight ne doit pas être partagé.</li>
+      <li>L'application est réservée aux appareils <strong>iPhone sous iOS 17 ou supérieur</strong>.</li>
+      <li>L'accès bêta est limité à <strong>1 appareil par testeur</strong>.</li>
+      <li>L'utilisation à des fins commerciales ou professionnelles est interdite pendant la phase bêta.</li>
+    </ul>
+    <div class="warning">
+      ⚠️ Il est strictement interdit de partager, reproduire, revendre ou distribuer l'application ou son contenu sous quelque forme que ce soit.
+    </div>
+  </div>
+
+  <!-- 5. CONFIDENTIALITÉ -->
+  <div class="section">
+    <h2>🔒 5. Confidentialité</h2>
+    <p>En participant à la bêta, le testeur s'engage à :</p>
+    <ul>
+      <li>Garder <strong>confidentiel</strong> toute information relative à l'application, ses fonctionnalités et son contenu.</li>
+      <li>Ne pas publier de captures d'écran, vidéos ou descriptions détaillées de l'app sans accord écrit préalable.</li>
+      <li>Ne pas divulguer l'existence du programme bêta à des tiers en dehors de son réseau personnel proche.</li>
+      <li>Ne pas tenter de décompiler, désassembler ou extraire le code source de l'application.</li>
+    </ul>
+    <div class="highlight">
+      💡 Exception : le testeur peut mentionner sa participation à la bêta sur ses réseaux sociaux en précisant "Bêta testeur FitCoach AI" si FitCoach AI l'autorise expressément.
+    </div>
+  </div>
+
+  <!-- 6. OBLIGATIONS DU TESTEUR -->
+  <div class="section">
+    <h2>✅ 6. Obligations du bêta testeur</h2>
+    <p>En contrepartie de l'accès gratuit, le testeur s'engage à :</p>
+    <ul>
+      <li>Utiliser l'application <strong>régulièrement</strong> pendant la période de bêta (minimum 3 fois par semaine).</li>
+      <li>Signaler tout <strong>bug, crash ou comportement inattendu</strong> via le formulaire prévu ou par email.</li>
+      <li>Fournir un <strong>retour honnête et constructif</strong> sur l'expérience utilisateur.</li>
+      <li>Répondre aux <strong>questionnaires de feedback</strong> envoyés par FitCoach AI (maximum 1 par semaine).</li>
+      <li>Informer FitCoach AI en cas d'impossibilité de continuer à tester.</li>
+    </ul>
+    <div class="green-box">
+      🎁 En échange de ta participation active : accès complet 90 jours, badge "Bêta Testeur Officiel" dans l'app et mention dans les crédits au lancement.
+    </div>
+  </div>
+
+  <!-- 7. DONNÉES PERSONNELLES -->
+  <div class="section">
+    <h2>🛡️ 7. Données personnelles</h2>
+    <ul>
+      <li>L'email collecté lors de l'inscription est utilisé <strong>uniquement</strong> pour l'envoi de l'invitation TestFlight et des communications liées à la bêta.</li>
+      <li>Les données de santé et nutrition saisies dans l'app sont stockées <strong>localement sur l'appareil</strong> et ne sont pas transmises à FitCoach AI.</li>
+      <li>Les messages envoyés au coach IA transitent par l'<strong>API Anthropic</strong> conformément à leur politique de confidentialité.</li>
+      <li>Les données du testeur ne sont jamais vendues ou partagées avec des tiers.</li>
+      <li>Le testeur peut demander la suppression de ses données à tout moment : support.fitcoachai@gmail.com</li>
+    </ul>
+  </div>
+
+  <!-- 8. LIMITATION DE RESPONSABILITÉ -->
+  <div class="section">
+    <h2>⚖️ 8. Limitation de responsabilité</h2>
+    <p>L'application bêta est fournie <strong>"en l'état"</strong>, sans garantie d'aucune sorte. FitCoach AI ne peut être tenu responsable de :</p>
+    <ul>
+      <li>Perte ou corruption de données liées à l'utilisation de la version bêta.</li>
+      <li>Interruptions ou dysfonctionnements du service pendant la phase de test.</li>
+      <li>Toute décision prise sur la base des conseils nutritionnels ou fitness fournis par l'IA.</li>
+    </ul>
+    <div class="warning">
+      ⚠️ Les conseils de FitCoach AI sont informatifs et ne remplacent en aucun cas un avis médical ou nutritionnel professionnel.
+    </div>
+  </div>
+
+  <!-- 9. RÉSILIATION -->
+  <div class="section">
+    <h2>🚪 9. Résiliation</h2>
+    <ul>
+      <li>FitCoach AI se réserve le droit de <strong>révoquer l'accès</strong> de tout testeur ne respectant pas cet accord.</li>
+      <li>En cas de violation de la confidentialité, FitCoach AI se réserve le droit d'engager des poursuites.</li>
+      <li>Le testeur peut se retirer à tout moment en envoyant un email à support.fitcoachai@gmail.com</li>
+    </ul>
+  </div>
+
+  <!-- 10. DROIT APPLICABLE -->
+  <div class="section">
+    <h2>🌍 10. Droit applicable</h2>
+    <p>Le présent accord est soumis au <strong>droit français</strong>. Tout litige sera soumis aux tribunaux compétents de la juridiction de l'éditeur.</p>
+    <p>En cas de version multilingue, la version <strong>française fait foi</strong>.</p>
+  </div>
+
+  <!-- SIGNATURE -->
+  <div class="sign-section" id="signForm">
+    <h2>✍️ Signature électronique</h2>
+    <p>En remplissant ce formulaire, tu confirmes avoir lu, compris et accepté l'intégralité des conditions ci-dessus. Cette signature a valeur d'accord contractuel.</p>
+
+    <div class="form-group">
+      <label>Prénom et Nom *</label>
+      <input type="text" id="signName" placeholder="Ex: Lucas Dupont" required>
+    </div>
+    <div class="form-group">
+      <label>Adresse email *</label>
+      <input type="email" id="signEmail" placeholder="ton@email.com" required>
+    </div>
+    <div class="form-group">
+      <label>Date du jour *</label>
+      <input type="text" id="signDate" placeholder="Ex: 26/06/2026" required>
+    </div>
+
+    <div class="checkbox-wrap">
+      <input type="checkbox" id="check1">
+      <label for="check1">J'ai lu et j'accepte l'intégralité des <strong>conditions de participation bêta</strong> de FitCoach AI.</label>
+    </div>
+    <div class="checkbox-wrap">
+      <input type="checkbox" id="check2">
+      <label for="check2">Je m'engage à respecter la <strong>confidentialité</strong> de l'application et à ne pas partager le lien TestFlight.</label>
+    </div>
+    <div class="checkbox-wrap">
+      <input type="checkbox" id="check3">
+      <label for="check3">J'accepte la <strong>politique de confidentialité</strong> et le traitement de mon email pour les communications bêta.</label>
+    </div>
+    <div class="checkbox-wrap">
+      <input type="checkbox" id="check4">
+      <label for="check4">Je m'engage à fournir un <strong>retour honnête</strong> et à signaler les bugs rencontrés.</label>
+    </div>
+
+    <button class="sign-btn" id="signBtn" disabled onclick="submitSignature()">
+      ✍️ Signer et rejoindre la bêta
+    </button>
+
+    <p style="text-align:center;font-size:11px;color:#4A4A6A;margin-top:12px">
+      🔒 Signature horodatée et enregistrée · Valeur contractuelle
+    </p>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success" id="successMsg">
+    <div class="success-icon">🎉</div>
+    <h3>Accord signé !</h3>
+    <p>Merci <span id="successName"></span> ! Ton accord a bien été enregistré.<br><br>
+    Tu recevras ton <strong>invitation TestFlight</strong> sur <span id="successEmail"></span> dans les 24-48h.<br><br>
+    Bienvenue dans l'équipe bêta FitCoach AI ! ⚡</p>
+    <div style="margin-top:20px;background:rgba(0,212,164,.08);border:1px solid rgba(0,212,164,.2);
+      border-radius:12px;padding:16px;font-size:13px;color:#00D4A4;line-height:1.6">
+      📋 Un récapitulatif de ton accord a été envoyé à ton adresse email.
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Auto-fill today's date
+var today = new Date();
+var dd = String(today.getDate()).padStart(2,'0');
+var mm = String(today.getMonth()+1).padStart(2,'0');
+var yyyy = today.getFullYear();
+document.getElementById('signDate').value = dd+'/'+mm+'/'+yyyy;
+
+// Enable button only when all checks + fields filled
+function checkForm() {
+  var name  = document.getElementById('signName').value.trim();
+  var email = document.getElementById('signEmail').value.trim();
+  var c1 = document.getElementById('check1').checked;
+  var c2 = document.getElementById('check2').checked;
+  var c3 = document.getElementById('check3').checked;
+  var c4 = document.getElementById('check4').checked;
+  document.getElementById('signBtn').disabled = !(name && email && c1 && c2 && c3 && c4);
+}
+
+['signName','signEmail','check1','check2','check3','check4'].forEach(function(id){
+  document.getElementById(id).addEventListener('input', checkForm);
+  document.getElementById(id).addEventListener('change', checkForm);
+});
+
+function submitSignature() {
+  var name  = document.getElementById('signName').value.trim();
+  var email = document.getElementById('signEmail').value.trim();
+  var date  = document.getElementById('signDate').value;
+
+  // Build Tally URL with prefilled data + redirect
+  var tallyUrl = 'https://tally.so/r/Bzgare'
+    + '?name=' + encodeURIComponent(name)
+    + '&email=' + encodeURIComponent(email)
+    + '&signed_at=' + encodeURIComponent(date)
+    + '&cgu_accepted=true';
+
+  // Show success
+  document.getElementById('signForm').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+  document.getElementById('successName').textContent = name.split(' ')[0];
+  document.getElementById('successEmail').textContent = email;
+
+  // Also open Tally to save the data
+  window.open(tallyUrl, '_blank');
+
+  // Log locally
+  console.log('Signature enregistrée:', {name, email, date, timestamp: new Date().toISOString()});
+}
+</script>
+</body>
+</html>
