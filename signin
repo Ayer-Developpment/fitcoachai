@@ -1,1 +1,502 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitCoach AI — Espace Bêta Testeur</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--v:#6C63FF;--g:#00D4A4;--o:#FF8C3C;--r:#FF5050;
+  --dark:#07070F;--card:#11111C;--card2:#17172A;
+  --text:#E8E8F0;--muted:#7878A0;--border:#1E1E32}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
+  background:var(--dark);color:var(--text);min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 20px}
+
+/* ORB */
+.orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;
+  animation:pulse 5s ease-in-out infinite alternate}
+@keyframes pulse{from{opacity:.25;transform:scale(1)}to{opacity:.45;transform:scale(1.1)}}
+
+.wrap{position:relative;z-index:1;width:100%;max-width:440px}
+
+/* HEADER */
+.logo{font-size:22px;font-weight:900;background:linear-gradient(135deg,var(--v),var(--g));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-align:center;margin-bottom:8px}
+.badge{display:inline-block;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.3);
+  color:var(--r);padding:6px 16px;border-radius:100px;font-size:12px;font-weight:700;
+  margin-bottom:20px}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px}
+.card-title{font-size:20px;font-weight:900;margin-bottom:6px}
+.card-sub{font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.6}
+
+/* STEPS */
+.step-indicator{display:flex;align-items:center;gap:8px;margin-bottom:24px}
+.step-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;transition:all .3s}
+.step-dot.active{background:linear-gradient(135deg,var(--v),var(--g));color:#fff}
+.step-dot.done{background:rgba(0,212,164,.2);color:var(--g);border:1px solid rgba(0,212,164,.3)}
+.step-dot.pending{background:var(--card2);color:var(--muted);border:1px solid var(--border)}
+.step-line{flex:1;height:1px;background:var(--border)}
+
+/* FORM */
+.field{margin-bottom:16px}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px}
+.field input{width:100%;background:#0D0D1A;border:1px solid var(--border);
+  border-radius:12px;padding:13px 16px;color:var(--text);font-size:15px;
+  font-family:inherit;outline:none;transition:border-color .2s;letter-spacing:.5px}
+.field input:focus{border-color:var(--v)}
+.field input::placeholder{color:#4A4A6A;letter-spacing:0}
+.hint{font-size:11px;color:#4A4A6A;margin-top:6px}
+
+.pw-strength{height:3px;border-radius:2px;margin-top:8px;transition:all .3s;background:var(--border)}
+.pw-strength.weak{background:var(--r);width:33%}
+.pw-strength.ok{background:var(--o);width:66%}
+.pw-strength.strong{background:var(--g);width:100%}
+
+/* BUTTONS */
+.btn-main{width:100%;padding:14px;border-radius:12px;border:none;
+  background:linear-gradient(135deg,var(--v),var(--g));
+  color:#fff;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;
+  box-shadow:0 8px 24px rgba(108,99,255,.3);transition:transform .2s;margin-top:4px}
+.btn-main:hover{transform:translateY(-2px)}
+.btn-main:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+/* ERROR */
+.err-box{background:rgba(255,80,80,.08);border:1px solid rgba(255,80,80,.25);
+  border-radius:10px;padding:10px 14px;font-size:13px;color:var(--r);
+  margin-bottom:14px;display:none}
+
+/* DASHBOARD (après connexion) */
+.dash{display:none}
+.dash-header{text-align:center;margin-bottom:28px}
+.dash-header h2{font-size:22px;font-weight:900;margin-bottom:4px}
+.dash-header p{font-size:13px;color:var(--muted)}
+.bta-display{display:inline-block;background:rgba(0,212,164,.1);
+  border:1px solid rgba(0,212,164,.3);color:var(--g);
+  padding:6px 16px;border-radius:100px;font-size:13px;font-weight:800;
+  font-family:monospace;letter-spacing:1px;margin:10px 0 4px}
+
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.menu-card{background:var(--card2);border:1px solid var(--border);border-radius:16px;
+  padding:20px 16px;text-align:center;cursor:pointer;text-decoration:none;
+  display:block;transition:all .2s}
+.menu-card:hover{border-color:var(--v);transform:translateY(-2px)}
+.menu-card .mc-icon{font-size:32px;margin-bottom:8px}
+.menu-card .mc-title{font-size:14px;font-weight:800;margin-bottom:3px}
+.menu-card .mc-sub{font-size:11px;color:var(--muted)}
+.menu-card.bugs{border-color:rgba(255,80,80,.2);background:rgba(255,80,80,.04)}
+.menu-card.bugs:hover{border-color:var(--r)}
+.menu-card.feedback{border-color:rgba(108,99,255,.2);background:rgba(108,99,255,.04)}
+.menu-card.feedback:hover{border-color:var(--v)}
+
+.logout-link{display:block;text-align:center;color:#4A4A6A;font-size:12px;
+  margin-top:16px;cursor:pointer;text-decoration:none}
+.logout-link:hover{color:var(--muted)}
+
+/* LANG */
+.lang-bar{display:flex;justify-content:center;gap:6px;margin-bottom:24px;flex-wrap:wrap}
+.lang-btn{background:transparent;border:1px solid var(--border);border-radius:8px;
+  color:var(--muted);font-size:11px;font-weight:600;padding:5px 11px;cursor:pointer;
+  font-family:inherit;transition:all .2s}
+.lang-btn:hover{border-color:var(--v);color:var(--v)}
+.lang-btn.active{background:rgba(108,99,255,.15);border-color:rgba(108,99,255,.4);
+  color:var(--v);font-weight:700}
+
+footer{color:#2A2A3A;font-size:11px;text-align:center;margin-top:24px;position:relative;z-index:1}
+</style>
+</head>
+<body>
+
+<div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(108,99,255,.15),transparent);top:-200px;left:-200px"></div>
+<div class="orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,164,.1),transparent);bottom:-150px;right:-150px;animation-duration:4s;animation-delay:1s"></div>
+
+<div class="wrap">
+
+  <!-- LANG -->
+  <div class="lang-bar">
+    <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">🇫🇷 FR</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">🇬🇧 EN</button>
+    <button class="lang-btn" id="btn-de" onclick="setLang('de')">🇩🇪 DE</button>
+    <button class="lang-btn" id="btn-es" onclick="setLang('es')">🇪🇸 ES</button>
+    <button class="lang-btn" id="btn-it" onclick="setLang('it')">🇮🇹 IT</button>
+  </div>
+
+  <div style="text-align:center;margin-bottom:20px">
+    <div class="logo">⚡ FitCoach AI</div>
+    <div class="badge" id="lbl-badge">🧪 Espace Bêta Testeur</div>
+  </div>
+
+  <!-- ── ÉTAPE 1 : CONNEXION ── -->
+  <div id="step1">
+    <div class="card">
+      <div class="card-title" id="lbl-s1-title">Connexion</div>
+      <div class="card-sub" id="lbl-s1-sub">Entre ton numéro BTA et ton mot de passe pour accéder à ton espace.</div>
+
+      <div class="err-box" id="loginErr" id="lbl-login-err">Numéro BTA ou mot de passe incorrect.</div>
+
+      <div class="field">
+        <label id="lbl-bta">Numéro bêta testeur</label>
+        <input type="text" id="inBta" placeholder="BTA-0042" maxlength="10"
+          oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')tryLogin()">
+        <div class="hint" id="lbl-bta-hint">Format : BTA-XXXX (reçu dans l'email de bienvenue)</div>
+      </div>
+      <div class="field">
+        <label id="lbl-pw">Mot de passe</label>
+        <input type="password" id="inPw" placeholder="••••••••"
+          onkeydown="if(event.key==='Enter')tryLogin()">
+        <div class="hint" id="lbl-pw-hint">Mot de passe temporaire reçu dans l'email de bienvenue</div>
+      </div>
+      <button class="btn-main" onclick="tryLogin()" id="lbl-login-btn">Accéder à mon espace →</button>
+    </div>
+    <div style="text-align:center;margin-top:16px">
+      <a href="https://ayer-developpment.github.io/fitcoachai/" style="color:#4A4A6A;font-size:12px;text-decoration:none" id="lbl-back">← Retour au site</a>
+    </div>
+  </div>
+
+  <!-- ── ÉTAPE 2 : CHANGER MOT DE PASSE (première connexion) ── -->
+  <div id="step2" style="display:none">
+    <div class="card">
+      <div class="step-indicator">
+        <div class="step-dot done">✓</div>
+        <div class="step-line"></div>
+        <div class="step-dot active">2</div>
+        <div class="step-line"></div>
+        <div class="step-dot pending">3</div>
+      </div>
+      <div class="card-title" id="lbl-s2-title">Crée ton mot de passe</div>
+      <div class="card-sub" id="lbl-s2-sub">C'est ta première connexion. Choisis un mot de passe personnel sécurisé.</div>
+
+      <div class="err-box" id="pwChangeErr"></div>
+
+      <div class="field">
+        <label id="lbl-npw">Nouveau mot de passe</label>
+        <input type="password" id="inNewPw" placeholder="••••••••" oninput="checkPwStrength()">
+        <div class="pw-strength" id="pwStrength"></div>
+      </div>
+      <div class="field">
+        <label id="lbl-cpw">Confirmer le mot de passe</label>
+        <input type="password" id="inConfPw" placeholder="••••••••"
+          onkeydown="if(event.key==='Enter')changePw()">
+      </div>
+      <button class="btn-main" onclick="changePw()" id="lbl-s2-btn">Enregistrer mon mot de passe →</button>
+    </div>
+  </div>
+
+  <!-- ── ÉTAPE 3 : TABLEAU DE BORD ── -->
+  <div id="step3" style="display:none">
+    <div class="card">
+      <div class="dash-header">
+        <div style="font-size:40px;margin-bottom:8px">👋</div>
+        <h2 id="dash-welcome">Bonjour !</h2>
+        <div class="bta-display" id="dash-bta">BTA-0000</div>
+        <p id="dash-sub">Bienvenue dans ton espace bêta testeur</p>
+      </div>
+
+      <div class="menu-grid">
+        <a class="menu-card bugs" href="https://ayer-developpment.github.io/fitcoachai/bugs.html">
+          <div class="mc-icon">🐛</div>
+          <div class="mc-title" id="lbl-menu-bugs">Bugs connus</div>
+          <div class="mc-sub" id="lbl-menu-bugs-sub">Voir & signaler</div>
+        </a>
+        <a class="menu-card feedback" href="https://ayer-developpment.github.io/fitcoachai/feedback-hebdo.html">
+          <div class="mc-icon">📋</div>
+          <div class="mc-title" id="lbl-menu-fb">Feedback</div>
+          <div class="mc-sub" id="lbl-menu-fb-sub">Hebdomadaire</div>
+        </a>
+      </div>
+
+      <a class="menu-card" href="https://ayer-developpment.github.io/fitcoachai/beta.html"
+        style="display:block;margin-bottom:0;text-align:center">
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px">
+          <span style="font-size:20px">📄</span>
+          <div style="text-align:left">
+            <div class="mc-title" id="lbl-menu-accord">Accord de participation</div>
+            <div class="mc-sub" id="lbl-menu-accord-sub">Consulter les conditions</div>
+          </div>
+        </div>
+      </a>
+
+      <a class="logout-link" onclick="doLogout()" id="lbl-logout">← Déconnexion</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>FitCoach AI · Ayer-Developpment · © 2026</footer>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────
+// Mot de passe temporaire envoyé dans l'email de bienvenue
+// Tous les testeurs reçoivent ce mot de passe temporaire
+// Ils le changent à la première connexion
+var TEMP_PWD = 'FitCoachBeta2026';
+var USERS_KEY = 'fitcoachai_beta_users'; // stockage local des users et leurs mots de passe
+var SESSION_KEY = 'fitcoachai_session';
+// ─────────────────────────────────────────────────────────
+
+var lang = 'fr';
+var currentBta = null;
+
+// ── TRADUCTIONS ───────────────────────────────────────────
+var T = {
+  fr:{
+    badge:'🧪 Espace Bêta Testeur',
+    s1_title:'Connexion',
+    s1_sub:'Entre ton numéro BTA et ton mot de passe pour accéder à ton espace.',
+    bta:'Numéro bêta testeur', bta_hint:'Format : BTA-XXXX (reçu dans l\'email de bienvenue)',
+    pw:'Mot de passe', pw_hint:'Mot de passe temporaire reçu dans l\'email de bienvenue',
+    login_btn:'Accéder à mon espace →',
+    login_err:'Numéro BTA ou mot de passe incorrect.',
+    back:'← Retour au site',
+    s2_title:'Crée ton mot de passe',
+    s2_sub:'C\'est ta première connexion. Choisis un mot de passe personnel sécurisé.',
+    npw:'Nouveau mot de passe', cpw:'Confirmer le mot de passe',
+    s2_btn:'Enregistrer mon mot de passe →',
+    pw_short:'Le mot de passe doit faire au moins 6 caractères.',
+    pw_nomatch:'Les mots de passe ne correspondent pas.',
+    welcome:'Bonjour', dash_sub:'Bienvenue dans ton espace bêta testeur',
+    menu_bugs:'Bugs connus', menu_bugs_sub:'Voir & signaler',
+    menu_fb:'Feedback', menu_fb_sub:'Hebdomadaire',
+    menu_accord:'Accord de participation', menu_accord_sub:'Consulter les conditions',
+    logout:'← Déconnexion'
+  },
+  en:{
+    badge:'🧪 Beta Tester Area',
+    s1_title:'Login',
+    s1_sub:'Enter your BTA number and password to access your space.',
+    bta:'Beta tester number', bta_hint:'Format: BTA-XXXX (received in the welcome email)',
+    pw:'Password', pw_hint:'Temporary password received in the welcome email',
+    login_btn:'Access my space →',
+    login_err:'Incorrect BTA number or password.',
+    back:'← Back to website',
+    s2_title:'Create your password',
+    s2_sub:'This is your first login. Choose a secure personal password.',
+    npw:'New password', cpw:'Confirm password',
+    s2_btn:'Save my password →',
+    pw_short:'Password must be at least 6 characters.',
+    pw_nomatch:'Passwords do not match.',
+    welcome:'Hello', dash_sub:'Welcome to your beta tester space',
+    menu_bugs:'Known bugs', menu_bugs_sub:'View & report',
+    menu_fb:'Feedback', menu_fb_sub:'Weekly',
+    menu_accord:'Participation agreement', menu_accord_sub:'View conditions',
+    logout:'← Log out'
+  },
+  de:{
+    badge:'🧪 Beta-Tester-Bereich',
+    s1_title:'Anmeldung',
+    s1_sub:'Gib deine BTA-Nummer und dein Passwort ein, um auf deinen Bereich zuzugreifen.',
+    bta:'Beta-Tester-Nummer', bta_hint:'Format: BTA-XXXX (in der Willkommens-E-Mail erhalten)',
+    pw:'Passwort', pw_hint:'Temporäres Passwort aus der Willkommens-E-Mail',
+    login_btn:'Auf meinen Bereich zugreifen →',
+    login_err:'Falsche BTA-Nummer oder falsches Passwort.',
+    back:'← Zurück zur Website',
+    s2_title:'Erstelle dein Passwort',
+    s2_sub:'Das ist deine erste Anmeldung. Wähle ein sicheres persönliches Passwort.',
+    npw:'Neues Passwort', cpw:'Passwort bestätigen',
+    s2_btn:'Passwort speichern →',
+    pw_short:'Das Passwort muss mindestens 6 Zeichen lang sein.',
+    pw_nomatch:'Die Passwörter stimmen nicht überein.',
+    welcome:'Hallo', dash_sub:'Willkommen in deinem Beta-Tester-Bereich',
+    menu_bugs:'Bekannte Fehler', menu_bugs_sub:'Ansehen & melden',
+    menu_fb:'Feedback', menu_fb_sub:'Wöchentlich',
+    menu_accord:'Teilnahmevereinbarung', menu_accord_sub:'Bedingungen ansehen',
+    logout:'← Abmelden'
+  },
+  es:{
+    badge:'🧪 Área Beta Tester',
+    s1_title:'Inicio de sesión',
+    s1_sub:'Introduce tu número BTA y contraseña para acceder a tu espacio.',
+    bta:'Número beta tester', bta_hint:'Formato: BTA-XXXX (recibido en el email de bienvenida)',
+    pw:'Contraseña', pw_hint:'Contraseña temporal recibida en el email de bienvenida',
+    login_btn:'Acceder a mi espacio →',
+    login_err:'Número BTA o contraseña incorrectos.',
+    back:'← Volver al sitio',
+    s2_title:'Crea tu contraseña',
+    s2_sub:'Es tu primer inicio de sesión. Elige una contraseña personal segura.',
+    npw:'Nueva contraseña', cpw:'Confirmar contraseña',
+    s2_btn:'Guardar mi contraseña →',
+    pw_short:'La contraseña debe tener al menos 6 caracteres.',
+    pw_nomatch:'Las contraseñas no coinciden.',
+    welcome:'¡Hola', dash_sub:'Bienvenido a tu espacio beta tester',
+    menu_bugs:'Bugs conocidos', menu_bugs_sub:'Ver y reportar',
+    menu_fb:'Feedback', menu_fb_sub:'Semanal',
+    menu_accord:'Acuerdo de participación', menu_accord_sub:'Ver condiciones',
+    logout:'← Cerrar sesión'
+  },
+  it:{
+    badge:'🧪 Area Beta Tester',
+    s1_title:'Accesso',
+    s1_sub:'Inserisci il tuo numero BTA e la password per accedere al tuo spazio.',
+    bta:'Numero beta tester', bta_hint:'Formato: BTA-XXXX (ricevuto nell\'email di benvenuto)',
+    pw:'Password', pw_hint:'Password temporanea ricevuta nell\'email di benvenuto',
+    login_btn:'Accedi al mio spazio →',
+    login_err:'Numero BTA o password errati.',
+    back:'← Torna al sito',
+    s2_title:'Crea la tua password',
+    s2_sub:'È il tuo primo accesso. Scegli una password personale sicura.',
+    npw:'Nuova password', cpw:'Conferma password',
+    s2_btn:'Salva la mia password →',
+    pw_short:'La password deve contenere almeno 6 caratteri.',
+    pw_nomatch:'Le password non corrispondono.',
+    welcome:'Ciao', dash_sub:'Benvenuto nel tuo spazio beta tester',
+    menu_bugs:'Bug noti', menu_bugs_sub:'Visualizza e segnala',
+    menu_fb:'Feedback', menu_fb_sub:'Settimanale',
+    menu_accord:'Accordo di partecipazione', menu_accord_sub:'Consulta le condizioni',
+    logout:'← Disconnetti'
+  }
+};
+
+// ── USER STORAGE ──────────────────────────────────────────
+function getUsers(){ var d=localStorage.getItem(USERS_KEY); return d?JSON.parse(d):{}; }
+function saveUsers(u){ localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
+function getSession(){ var d=sessionStorage.getItem(SESSION_KEY); return d?JSON.parse(d):null; }
+function setSession(bta){ sessionStorage.setItem(SESSION_KEY, JSON.stringify({bta:bta})); }
+function clearSession(){ sessionStorage.removeItem(SESSION_KEY); }
+
+// ── LOGIN ─────────────────────────────────────────────────
+function tryLogin(){
+  var t   = T[lang];
+  var bta = document.getElementById('inBta').value.trim().toUpperCase();
+  var pw  = document.getElementById('inPw').value;
+  var err = document.getElementById('loginErr');
+
+  if(!bta.startsWith('BTA-') || bta.length < 6){
+    err.textContent = t.login_err;
+    err.style.display = 'block';
+    return;
+  }
+
+  var users = getUsers();
+
+  // Première connexion avec mot de passe temporaire
+  if(pw === TEMP_PWD && !users[bta]){
+    currentBta = bta;
+    err.style.display = 'none';
+    showStep(2);
+    return;
+  }
+
+  // Connexion normale avec mot de passe personnel
+  if(users[bta] && users[bta].pw === pw){
+    currentBta = bta;
+    setSession(bta);
+    err.style.display = 'none';
+    showDash();
+    return;
+  }
+
+  // Déjà enregistré mais mot de passe temp encore utilisé
+  if(pw === TEMP_PWD && users[bta]){
+    err.textContent = t.login_err;
+    err.style.display = 'block';
+    return;
+  }
+
+  err.textContent = t.login_err;
+  err.style.display = 'block';
+}
+
+// ── CHANGE PASSWORD ───────────────────────────────────────
+function checkPwStrength(){
+  var pw  = document.getElementById('inNewPw').value;
+  var bar = document.getElementById('pwStrength');
+  bar.className = 'pw-strength';
+  if(pw.length >= 10) bar.classList.add('strong');
+  else if(pw.length >= 6) bar.classList.add('ok');
+  else if(pw.length > 0) bar.classList.add('weak');
+}
+
+function changePw(){
+  var t    = T[lang];
+  var npw  = document.getElementById('inNewPw').value;
+  var cpw  = document.getElementById('inConfPw').value;
+  var err  = document.getElementById('pwChangeErr');
+
+  if(npw.length < 6){ err.textContent=t.pw_short; err.style.display='block'; return; }
+  if(npw !== cpw)   { err.textContent=t.pw_nomatch; err.style.display='block'; return; }
+
+  var users = getUsers();
+  users[currentBta] = { pw: npw, firstLogin: false };
+  saveUsers(users);
+  setSession(currentBta);
+  err.style.display = 'none';
+  showDash();
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────
+function showDash(){
+  var t = T[lang];
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('step3').style.display = 'block';
+  document.getElementById('dash-welcome').textContent = t.welcome + ', ' + currentBta.replace('BTA-','#') + ' 👋';
+  document.getElementById('dash-bta').textContent = currentBta;
+  document.getElementById('dash-sub').textContent = t.dash_sub;
+}
+
+function doLogout(){
+  clearSession();
+  currentBta = null;
+  document.getElementById('inPw').value = '';
+  document.getElementById('inBta').value = '';
+  showStep(1);
+}
+
+// ── NAV ───────────────────────────────────────────────────
+function showStep(n){
+  [1,2,3].forEach(function(i){
+    document.getElementById('step'+i).style.display = i===n ? 'block' : 'none';
+  });
+}
+
+// ── LANG ─────────────────────────────────────────────────
+function setLang(l){
+  lang = l;
+  var t = T[l];
+  var map = {
+    'lbl-badge':t.badge,
+    'lbl-s1-title':t.s1_title, 'lbl-s1-sub':t.s1_sub,
+    'lbl-bta':t.bta, 'lbl-bta-hint':t.bta_hint,
+    'lbl-pw':t.pw, 'lbl-pw-hint':t.pw_hint,
+    'lbl-login-btn':t.login_btn, 'lbl-login-err':t.login_err,
+    'lbl-back':t.back,
+    'lbl-s2-title':t.s2_title, 'lbl-s2-sub':t.s2_sub,
+    'lbl-npw':t.npw, 'lbl-cpw':t.cpw, 'lbl-s2-btn':t.s2_btn,
+    'lbl-menu-bugs':t.menu_bugs, 'lbl-menu-bugs-sub':t.menu_bugs_sub,
+    'lbl-menu-fb':t.menu_fb, 'lbl-menu-fb-sub':t.menu_fb_sub,
+    'lbl-menu-accord':t.menu_accord, 'lbl-menu-accord-sub':t.menu_accord_sub,
+    'lbl-logout':t.logout
+  };
+  Object.keys(map).forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.textContent = map[id];
+  });
+  ['fr','en','de','es','it'].forEach(function(c){
+    document.getElementById('btn-'+c).classList.toggle('active', c===l);
+  });
+  document.documentElement.lang = l;
+  // Si dashboard affiché, mettre à jour
+  if(currentBta) showDash();
+}
+
+// ── INIT ─────────────────────────────────────────────────
+var det = navigator.language.slice(0,2);
+lang = ['fr','en','de','es','it'].includes(det) ? det : 'fr';
+setLang(lang);
+
+// Vérifier session active
+var sess = getSession();
+if(sess && sess.bta){
+  currentBta = sess.bta;
+  showDash();
+}
+</script>
+</body>
+</html>
 
