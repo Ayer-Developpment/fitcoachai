@@ -374,27 +374,87 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
 </div>
 
 <div id="page-privacy" class="legal">
-  <h1 data-t="priv_h1"></h1><p class="date">2026</p>
+  <h1 data-t="priv_h1"></h1>
+  <p class="date" data-t="priv_date"></p>
+
   <h2 data-t="priv_h2"></h2>
-  <ul><li data-t="priv_l1"></li><li data-t="priv_l2"></li><li data-t="priv_l3"></li><li data-t="priv_l4"></li></ul>
+  <ul>
+    <li data-t="priv_l1"></li>
+    <li data-t="priv_l2"></li>
+    <li data-t="priv_l3"></li>
+    <li data-t="priv_l4"></li>
+  </ul>
+
   <h2 data-t="priv_h_store"></h2>
   <div class="highlight"><p data-t="priv_store_p"></p></div>
+  <p data-t="priv_store_detail"></p>
+
   <h2 data-t="priv_h3"></h2>
-  <ul><li data-t="priv_share1"></li><li data-t="priv_share2"></li><li data-t="priv_share3"></li><li data-t="priv_share4"></li></ul>
+  <ul>
+    <li data-t="priv_share1"></li>
+    <li data-t="priv_share2"></li>
+    <li data-t="priv_share3"></li>
+    <li data-t="priv_share4"></li>
+  </ul>
   <div class="highlight"><p data-t="priv_no_sell"></p></div>
-  <h2>RGPD</h2>
+
+  <h2 data-t="priv_h_retention"></h2>
+  <p data-t="priv_retention_p"></p>
+
+  <h2 data-t="priv_h_delete"></h2>
+  <p data-t="priv_delete_p"></p>
+
+  <h2 data-t="priv_h_minors"></h2>
+  <p data-t="priv_minors_p"></p>
+
+  <h2>RGPD / GDPR</h2>
   <p data-t="priv_rgpd"></p>
-  <p><a href="mailto:support.fitcoachai@gmail.com">support.fitcoachai@gmail.com</a></p>
+  <ul>
+    <li data-t="priv_right1"></li>
+    <li data-t="priv_right2"></li>
+    <li data-t="priv_right3"></li>
+    <li data-t="priv_right4"></li>
+  </ul>
+  <p><strong>Contact :</strong> <a href="mailto:support.fitcoachai@gmail.com">support.fitcoachai@gmail.com</a></p>
 </div>
 
 <div id="page-terms" class="legal">
-  <h1 data-t="terms_h1"></h1><p class="date">2026</p>
-  <h2 data-t="terms_h2"></h2><p data-t="terms_p2"></p>
+  <h1 data-t="terms_h1"></h1>
+  <p class="date" data-t="terms_date"></p>
+
+  <h2 data-t="terms_h2"></h2>
+  <p data-t="terms_p2"></p>
   <div class="highlight"><p data-t="terms_warning"></p></div>
+
+  <h2 data-t="terms_h_ai"></h2>
+  <p data-t="terms_ai_p"></p>
+
   <h2 data-t="terms_h3"></h2>
-  <ul><li data-t="terms_l1"></li><li data-t="terms_l2"></li><li data-t="terms_l3"></li><li data-t="terms_l4"></li></ul>
+  <ul>
+    <li data-t="terms_l1"></li>
+    <li data-t="terms_l2"></li>
+    <li data-t="terms_l3"></li>
+    <li data-t="terms_l4"></li>
+    <li data-t="terms_l5"></li>
+  </ul>
+
+  <h2 data-t="terms_h_trial"></h2>
+  <p data-t="terms_trial_p"></p>
+
   <h2 data-t="terms_h_prohibited"></h2>
-  <ul><li data-t="terms_p1"></li><li data-t="terms_p2b"></li><li data-t="terms_p3"></li></ul>
+  <ul>
+    <li data-t="terms_p1"></li>
+    <li data-t="terms_p2b"></li>
+    <li data-t="terms_p3"></li>
+    <li data-t="terms_p4"></li>
+  </ul>
+
+  <h2 data-t="terms_h_liability"></h2>
+  <p data-t="terms_liability_p"></p>
+
+  <h2 data-t="terms_h_changes"></h2>
+  <p data-t="terms_changes_p"></p>
+
   <h2>Contact</h2>
   <p><a href="mailto:support.fitcoachai@gmail.com">support.fitcoachai@gmail.com</a></p>
 </div>
@@ -481,7 +541,30 @@ const T = {
     terms_p1:"Utilisation à des fins commerciales sans autorisation",
     terms_p2b:"Tentative de décompilation ou extraction du code source",
     terms_p3:"Partage de l'accès avec des tiers",
-    foot_home:"Accueil", foot_support:"Support", foot_privacy:"Confidentialité", foot_terms:"Conditions"
+    foot_home:"Accueil", foot_support:"Support", foot_privacy:"Confidentialité", foot_terms:"Conditions",
+    priv_date:"Dernière mise à jour : Juin 2026",
+    priv_store_detail:"Tes données ne sont jamais envoyées sur nos serveurs. Seuls les messages au coach IA transitent par l'API Anthropic.",
+    priv_h_retention:"📅 Durée de conservation",
+    priv_retention_p:"Tes données locales sont conservées jusqu'à désinstallation ou suppression manuelle. Ton email de liste d'attente est conservé jusqu'au lancement ou sur demande.",
+    priv_h_delete:"🗑️ Suppression des données",
+    priv_delete_p:"Supprime tes données depuis l'app : Réglages → Supprimer mes données. Pour l'email : support.fitcoachai@gmail.com.",
+    priv_h_minors:"👶 Mineurs",
+    priv_minors_p:"FitCoach AI est destiné aux personnes de 13 ans et plus. Nous ne collectons pas de données sur des enfants de moins de 13 ans.",
+    priv_right1:"Droit d'accès — obtenir une copie de tes données",
+    priv_right2:"Droit de rectification — corriger des données inexactes",
+    priv_right3:"Droit à l'effacement — demander la suppression de tes données",
+    priv_right4:"Droit d'opposition — t'opposer au traitement de tes données",
+    terms_date:"Dernière mise à jour : Juin 2026",
+    terms_h_ai:"🤖 Intelligence artificielle",
+    terms_ai_p:"Les réponses de l'IA sont générées par Claude (Anthropic). Elles peuvent contenir des erreurs. FitCoach AI ne garantit pas l'exactitude des informations nutritionnelles ou sportives.",
+    terms_l5:"Annulation 24h avant la fin de la période en cours pour éviter le renouvellement",
+    terms_h_trial:"🎁 Essai gratuit",
+    terms_trial_p:"L'essai gratuit 7 jours donne accès à toutes les fonctionnalités. Aucune facturation pendant l'essai. L'abonnement démarre automatiquement après l'essai sauf annulation.",
+    terms_p4:"Utilisation de l'app pour générer des contenus trompeurs, nuisibles ou illégaux",
+    terms_h_liability:"⚖️ Limitation de responsabilité",
+    terms_liability_p:"FitCoach AI est fourni 'en l'état'. Ayer-Developpment ne peut être tenu responsable des décisions médicales ou sportives prises sur la base des recommandations de l'IA.",
+    terms_h_changes:"🔄 Modifications",
+    terms_changes_p:"Nous pouvons modifier ces conditions à tout moment. Les utilisateurs seront informés via l'app. L'utilisation continue vaut acceptation."
   },
   en:{
     badge:"Coming soon to the App Store", nav_cta:"🔔 Notify me",
@@ -547,7 +630,30 @@ const T = {
     terms_p1:"Commercial use without authorization",
     terms_p2b:"Attempting to decompile or extract source code",
     terms_p3:"Sharing access with third parties",
-    foot_home:"Home", foot_support:"Support", foot_privacy:"Privacy", foot_terms:"Terms"
+    foot_home:"Home", foot_support:"Support", foot_privacy:"Privacy", foot_terms:"Terms",
+    priv_date:"Last updated: June 2026",
+    priv_store_detail:"Your data is never sent to our servers. Only AI coach messages are processed via the Anthropic API.",
+    priv_h_retention:"📅 Data retention",
+    priv_retention_p:"Local data is kept until app uninstall or manual deletion. Your waitlist email is kept until official launch or upon deletion request.",
+    priv_h_delete:"🗑️ Data deletion",
+    priv_delete_p:"Delete your data in the app: Settings → Delete my data. For email removal: support.fitcoachai@gmail.com.",
+    priv_h_minors:"👶 Minors",
+    priv_minors_p:"FitCoach AI is intended for users aged 13 and over. We do not knowingly collect data from children under 13.",
+    priv_right1:"Right of access — obtain a copy of your data",
+    priv_right2:"Right to rectification — correct inaccurate data",
+    priv_right3:"Right to erasure — request deletion of your data",
+    priv_right4:"Right to object — object to processing of your data",
+    terms_date:"Last updated: June 2026",
+    terms_h_ai:"🤖 Artificial intelligence",
+    terms_ai_p:"AI responses are generated by Claude (Anthropic). They may contain errors. FitCoach AI does not guarantee the accuracy of nutritional or fitness information.",
+    terms_l5:"Cancel 24h before end of current period to avoid renewal",
+    terms_h_trial:"🎁 Free trial",
+    terms_trial_p:"The 7-day free trial gives full access. No charge during trial. Subscription starts automatically after trial unless cancelled.",
+    terms_p4:"Using the app to generate misleading, harmful or illegal content",
+    terms_h_liability:"⚖️ Limitation of liability",
+    terms_liability_p:"FitCoach AI is provided as-is. Ayer-Developpment cannot be held liable for medical or fitness decisions made based on AI recommendations.",
+    terms_h_changes:"🔄 Changes",
+    terms_changes_p:"We may update these terms at any time. Users will be notified in-app. Continued use constitutes acceptance."
   },
   de:{
     badge:"Demnächst im App Store", nav_cta:"🔔 Benachrichtigen",
@@ -613,7 +719,30 @@ const T = {
     terms_p1:"Kommerzielle Nutzung ohne Genehmigung",
     terms_p2b:"Versuche zur Dekompilierung des Quellcodes",
     terms_p3:"Weitergabe des Zugangs an Dritte",
-    foot_home:"Startseite", foot_support:"Support", foot_privacy:"Datenschutz", foot_terms:"AGB"
+    foot_home:"Startseite", foot_support:"Support", foot_privacy:"Datenschutz", foot_terms:"AGB",
+    priv_date:"Zuletzt aktualisiert: Juni 2026",
+    priv_store_detail:"Deine Daten werden nie an unsere Server gesendet. Nur KI-Coach-Nachrichten werden über die Anthropic API verarbeitet.",
+    priv_h_retention:"📅 Datenspeicherung",
+    priv_retention_p:"Lokale Daten werden bis zur Deinstallation oder manuellen Löschung aufbewahrt.",
+    priv_h_delete:"🗑️ Datenlöschung",
+    priv_delete_p:"Daten löschen in der App: Einstellungen → Meine Daten löschen. Kontakt: support.fitcoachai@gmail.com.",
+    priv_h_minors:"👶 Minderjährige",
+    priv_minors_p:"FitCoach AI ist für Personen ab 13 Jahren bestimmt.",
+    priv_right1:"Auskunftsrecht — Kopie deiner Daten erhalten",
+    priv_right2:"Berichtigungsrecht — ungenaue Daten korrigieren",
+    priv_right3:"Löschungsrecht — Löschung deiner Daten beantragen",
+    priv_right4:"Widerspruchsrecht — der Datenverarbeitung widersprechen",
+    terms_date:"Zuletzt aktualisiert: Juni 2026",
+    terms_h_ai:"🤖 Künstliche Intelligenz",
+    terms_ai_p:"KI-Antworten werden von Claude (Anthropic) generiert. Sie können Fehler enthalten.",
+    terms_l5:"Kündigung 24h vor Ende des Zeitraums, um Verlängerung zu vermeiden",
+    terms_h_trial:"🎁 Kostenlose Testversion",
+    terms_trial_p:"7 Tage kostenlose Testversion mit vollem Zugang. Keine Gebühren während der Testphase. Abo beginnt automatisch danach, sofern nicht gekündigt.",
+    terms_p4:"Nutzung der App zur Erstellung schädlicher oder illegaler Inhalte",
+    terms_h_liability:"⚖️ Haftungsbeschränkung",
+    terms_liability_p:"FitCoach AI wird ohne Gewähr bereitgestellt. Ayer-Developpment haftet nicht für Entscheidungen auf Basis von KI-Empfehlungen.",
+    terms_h_changes:"🔄 Änderungen",
+    terms_changes_p:"Wir können diese Bedingungen jederzeit ändern. Nutzer werden per In-App-Benachrichtigung informiert."
   },
   es:{
     badge:"Próximamente en el App Store", nav_cta:"🔔 Notificarme",
@@ -679,7 +808,30 @@ const T = {
     terms_p1:"Uso comercial sin autorización",
     terms_p2b:"Intentos de descompilar el código fuente",
     terms_p3:"Compartir el acceso con terceros",
-    foot_home:"Inicio", foot_support:"Soporte", foot_privacy:"Privacidad", foot_terms:"Términos"
+    foot_home:"Inicio", foot_support:"Soporte", foot_privacy:"Privacidad", foot_terms:"Términos",
+    priv_date:"Última actualización: Junio 2026",
+    priv_store_detail:"Tus datos nunca se envían a nuestros servidores. Solo los mensajes al coach IA se procesan por la API de Anthropic.",
+    priv_h_retention:"📅 Retención de datos",
+    priv_retention_p:"Los datos locales se conservan hasta la desinstalación o eliminación manual.",
+    priv_h_delete:"🗑️ Eliminación de datos",
+    priv_delete_p:"Elimina tus datos en la app: Ajustes → Eliminar mis datos. Contacto: support.fitcoachai@gmail.com.",
+    priv_h_minors:"👶 Menores",
+    priv_minors_p:"FitCoach AI está destinado a personas de 13 años o más.",
+    priv_right1:"Derecho de acceso — obtener copia de tus datos",
+    priv_right2:"Derecho de rectificación — corregir datos inexactos",
+    priv_right3:"Derecho al olvido — solicitar eliminación de tus datos",
+    priv_right4:"Derecho de oposición — oponerte al tratamiento",
+    terms_date:"Última actualización: Junio 2026",
+    terms_h_ai:"🤖 Inteligencia artificial",
+    terms_ai_p:"Las respuestas de IA son generadas por Claude (Anthropic). Pueden contener errores.",
+    terms_l5:"Cancelar 24h antes del final del período para evitar renovación",
+    terms_h_trial:"🎁 Prueba gratuita",
+    terms_trial_p:"7 días de prueba gratuita con acceso completo. Sin cobro durante la prueba. La suscripción comienza automáticamente después salvo cancelación.",
+    terms_p4:"Uso de la app para generar contenidos engañosos o ilegales",
+    terms_h_liability:"⚖️ Limitación de responsabilidad",
+    terms_liability_p:"FitCoach AI se proporciona tal como está. Ayer-Developpment no responde por decisiones basadas en recomendaciones de la IA.",
+    terms_h_changes:"🔄 Cambios",
+    terms_changes_p:"Podemos modificar estos términos en cualquier momento. Los usuarios serán notificados en la app."
   },
   it:{
     badge:"Presto sull'App Store", nav_cta:"🔔 Avvisami",
@@ -745,7 +897,30 @@ const T = {
     terms_p1:"Uso commerciale senza autorizzazione",
     terms_p2b:"Tentativi di decompilare il codice sorgente",
     terms_p3:"Condivisione dell'accesso con terzi",
-    foot_home:"Home", foot_support:"Supporto", foot_privacy:"Privacy", foot_terms:"Termini"
+    foot_home:"Home", foot_support:"Supporto", foot_privacy:"Privacy", foot_terms:"Termini",
+    priv_date:"Ultimo aggiornamento: Giugno 2026",
+    priv_store_detail:"I tuoi dati non vengono mai inviati ai nostri server. Solo i messaggi al coach IA vengono elaborati tramite l'API Anthropic.",
+    priv_h_retention:"📅 Conservazione dei dati",
+    priv_retention_p:"I dati locali vengono conservati fino alla disinstallazione o eliminazione manuale.",
+    priv_h_delete:"🗑️ Eliminazione dei dati",
+    priv_delete_p:"Elimina i tuoi dati nell'app: Impostazioni → Elimina i miei dati. Contatto: support.fitcoachai@gmail.com.",
+    priv_h_minors:"👶 Minori",
+    priv_minors_p:"FitCoach AI è destinato a persone di 13 anni e oltre.",
+    priv_right1:"Diritto di accesso — ottenere copia dei dati",
+    priv_right2:"Diritto di rettifica — correggere dati inesatti",
+    priv_right3:"Diritto alla cancellazione — richiedere eliminazione dei dati",
+    priv_right4:"Diritto di opposizione — opporsi al trattamento",
+    terms_date:"Ultimo aggiornamento: Giugno 2026",
+    terms_h_ai:"🤖 Intelligenza artificiale",
+    terms_ai_p:"Le risposte dell'IA sono generate da Claude (Anthropic). Possono contenere errori.",
+    terms_l5:"Cancellare 24h prima della fine del periodo per evitare il rinnovo",
+    terms_h_trial:"🎁 Prova gratuita",
+    terms_trial_p:"7 giorni di prova gratuita con accesso completo. Nessun addebito durante la prova. L'abbonamento inizia automaticamente dopo la prova salvo cancellazione.",
+    terms_p4:"Utilizzo dell'app per generare contenuti fuorvianti o illegali",
+    terms_h_liability:"⚖️ Limitazione di responsabilità",
+    terms_liability_p:"FitCoach AI è fornito così com'è. Ayer-Developpment non è responsabile per decisioni basate su raccomandazioni dell'IA.",
+    terms_h_changes:"🔄 Modifiche",
+    terms_changes_p:"Possiamo modificare questi termini in qualsiasi momento. Gli utenti saranno informati tramite notifica nell'app."
   }
 };
 
