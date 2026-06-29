@@ -268,6 +268,7 @@ footer{text-align:center;font-size:11px;color:#2A2A3A;margin-top:32px}
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────
+var ANTHROPIC_KEY = 'sk-ant-api03-5jIDffcEXEiQs3R29QUA5KNL0b8_pq4m2PXWVOtZqUdl-8vpWP1-sDLnN_MurGfqMkLNlVQWBVkV7jdmLSkduw-W_3AKAAA'; // clé API
 var ADMIN_PWD = 'FitCoachAdmin2026'; // ← change avant déploiement !
 var STORE_KEY = 'fitcoachai_bugs_v3';
 var TALLY_URL = 'https://tally.so/r/kdp641';
@@ -420,12 +421,13 @@ function renderList(id, list, t){
   el.innerHTML = list.map(function(b){
     var sc = b.status==='fixed' ? 'f' : b.sev;
     var sl = b.status==='fixed' ? t.sev.f : (t.sev[b.sev]||b.sev);
-    var w  = b.work ? '<span class="workaround">'+t.wa+' : '+b.work+'</span>' : '';
+    var wt = b.works&&b.works[lang] ? b.works[lang] : (b.work||'');
+    var w  = wt ? '<span class="workaround">'+t.wa+' : '+wt+'</span>' : '';
     var vr = b.ver  ? '<span class="bug-meta">'+t.ver+b.ver+'</span>' : '';
     var dt = b.date ? '<span class="bug-meta">'+new Date(b.date).toLocaleDateString()+'</span>' : '';
     return '<div class="bug-card '+sc+'">'+
-      '<div class="bug-top"><span class="sev">'+sl+'</span><span class="bug-title">'+b.title+'</span></div>'+
-      (b.desc ? '<div class="bug-desc">'+b.desc+'</div>' : '')+
+      '<div class="bug-top"><span class="sev">'+sl+'</span><span class="bug-title">'+(b.titles&&b.titles[lang]?b.titles[lang]:b.title)+'</span></div>'+
+      ((b.descs&&b.descs[lang]?b.descs[lang]:b.desc) ? '<div class="bug-desc">'+(b.descs&&b.descs[lang]?b.descs[lang]:b.desc)+'</div>' : '')+
       '<div class="bug-footer">'+
         '<div style="display:flex;gap:8px;flex-wrap:wrap">'+w+'</div>'+
         '<div style="display:flex;gap:6px">'+vr+dt+'</div>'+
@@ -452,7 +454,7 @@ function renderAdminList(t){
 }
 
 // ── ACTIONS ───────────────────────────────────────────────
-function addBug(){
+async function addBug(){
   var title = document.getElementById('fTitle').value.trim();
   var sev   = document.getElementById('fSev').value;
   var desc  = document.getElementById('fDesc').value.trim();
@@ -460,8 +462,47 @@ function addBug(){
   var status= document.getElementById('fStatus').value;
   var ver   = document.getElementById('fVer').value.trim();
   if(!title){ alert('Titre obligatoire'); return; }
-  bugs.unshift({ id:Date.now(), title, sev, desc, work, status, ver, date:new Date().toISOString() });
+
+  // Afficher indicateur de traduction
+  var btn = document.getElementById('addBugBtn');
+  btn.disabled = true;
+  btn.textContent = '🌍 Traduction en cours...';
+
+  // Traduire via Claude API
+  var titles = {fr:title, en:title, de:title, es:title, it:title};
+  var descs  = {fr:desc,  en:desc,  de:desc,  es:desc,  it:desc};
+  var works  = {fr:work,  en:work,  de:work,  es:work,  it:work};
+
+  try {
+    var prompt = 'Translate these bug report texts into FR, EN, DE, ES, IT. Respond ONLY with valid JSON, no markdown:\n'+
+      JSON.stringify({title:title, desc:desc, work:work});
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':ANTHROPIC_KEY,'anthropic-version':'2023-06-01'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:600,
+        messages:[{role:'user', content: prompt}],
+        system:'You translate bug report texts for a fitness iOS app. Return ONLY a JSON object with keys fr,en,de,es,it, each containing {title,desc,work} strings. No markdown, no explanation.'
+      })
+    });
+    if(resp.ok){
+      var data = await resp.json();
+      var text = data.content[0].text.trim().replace(/```json|```/g,'').trim();
+      var tr   = JSON.parse(text);
+      titles = {fr:tr.fr.title||title, en:tr.en.title||title, de:tr.de.title||title, es:tr.es.title||title, it:tr.it.title||title};
+      descs  = {fr:tr.fr.desc||desc,   en:tr.en.desc||desc,   de:tr.de.desc||desc,   es:tr.es.desc||desc,   it:tr.it.desc||desc};
+      works  = {fr:tr.fr.work||work,   en:tr.en.work||work,   de:tr.de.work||work,   es:tr.es.work||work,   it:tr.it.work||work};
+    }
+  } catch(e){ console.warn('Translation failed, using original', e); }
+
+  bugs.unshift({ id:Date.now(), titles, descs, works,
+    title, desc, work, // fallback legacy
+    sev, status, ver, date:new Date().toISOString() });
   saveBugs(); render();
+
+  btn.disabled = false;
+  btn.textContent = '+ ' + (document.documentElement.lang === 'fr' ? 'Ajouter' : 'Add');
   document.getElementById('fTitle').value = '';
   document.getElementById('fDesc').value  = '';
   document.getElementById('fWork').value  = '';
