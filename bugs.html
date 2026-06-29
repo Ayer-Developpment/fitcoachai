@@ -310,7 +310,18 @@ async function loadGitHubIssues(){
     var issues = await resp.json();
     return issues.map(function(issue){
       var parsed = {};
-      try { parsed = JSON.parse(issue.body||'{}'); } catch(e){}
+      var bodyText = issue.body || '';
+      // Extraire le JSON s'il est présent dans le body
+      var jsonMatch = bodyText.match(/\{[^{}]*"sev"[^{}]*\}/);
+      if (jsonMatch) {
+        try { parsed = JSON.parse(jsonMatch[0]); } catch(e){}
+        // Le texte avant le JSON = description
+        var descText = bodyText.replace(jsonMatch[0], '').trim();
+        if (!parsed.desc && descText) parsed.desc = descText;
+      } else {
+        // Pas de JSON — tout le body est la description
+        if (bodyText) parsed.desc = bodyText;
+      }
       var status = issue.state === 'closed' ? 'fixed' : 'open';
       issue.labels.forEach(function(l){
         if(l.name==='in-progress') status = 'prog';
