@@ -13,8 +13,6 @@
 html{scroll-behavior:smooth}
 body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
   background:var(--dark);color:var(--text);overflow-x:hidden}
-
-/* NAV */
 nav{position:fixed;top:0;width:100%;background:rgba(7,7,15,.9);backdrop-filter:blur(24px);
   -webkit-backdrop-filter:blur(24px);z-index:1000;border-bottom:1px solid rgba(255,255,255,.05)}
 .nav-inner{max-width:1100px;margin:0 auto;height:64px;display:flex;align-items:center;
@@ -25,25 +23,19 @@ nav{position:fixed;top:0;width:100%;background:rgba(7,7,15,.9);backdrop-filter:b
 .nav-cta{background:linear-gradient(135deg,var(--v),var(--g));color:#fff;
   padding:8px 18px;border-radius:100px;font-size:13px;font-weight:700;
   text-decoration:none;white-space:nowrap;cursor:pointer;border:none}
-
-/* Language selector */
 .lang-sel{position:relative}
 .lang-btn{display:flex;align-items:center;gap:6px;background:var(--card2);
   border:1px solid var(--border);color:var(--text);padding:7px 12px;
-  border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;
-  white-space:nowrap}
+  border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
 .lang-btn:hover{border-color:var(--v)}
 .lang-dropdown{position:absolute;top:calc(100% + 8px);right:0;
   background:var(--card);border:1px solid var(--border);border-radius:14px;
-  padding:6px;min-width:140px;display:none;z-index:100;
-  box-shadow:0 8px 30px rgba(0,0,0,.4)}
+  padding:6px;min-width:140px;display:none;z-index:100;box-shadow:0 8px 30px rgba(0,0,0,.4)}
 .lang-sel.open .lang-dropdown{display:block}
 .lang-option{display:flex;align-items:center;gap:8px;padding:8px 12px;
   border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;transition:background .15s}
 .lang-option:hover{background:var(--card2)}
 .lang-option.active{color:var(--v);font-weight:700}
-
-/* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;
   text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden}
 .orb{position:absolute;border-radius:50%;filter:blur(80px);
@@ -75,15 +67,11 @@ nav{position:fixed;top:0;width:100%;background:rgba(7,7,15,.9);backdrop-filter:b
 .stat-n{font-size:24px;font-weight:900;background:linear-gradient(135deg,var(--v),var(--g));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .stat-l{font-size:12px;color:var(--muted);margin-top:2px;text-align:center}
-
-/* SECTIONS */
 .section{padding:88px 24px;max-width:1100px;margin:0 auto}
 .sec-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:2px;
   text-transform:uppercase;color:var(--v);margin-bottom:14px}
 .sec-h{font-size:clamp(26px,4vw,44px);font-weight:900;letter-spacing:-1px;margin-bottom:14px}
 .sec-p{font-size:16px;color:var(--muted);line-height:1.6;max-width:540px}
-
-/* FEATURES */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:48px}
 .feat{background:var(--card);border:1px solid var(--border);border-radius:20px;
   padding:26px;transition:border-color .25s,transform .25s}
@@ -95,8 +83,6 @@ nav{position:fixed;top:0;width:100%;background:rgba(7,7,15,.9);backdrop-filter:b
 .feat-new{display:inline-block;font-size:9px;font-weight:800;color:var(--g);
   background:rgba(0,212,164,.1);border:1px solid rgba(0,212,164,.2);
   padding:2px 8px;border-radius:6px;margin-bottom:7px;letter-spacing:1px}
-
-/* STEPS */
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;margin-top:48px}
 .step{text-align:center;padding:28px 16px}
 .step-num{width:44px;height:44px;border-radius:50%;
@@ -105,8 +91,6 @@ nav{position:fixed;top:0;width:100%;background:rgba(7,7,15,.9);backdrop-filter:b
   font-size:17px;font-weight:900;color:#fff;margin:0 auto 14px}
 .step h3{font-size:15px;font-weight:700;margin-bottom:6px}
 .step p{font-size:13px;color:var(--muted);line-height:1.6}
-
-/* SCAN */
 .scan-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:48px}
 @media(max-width:680px){.scan-grid{grid-template-columns:1fr}}
 .scan-phone-inner{background:#000;border-radius:32px;border:2px solid #1E1E32;
@@ -137,8 +121,6 @@ nav{position:fixed;top:0;width:100%;background:rgba(7,7,15,.9);backdrop-filter:b
   display:flex;align-items:center;justify-content:center;font-size:20px}
 .scan-feat h4{font-size:14px;font-weight:700;margin-bottom:3px}
 .scan-feat p{font-size:13px;color:var(--muted);line-height:1.5}
-
-/* WAITLIST */
 .waitlist-wrap{background:linear-gradient(135deg,rgba(108,99,255,.08),rgba(0,212,164,.05));
   border:1px solid rgba(108,99,255,.2);border-radius:28px;
   padding:56px 44px;text-align:center;position:relative;overflow:hidden}
@@ -154,24 +136,18 @@ nav{position:fixed;top:0;width:100%;background:rgba(7,7,15,.9);backdrop-filter:b
 .perks{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:22px;position:relative;z-index:2}
 .perk{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
 .perk-dot{width:6px;height:6px;border-radius:50%;background:var(--g);flex-shrink:0}
-
-/* PRICING */
 .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:20px;max-width:660px;margin:48px auto 0}
 .price-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px}
-.price-card.featured{border-color:var(--v);
-  background:linear-gradient(135deg,rgba(108,99,255,.07),rgba(0,212,164,.03))}
+.price-card.featured{border-color:var(--v);background:linear-gradient(135deg,rgba(108,99,255,.07),rgba(0,212,164,.03))}
 .price-badge{display:inline-block;background:linear-gradient(135deg,var(--v),var(--g));
-  color:#fff;padding:4px 14px;border-radius:100px;font-size:11px;font-weight:800;
-  margin-bottom:16px}
+  color:#fff;padding:4px 14px;border-radius:100px;font-size:11px;font-weight:800;margin-bottom:16px}
 .price-amount{font-size:46px;font-weight:900;color:var(--v);line-height:1}
 .price-amount span{font-size:16px;color:var(--muted);font-weight:400}
 .price-save{color:var(--g);font-size:13px;font-weight:700;margin:6px 0 18px}
 .price-card ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
 .price-card li{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
 .price-card li::before{content:'✓';color:var(--g);font-weight:800;flex-shrink:0}
-
-/* FOOTER */
 footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24px}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;
   justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
@@ -179,8 +155,6 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
 .footer-links a{color:var(--muted);text-decoration:none;font-size:13px;
   padding:4px 10px;border-radius:6px;transition:color .2s;cursor:pointer}
 .footer-links a:hover{color:var(--text)}
-
-/* LEGAL */
 .legal{display:none;padding:110px 24px 80px;max-width:800px;margin:0 auto}
 .legal h1{font-size:32px;font-weight:900;margin-bottom:6px}
 .legal .date{color:var(--muted);font-size:13px;margin-bottom:36px}
@@ -188,16 +162,16 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
 .legal p,.legal li{color:var(--muted);line-height:1.8;margin-bottom:10px;font-size:15px}
 .legal ul{padding-left:20px}
 .legal a{color:var(--v)}
+.legal .highlight{background:rgba(108,99,255,.06);border:1px solid rgba(108,99,255,.15);border-radius:12px;padding:16px 20px;margin:16px 0}
+.legal .highlight p{margin:0;color:var(--text)}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a class="logo" href="#" onclick="goHome()">⚡ FitCoach AI</a>
+    <a class="logo" href="#" onclick="goHome(); return false;">⚡ FitCoach AI</a>
     <div class="nav-right">
-      <!-- Language selector -->
       <div class="lang-sel" id="langSel">
         <button class="lang-btn" onclick="toggleLang()">
           <span id="langFlag">🇫🇷</span>
@@ -212,15 +186,12 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
           <div class="lang-option" onclick="setLang('it')">🇮🇹 Italiano</div>
         </div>
       </div>
-      <button class="nav-cta" onclick="scrollTo('waitlist')" data-t="nav_cta">🔔 Me notifier</button>
+      <a class="nav-cta" href="#waitlist" onclick="goToWaitlist(); return false;" data-t="nav_cta">🔔 Me notifier</a>
     </div>
   </div>
 </nav>
 
-<!-- HOME -->
 <div id="page-home">
-
-<!-- HERO -->
 <div class="hero">
   <div>
     <div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(108,99,255,.18),transparent);top:-150px;left:-150px;animation-duration:6s"></div>
@@ -231,8 +202,8 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
     <h1 data-t="hero_h1"></h1>
     <p data-t="hero_p"></p>
     <div class="hero-btns">
-      <button class="btn btn-p" onclick="scrollTo('waitlist')" data-t="hero_cta1"></button>
-      <button class="btn btn-g" onclick="scrollTo('features')" data-t="hero_cta2"></button>
+      <a class="btn btn-p" href="#waitlist" onclick="goToWaitlist(); return false;" data-t="hero_cta1"></a>
+      <a class="btn btn-g" href="#features" onclick="goToFeatures(); return false;" data-t="hero_cta2"></a>
     </div>
     <div class="stats">
       <div class="stat"><div class="stat-n">7</div><div class="stat-l" data-t="stat1"></div></div>
@@ -243,7 +214,6 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
   </div>
 </div>
 
-<!-- FEATURES -->
 <section class="section" id="features">
   <div class="sec-tag" data-t="feat_tag"></div>
   <div class="sec-h" data-t="feat_h"></div>
@@ -261,7 +231,6 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
   </div>
 </section>
 
-<!-- SCAN -->
 <section class="section" style="padding-top:0">
   <div class="sec-tag" style="color:var(--g)" data-t="scan_tag"></div>
   <div class="sec-h" data-t="scan_h"></div>
@@ -270,21 +239,20 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
       <div class="scan-phone-inner">
         <div class="cam-view">
           <div style="background:#fff;border-radius:6px;padding:5px">
-            <svg width="120" height="55" viewBox="0 0 120 55">
-              <rect width="120" height="55" fill="white"/>
-              <rect x="7"  y="3" width="2"  height="42" fill="#000"/><rect x="11" y="3" width="1"  height="42" fill="#000"/>
-              <rect x="14" y="3" width="3"  height="42" fill="#000"/><rect x="19" y="3" width="1"  height="42" fill="#000"/>
-              <rect x="22" y="3" width="2"  height="42" fill="#000"/><rect x="26" y="3" width="1"  height="42" fill="#000"/>
-              <rect x="29" y="3" width="3"  height="42" fill="#000"/><rect x="34" y="3" width="1"  height="42" fill="#000"/>
-              <rect x="37" y="3" width="2"  height="42" fill="#000"/><rect x="41" y="3" width="1"  height="34" fill="#000"/>
-              <rect x="44" y="3" width="2"  height="34" fill="#000"/><rect x="48" y="3" width="3"  height="34" fill="#000"/>
-              <rect x="53" y="3" width="1"  height="34" fill="#000"/><rect x="56" y="3" width="2"  height="34" fill="#000"/>
-              <rect x="60" y="3" width="1"  height="42" fill="#000"/><rect x="63" y="3" width="1"  height="42" fill="#000"/>
-              <rect x="67" y="3" width="2"  height="34" fill="#000"/><rect x="71" y="3" width="1"  height="34" fill="#000"/>
-              <rect x="74" y="3" width="3"  height="34" fill="#000"/><rect x="79" y="3" width="1"  height="34" fill="#000"/>
-              <rect x="82" y="3" width="2"  height="34" fill="#000"/><rect x="86" y="3" width="1"  height="34" fill="#000"/>
-              <rect x="89" y="3" width="3"  height="34" fill="#000"/><rect x="94" y="3" width="1"  height="42" fill="#000"/>
-              <rect x="97" y="3" width="2"  height="42" fill="#000"/><rect x="101" y="3" width="1" height="42" fill="#000"/>
+            <svg width="120" height="55" viewBox="0 0 120 55"><rect width="120" height="55" fill="white"/>
+              <rect x="7" y="3" width="2" height="42" fill="#000"/><rect x="11" y="3" width="1" height="42" fill="#000"/>
+              <rect x="14" y="3" width="3" height="42" fill="#000"/><rect x="19" y="3" width="1" height="42" fill="#000"/>
+              <rect x="22" y="3" width="2" height="42" fill="#000"/><rect x="26" y="3" width="1" height="42" fill="#000"/>
+              <rect x="29" y="3" width="3" height="42" fill="#000"/><rect x="34" y="3" width="1" height="42" fill="#000"/>
+              <rect x="37" y="3" width="2" height="42" fill="#000"/><rect x="41" y="3" width="1" height="34" fill="#000"/>
+              <rect x="44" y="3" width="2" height="34" fill="#000"/><rect x="48" y="3" width="3" height="34" fill="#000"/>
+              <rect x="53" y="3" width="1" height="34" fill="#000"/><rect x="56" y="3" width="2" height="34" fill="#000"/>
+              <rect x="60" y="3" width="1" height="42" fill="#000"/><rect x="63" y="3" width="1" height="42" fill="#000"/>
+              <rect x="67" y="3" width="2" height="34" fill="#000"/><rect x="71" y="3" width="1" height="34" fill="#000"/>
+              <rect x="74" y="3" width="3" height="34" fill="#000"/><rect x="79" y="3" width="1" height="34" fill="#000"/>
+              <rect x="82" y="3" width="2" height="34" fill="#000"/><rect x="86" y="3" width="1" height="34" fill="#000"/>
+              <rect x="89" y="3" width="3" height="34" fill="#000"/><rect x="94" y="3" width="1" height="42" fill="#000"/>
+              <rect x="97" y="3" width="2" height="42" fill="#000"/><rect x="101" y="3" width="1" height="42" fill="#000"/>
               <rect x="104" y="3" width="3" height="42" fill="#000"/><rect x="109" y="3" width="1" height="42" fill="#000"/>
               <rect x="112" y="3" width="2" height="42" fill="#000"/>
               <text x="60" y="52" fill="#000" font-size="6" text-anchor="middle" font-family="monospace">3 017620 422003</text>
@@ -320,7 +288,6 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
   </div>
 </section>
 
-<!-- STEPS -->
 <section class="section" style="padding-top:40px">
   <div class="sec-tag" data-t="steps_tag"></div>
   <div class="sec-h" data-t="steps_h"></div>
@@ -331,26 +298,15 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
   </div>
 </section>
 
-<!-- BETA -->
 <section class="section" id="beta" style="padding-top:0">
-  <div style="background:linear-gradient(135deg,rgba(255,80,80,.08),rgba(255,140,60,.04));
-    border:1px solid rgba(255,80,80,.2);border-radius:28px;padding:48px 40px;text-align:center;position:relative;overflow:hidden">
-    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,80,80,.1);
-      border:1px solid rgba(255,80,80,.25);color:#FF5050;padding:6px 16px;border-radius:100px;
-      font-size:13px;font-weight:700;margin-bottom:18px">
+  <div style="background:linear-gradient(135deg,rgba(255,80,80,.08),rgba(255,140,60,.04));border:1px solid rgba(255,80,80,.2);border-radius:28px;padding:48px 40px;text-align:center;position:relative;overflow:hidden">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.25);color:#FF5050;padding:6px 16px;border-radius:100px;font-size:13px;font-weight:700;margin-bottom:18px">
       <div style="width:7px;height:7px;border-radius:50%;background:#FF5050;animation:blink 1s infinite"></div>
       Recherche bêta testeurs — Places limitées à 15
     </div>
-    <h2 style="font-size:clamp(22px,4vw,36px);font-weight:900;letter-spacing:-1px;margin-bottom:12px">
-      Tu veux tester FitCoach AI<br>en avant-première ? 🚀
-    </h2>
-    <p style="color:var(--muted);font-size:15px;max-width:460px;margin:0 auto 28px;line-height:1.6">
-      Accès gratuit 90 jours via TestFlight. En échange : ton retour honnête sur l'app.
-    </p>
-    <iframe data-tally-src="https://tally.so/embed/Bzgare?alignLeft=0&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-      loading="lazy" width="100%" height="200"
-      style="border:none;max-width:540px;display:block;margin:0 auto;border-radius:16px"
-      title="FitCoachAI Beta"></iframe>
+    <h2 style="font-size:clamp(22px,4vw,36px);font-weight:900;letter-spacing:-1px;margin-bottom:12px">Tu veux tester FitCoach AI<br>en avant-première ? 🚀</h2>
+    <p style="color:var(--muted);font-size:15px;max-width:460px;margin:0 auto 28px;line-height:1.6">Accès gratuit 90 jours via TestFlight. En échange : ton retour honnête sur l'app.</p>
+    <iframe data-tally-src="https://tally.so/embed/Bzgare?alignLeft=0&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="200" style="border:none;max-width:540px;display:block;margin:0 auto;border-radius:16px" title="FitCoachAI Beta"></iframe>
     <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:20px">
       <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)"><div style="width:6px;height:6px;border-radius:50%;background:#FF5050"></div>Accès 90 jours gratuits</div>
       <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)"><div style="width:6px;height:6px;border-radius:50%;background:#FF5050"></div>Via TestFlight (iPhone)</div>
@@ -359,15 +315,13 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
   </div>
 </section>
 
-<!-- WAITLIST -->
 <section class="section" id="waitlist" style="padding-top:0">
   <div class="waitlist-wrap">
     <div class="wl-badge"><div class="blink"></div><span data-t="wl_badge"></span></div>
     <h2 style="font-size:clamp(22px,4vw,38px);font-weight:900;letter-spacing:-1px;margin-bottom:12px;position:relative;z-index:2" data-t="wl_h"></h2>
     <p style="color:var(--muted);font-size:15px;max-width:460px;margin:0 auto;line-height:1.6;position:relative;z-index:2" data-t="wl_p"></p>
     <div class="tally-wrap">
-      <iframe data-tally-src="https://tally.so/embed/D4Y2db?alignLeft=0&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-        loading="lazy" width="100%" height="200" title="FitCoachAI waitlist"></iframe>
+      <iframe data-tally-src="https://tally.so/embed/D4Y2db?alignLeft=0&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="200" title="FitCoachAI waitlist"></iframe>
     </div>
     <div class="perks">
       <div class="perk"><div class="perk-dot"></div><span data-t="perk1"></span></div>
@@ -378,7 +332,6 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
   </div>
 </section>
 
-<!-- PRICING -->
 <section class="section" id="pricing" style="padding-top:40px">
   <div style="text-align:center">
     <div class="sec-tag" data-t="price_tag"></div>
@@ -389,29 +342,22 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
     <div class="price-card">
       <div class="price-amount" data-t="free_title"></div>
       <p style="color:var(--muted);font-size:13px;margin:8px 0 18px" data-t="free_sub"></p>
-      <ul>
-        <li data-t="free_f1"></li><li data-t="free_f2"></li><li data-t="free_f3"></li>
-        <li data-t="free_f4"></li><li data-t="free_f5"></li><li data-t="free_f6"></li>
-      </ul>
-      <button class="btn btn-g" style="width:100%;justify-content:center;font-size:14px" onclick="scrollTo('waitlist')" data-t="free_btn"></button>
+      <ul><li data-t="free_f1"></li><li data-t="free_f2"></li><li data-t="free_f3"></li><li data-t="free_f4"></li><li data-t="free_f5"></li><li data-t="free_f6"></li></ul>
+      <a class="btn btn-g" style="width:100%;justify-content:center;font-size:14px" href="#waitlist" onclick="goToWaitlist(); return false;" data-t="free_btn"></a>
     </div>
     <div class="price-card featured">
       <div class="price-badge" data-t="pro_badge"></div>
       <div class="price-amount" style="color:var(--v)">69,99€<span>/an</span></div>
       <div class="price-save" data-t="pro_save"></div>
-      <ul>
-        <li data-t="pro_f1"></li><li data-t="pro_f2"></li><li data-t="pro_f3"></li>
-        <li data-t="pro_f4"></li><li data-t="pro_f5"></li><li data-t="pro_f6"></li>
-        <li data-t="pro_f7"></li><li data-t="pro_f8"></li>
-      </ul>
-      <button class="btn btn-p" style="width:100%;justify-content:center;font-size:14px" onclick="scrollTo('waitlist')" data-t="pro_btn"></button>
+      <ul><li data-t="pro_f1"></li><li data-t="pro_f2"></li><li data-t="pro_f3"></li><li data-t="pro_f4"></li><li data-t="pro_f5"></li><li data-t="pro_f6"></li><li data-t="pro_f7"></li><li data-t="pro_f8"></li></ul>
+      <a class="btn btn-p" style="width:100%;justify-content:center;font-size:14px" href="#waitlist" onclick="goToWaitlist(); return false;" data-t="pro_btn"></a>
     </div>
   </div>
   <p style="text-align:center;color:var(--muted);font-size:13px;margin-top:18px" data-t="price_note"></p>
 </section>
 </div>
 
-<!-- LEGAL PAGES -->
+<!-- PAGES LÉGALES -->
 <div id="page-support" class="legal">
   <h1 data-t="sup_h1"></h1><p class="date">2026</p>
   <h2 data-t="sup_contact_h"></h2>
@@ -420,26 +366,39 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
   <h2>FAQ</h2>
   <p data-t="sup_faq1"></p>
   <p data-t="sup_faq2"></p>
+  <br>
+  <h2 data-t="sup_notify_h"></h2>
+  <p data-t="sup_notify_p"></p>
+  <br>
+  <a class="btn btn-p" href="#" onclick="goToWaitlist(); return false;" style="display:inline-flex" data-t="sup_notify_btn"></a>
 </div>
+
 <div id="page-privacy" class="legal">
   <h1 data-t="priv_h1"></h1><p class="date">2026</p>
   <h2 data-t="priv_h2"></h2>
   <ul><li data-t="priv_l1"></li><li data-t="priv_l2"></li><li data-t="priv_l3"></li><li data-t="priv_l4"></li></ul>
+  <h2 data-t="priv_h_store"></h2>
+  <div class="highlight"><p data-t="priv_store_p"></p></div>
   <h2 data-t="priv_h3"></h2>
-  <p data-t="priv_p3"></p>
+  <ul><li data-t="priv_share1"></li><li data-t="priv_share2"></li><li data-t="priv_share3"></li><li data-t="priv_share4"></li></ul>
+  <div class="highlight"><p data-t="priv_no_sell"></p></div>
   <h2>RGPD</h2>
+  <p data-t="priv_rgpd"></p>
   <p><a href="mailto:support.fitcoachai@gmail.com">support.fitcoachai@gmail.com</a></p>
 </div>
+
 <div id="page-terms" class="legal">
   <h1 data-t="terms_h1"></h1><p class="date">2026</p>
   <h2 data-t="terms_h2"></h2><p data-t="terms_p2"></p>
+  <div class="highlight"><p data-t="terms_warning"></p></div>
   <h2 data-t="terms_h3"></h2>
-  <ul><li data-t="terms_l1"></li><li data-t="terms_l2"></li><li data-t="terms_l3"></li></ul>
+  <ul><li data-t="terms_l1"></li><li data-t="terms_l2"></li><li data-t="terms_l3"></li><li data-t="terms_l4"></li></ul>
+  <h2 data-t="terms_h_prohibited"></h2>
+  <ul><li data-t="terms_p1"></li><li data-t="terms_p2b"></li><li data-t="terms_p3"></li></ul>
   <h2>Contact</h2>
   <p><a href="mailto:support.fitcoachai@gmail.com">support.fitcoachai@gmail.com</a></p>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div>
@@ -447,327 +406,436 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
       <div style="color:var(--muted);font-size:12px;margin-top:5px">© 2026 FitCoach AI</div>
     </div>
     <div class="footer-links">
-      <a onclick="goHome()">Accueil</a>
-      <a onclick="showPage('support')" data-t="foot_support"></a>
-      <a onclick="showPage('privacy')" data-t="foot_privacy"></a>
-      <a onclick="showPage('terms')" data-t="foot_terms"></a>
+      <a href="#" onclick="goHome(); return false;" data-t="foot_home">Accueil</a>
+      <a href="#support" onclick="goToPage('support'); return false;" data-t="foot_support">Support</a>
+      <a href="#privacy" onclick="goToPage('privacy'); return false;" data-t="foot_privacy">Confidentialité</a>
+      <a href="#terms" onclick="goToPage('terms'); return false;" data-t="foot_terms">Conditions</a>
       <a href="mailto:support.fitcoachai@gmail.com">Contact</a>
     </div>
   </div>
 </footer>
 
 <script>
-// ── TRANSLATIONS ──────────────────────────────────────────────────────────────
 const T = {
   fr:{
-    badge:"Lancement bientôt sur l'App Store",
-    nav_cta:"🔔 Me notifier",
+    badge:"Lancement bientôt sur l'App Store", nav_cta:"🔔 Me notifier",
     hero_h1:"Ton coach nutrition<br>& fitness <span class='grad'>alimenté par l'IA</span>",
     hero_p:"FitCoach AI analyse tes repas, scanne tes produits, génère tes séances et te motive chaque jour.",
-    hero_cta1:"🔔 Être notifié au lancement",hero_cta2:"Découvrir l'app",
-    stat1:"jours d'essai gratuit",stat2:"Par an · 5,83€/mois",stat3:"Produits scannables",stat4:"Exercices illustrés",
-    feat_tag:"✨ Fonctionnalités",feat_h:"Tout ce dont tu as besoin",feat_p:"Une seule app pour la nutrition, le fitness et le coaching IA.",
-    f1_h:"Coach IA personnel",f1_p:"Un coach qui te connaît par prénom et répond en 1 seconde. Disponible 24h/24, 7j/7.",
-    f2_h:"Scan code-barres produits",f2_p:"Scanne n'importe quel produit du supermarché. Calories, protéines, glucides, lipides et Nutri-Score instantanément.",
-    f3_h:"Recettes générées par l'IA",f3_p:"3 recettes ultra-variées depuis 15 cuisines du monde. Adaptées à tes allergies.",
-    f4_h:"Séances maison sur-mesure",f4_p:"200+ exercices illustrés en 3 étapes avec flèches directionnelles.",
-    f5_h:"Scan photo des repas",f5_p:"Prends une photo de ton assiette — l'IA analyse les macros instantanément.",
-    f6_h:"Sync Apple Santé",f6_p:"Pas, calories brûlées, fréquence cardiaque et poids synchronisés automatiquement.",
-    f7_h:"Streak & 11 badges",f7_p:"Gamification complète pour rester motivé. Streak quotidien et badges débloquables.",
-    f8_h:"Coach vocal pendant la séance",f8_p:"Parle à ton coach en faisant tes exercices. Il répond à voix haute.",
-    f9_h:"Sync iCloud multi-appareils",f9_p:"Tes données synchronisées sur tous tes appareils Apple.",
-    scan_tag:"📷 Nouveau",scan_h:"Scan code-barres<br><span class='grad'>en 1 seconde</span>",
-    scan_product:"Yaourt grec nature",scan_add:"✅ Ajouter au journal",
-    sf1_h:"3 millions de produits",sf1_p:"Base Open Food Facts — la plus grande base alimentaire open source au monde.",
-    sf2_h:"Résultat en 1 seconde",sf2_p:"Scanne le code-barres, les macros s'affichent immédiatement.",
-    sf3_h:"Nutri-Score A à E",sf3_p:"Qualité nutritionnelle affichée instantanément pour chaque produit.",
-    sf4_h:"Ajout en 1 tap au journal",sf4_p:"Calories et macros mis à jour en temps réel dans ton bilan.",
-    steps_tag:"🚀 Comment ça marche",steps_h:"Prêt en 3 minutes",
-    s1_h:"Crée ton profil",s1_p:"Prénom, objectifs et préférences en 2 minutes. L'IA calcule tes besoins nutritionnels.",
-    s2_h:"Parle à ton coach",s2_p:"Dis ce que tu as mangé, scanne tes produits ou demande une séance. Répond en 1 seconde.",
-    s3_h:"Atteins tes objectifs",s3_p:"Suis tes progrès chaque jour. Le coach s'adapte et te motive.",
-    wl_badge:"Lancement bientôt",wl_h:"Sois parmi les premiers<br>à découvrir FitCoach AI",
+    hero_cta1:"🔔 Être notifié au lancement", hero_cta2:"Découvrir l'app",
+    stat1:"jours d'essai gratuit", stat2:"Par an · 5,83€/mois", stat3:"Produits scannables", stat4:"Exercices illustrés",
+    feat_tag:"✨ Fonctionnalités", feat_h:"Tout ce dont tu as besoin", feat_p:"Une seule app pour la nutrition, le fitness et le coaching IA.",
+    f1_h:"Coach IA personnel", f1_p:"Un coach qui te connaît par prénom et répond en 1 seconde. Disponible 24h/24, 7j/7.",
+    f2_h:"Scan code-barres produits", f2_p:"Scanne n'importe quel produit du supermarché. Calories, protéines, glucides, lipides et Nutri-Score instantanément.",
+    f3_h:"Recettes générées par l'IA", f3_p:"3 recettes ultra-variées depuis 15 cuisines du monde. Adaptées à tes allergies.",
+    f4_h:"Séances maison sur-mesure", f4_p:"200+ exercices illustrés en 3 étapes avec flèches directionnelles.",
+    f5_h:"Scan photo des repas", f5_p:"Prends une photo de ton assiette — l'IA analyse les macros instantanément.",
+    f6_h:"Sync Apple Santé", f6_p:"Pas, calories brûlées, fréquence cardiaque et poids synchronisés automatiquement.",
+    f7_h:"Streak & 11 badges", f7_p:"Gamification complète pour rester motivé. Streak quotidien et badges débloquables.",
+    f8_h:"Coach vocal pendant la séance", f8_p:"Parle à ton coach en faisant tes exercices. Il répond à voix haute.",
+    f9_h:"Sync iCloud multi-appareils", f9_p:"Tes données synchronisées sur tous tes appareils Apple.",
+    scan_tag:"📷 Nouveau", scan_h:"Scan code-barres<br><span class='grad'>en 1 seconde</span>",
+    scan_product:"Yaourt grec nature", scan_add:"✅ Ajouter au journal",
+    sf1_h:"3 millions de produits", sf1_p:"Base Open Food Facts — la plus grande base alimentaire open source au monde.",
+    sf2_h:"Résultat en 1 seconde", sf2_p:"Scanne le code-barres, les macros s'affichent immédiatement.",
+    sf3_h:"Nutri-Score A à E", sf3_p:"Qualité nutritionnelle affichée instantanément pour chaque produit.",
+    sf4_h:"Ajout en 1 tap au journal", sf4_p:"Calories et macros mis à jour en temps réel dans ton bilan.",
+    steps_tag:"🚀 Comment ça marche", steps_h:"Prêt en 3 minutes",
+    s1_h:"Crée ton profil", s1_p:"Prénom, objectifs et préférences en 2 minutes. L'IA calcule tes besoins nutritionnels.",
+    s2_h:"Parle à ton coach", s2_p:"Dis ce que tu as mangé, scanne tes produits ou demande une séance. Répond en 1 seconde.",
+    s3_h:"Atteins tes objectifs", s3_p:"Suis tes progrès chaque jour. Le coach s'adapte et te motive.",
+    wl_badge:"Lancement bientôt", wl_h:"Sois parmi les premiers<br>à découvrir FitCoach AI",
     wl_p:"Entre ton email ci-dessous. Tu seras notifié en avant-première et tu bénéficieras de l'essai gratuit 7 jours.",
-    perk1:"100% gratuit · sans spam",perk2:"Notifié en avant-première",perk3:"7 jours d'essai offerts",perk4:"Désabonnement 1 clic",
-    price_tag:"💰 Tarifs",price_h:"Simple et transparent",price_p:"Commence gratuitement, sans carte bancaire.",
-    free_title:"Gratuit<span style='font-size:15px;display:block;margin-top:4px'>/7 jours</span>",free_sub:"Accès complet, sans carte",
-    free_f1:"Coach IA 6 messages/jour",free_f2:"3 recettes/jour",free_f3:"3 séances/jour",
-    free_f4:"Scan code-barres",free_f5:"Scan photo repas",free_f6:"Sync Apple Santé",
+    perk1:"100% gratuit · sans spam", perk2:"Notifié en avant-première", perk3:"7 jours d'essai offerts", perk4:"Désabonnement 1 clic",
+    price_tag:"💰 Tarifs", price_h:"Simple et transparent", price_p:"Commence gratuitement, sans carte bancaire.",
+    free_title:"Gratuit<span style='font-size:15px;display:block;margin-top:4px'>/7 jours</span>", free_sub:"Accès complet, sans carte",
+    free_f1:"Coach IA 6 messages/jour", free_f2:"3 recettes/jour", free_f3:"3 séances/jour",
+    free_f4:"Scan code-barres", free_f5:"Scan photo repas", free_f6:"Sync Apple Santé",
     free_btn:"Être notifié au lancement",
-    pro_badge:"🔥 Le plus populaire",pro_save:"5,83€/mois · -55% vs mensuel",
-    pro_f1:"Coach IA 50 messages/jour",pro_f2:"Recettes illimitées",pro_f3:"Séances illimitées",
-    pro_f4:"Programme multi-semaines IA",pro_f5:"Coach vocal",pro_f6:"iCloud multi-appareils",
-    pro_f7:"200+ exercices illustrés",pro_f8:"Support prioritaire",
-    pro_btn:"Être notifié au lancement",price_note:"Option mensuelle 12,99€/mois · Annulation à tout moment via Réglages iOS",
-    sup_h1:"Support",sup_contact_h:"📧 Contact",sup_response:"Réponse sous 24-48h en semaine.",
+    pro_badge:"🔥 Le plus populaire", pro_save:"5,83€/mois · -55% vs mensuel",
+    pro_f1:"Coach IA 50 messages/jour", pro_f2:"Recettes illimitées", pro_f3:"Séances illimitées",
+    pro_f4:"Programme multi-semaines IA", pro_f5:"Coach vocal", pro_f6:"iCloud multi-appareils",
+    pro_f7:"200+ exercices illustrés", pro_f8:"Support prioritaire",
+    pro_btn:"Être notifié au lancement", price_note:"Option mensuelle 12,99€/mois · Annulation à tout moment via Réglages iOS",
+    sup_h1:"Support", sup_contact_h:"📧 Contact", sup_response:"Réponse sous 24-48h en semaine.",
     sup_faq1:"Comment annuler ? → Réglages iOS → Apple ID → Abonnements → FitCoach AI → Annuler.",
     sup_faq2:"Produit non trouvé au scan ? → Ajoute les infos manuellement dans le chat coach.",
-    priv_h1:"Politique de confidentialité",priv_h2:"Données collectées",
-    priv_l1:"Profil : prénom, âge, poids, objectifs (local)",priv_l2:"Repas et macros (local)",
-    priv_l3:"Messages coach IA (transmis à Anthropic)",priv_l4:"Email liste d'attente (via Tally)",
-    priv_h3:"Partage",priv_p3:"Nous ne vendons jamais tes données. Messages via Anthropic. Paiements via Apple. Scan via Open Food Facts.",
-    terms_h1:"Conditions d'utilisation",terms_h2:"Service",terms_p2:"FitCoach AI est une app de coaching IA. Les conseils sont informatifs et ne remplacent pas un avis médical.",
-    terms_h3:"Abonnement",terms_l1:"Essai gratuit 7 jours",terms_l2:"69,99€/an ou 12,99€/mois",terms_l3:"Annulation via Réglages iOS",
-    foot_support:"Support",foot_privacy:"Confidentialité",foot_terms:"Conditions"
+    sup_notify_h:"🔔 Être notifié au lancement", sup_notify_p:"Inscris-toi pour être prévenu en avant-première à la sortie officielle sur l'App Store.",
+    sup_notify_btn:"🔔 Rejoindre la liste d'attente",
+    priv_h1:"Politique de confidentialité", priv_h2:"Données collectées",
+    priv_l1:"Profil : prénom, âge, poids, objectifs — stockés localement sur ton appareil",
+    priv_l2:"Repas et macros journaliers — stockés localement",
+    priv_l3:"Messages coach IA — transmis à Anthropic pour générer les réponses",
+    priv_l4:"Email liste d'attente — collecté via Tally uniquement",
+    priv_h_store:"🔒 Stockage", priv_store_p:"💡 Toutes tes données de santé sont stockées uniquement sur ton iPhone. Elles ne quittent jamais ton appareil.",
+    priv_h3:"Partage des données",
+    priv_share1:"Anthropic — Messages coach IA uniquement", priv_share2:"Apple — Paiements via l'App Store",
+    priv_share3:"Open Food Facts — Recherche produits (scan)", priv_share4:"Open-Meteo — Données météo locales",
+    priv_no_sell:"🚫 Nous ne vendons jamais tes données. Aucun partage publicitaire.",
+    priv_rgpd:"Conformément au RGPD, tu as le droit d'accéder, rectifier et supprimer tes données.",
+    terms_h1:"Conditions d'utilisation", terms_h2:"Service",
+    terms_p2:"FitCoach AI est une application de coaching IA. Les conseils sont informatifs et ne remplacent pas un avis médical.",
+    terms_warning:"⚠️ Consultez toujours un professionnel de santé avant de modifier significativement votre alimentation ou programme d'exercice.",
+    terms_h3:"Abonnement", terms_l1:"Essai gratuit 7 jours — accès complet", terms_l2:"69,99€/an (5,83€/mois)",
+    terms_l3:"12,99€/mois", terms_l4:"Annulation via Réglages iOS → Apple ID → Abonnements",
+    terms_h_prohibited:"🚫 Utilisation interdite",
+    terms_p1:"Utilisation à des fins commerciales sans autorisation",
+    terms_p2b:"Tentative de décompilation ou extraction du code source",
+    terms_p3:"Partage de l'accès avec des tiers",
+    foot_home:"Accueil", foot_support:"Support", foot_privacy:"Confidentialité", foot_terms:"Conditions"
   },
   en:{
-    badge:"Coming soon to the App Store",
-    nav_cta:"🔔 Notify me",
+    badge:"Coming soon to the App Store", nav_cta:"🔔 Notify me",
     hero_h1:"Your personal nutrition<br>& fitness coach <span class='grad'>powered by AI</span>",
     hero_p:"FitCoach AI analyzes your meals, scans your products, generates your workouts and motivates you every day.",
-    hero_cta1:"🔔 Get notified at launch",hero_cta2:"Discover the app",
-    stat1:"days free trial",stat2:"Per year · €5.83/mo",stat3:"Scannable products",stat4:"Illustrated exercises",
-    feat_tag:"✨ Features",feat_h:"Everything you need",feat_p:"One app for nutrition, fitness and AI coaching.",
-    f1_h:"Personal AI Coach",f1_p:"A coach who knows you by name and replies in 1 second. Available 24/7.",
-    f2_h:"Product barcode scan",f2_p:"Scan any supermarket product. Calories, protein, carbs, fat and Nutri-Score instantly.",
-    f3_h:"AI-generated recipes",f3_p:"3 ultra-varied recipes from 15 world cuisines. Tailored to your allergies.",
-    f4_h:"Custom home workouts",f4_p:"200+ exercises illustrated in 3 steps with directional arrows.",
-    f5_h:"Meal photo scan",f5_p:"Take a photo of your plate — AI analyzes macros instantly.",
-    f6_h:"Apple Health sync",f6_p:"Steps, calories burned, heart rate and weight synced automatically.",
-    f7_h:"Streak & 11 badges",f7_p:"Full gamification to stay motivated. Daily streak and unlockable badges.",
-    f8_h:"Voice coach during workout",f8_p:"Talk to your coach while exercising. It replies out loud.",
-    f9_h:"iCloud multi-device sync",f9_p:"Your data synced across all your Apple devices.",
-    scan_tag:"📷 New",scan_h:"Barcode scan<br><span class='grad'>in 1 second</span>",
-    scan_product:"Greek yogurt",scan_add:"✅ Add to journal",
-    sf1_h:"3 million products",sf1_p:"Open Food Facts database — the world's largest open food database.",
-    sf2_h:"Result in 1 second",sf2_p:"Scan the barcode, macros appear instantly.",
-    sf3_h:"Nutri-Score A to E",sf3_p:"Nutritional quality displayed instantly for every scanned product.",
-    sf4_h:"Add to journal in 1 tap",sf4_p:"Calories and macros updated in real time in your daily log.",
-    steps_tag:"🚀 How it works",steps_h:"Ready in 3 minutes",
-    s1_h:"Create your profile",s1_p:"Name, goals and preferences in 2 minutes. AI calculates your nutritional needs.",
-    s2_h:"Talk to your coach",s2_p:"Tell what you ate, scan products or request a workout. Replies in 1 second.",
-    s3_h:"Reach your goals",s3_p:"Track your progress every day. The coach adapts and motivates you.",
-    wl_badge:"Launching soon",wl_h:"Be among the first<br>to discover FitCoach AI",
+    hero_cta1:"🔔 Get notified at launch", hero_cta2:"Discover the app",
+    stat1:"days free trial", stat2:"Per year · €5.83/mo", stat3:"Scannable products", stat4:"Illustrated exercises",
+    feat_tag:"✨ Features", feat_h:"Everything you need", feat_p:"One app for nutrition, fitness and AI coaching.",
+    f1_h:"Personal AI Coach", f1_p:"A coach who knows you by name and replies in 1 second. Available 24/7.",
+    f2_h:"Product barcode scan", f2_p:"Scan any supermarket product. Calories, protein, carbs, fat and Nutri-Score instantly.",
+    f3_h:"AI-generated recipes", f3_p:"3 ultra-varied recipes from 15 world cuisines. Tailored to your allergies.",
+    f4_h:"Custom home workouts", f4_p:"200+ exercises illustrated in 3 steps with directional arrows.",
+    f5_h:"Meal photo scan", f5_p:"Take a photo of your plate — AI analyzes macros instantly.",
+    f6_h:"Apple Health sync", f6_p:"Steps, calories burned, heart rate and weight synced automatically.",
+    f7_h:"Streak & 11 badges", f7_p:"Full gamification to stay motivated. Daily streak and unlockable badges.",
+    f8_h:"Voice coach during workout", f8_p:"Talk to your coach while exercising. It replies out loud.",
+    f9_h:"iCloud multi-device sync", f9_p:"Your data synced across all your Apple devices.",
+    scan_tag:"📷 New", scan_h:"Barcode scan<br><span class='grad'>in 1 second</span>",
+    scan_product:"Greek yogurt", scan_add:"✅ Add to journal",
+    sf1_h:"3 million products", sf1_p:"Open Food Facts — the world's largest open food database.",
+    sf2_h:"Result in 1 second", sf2_p:"Scan the barcode, macros appear instantly.",
+    sf3_h:"Nutri-Score A to E", sf3_p:"Nutritional quality displayed instantly for every scanned product.",
+    sf4_h:"Add to journal in 1 tap", sf4_p:"Calories and macros updated in real time in your daily log.",
+    steps_tag:"🚀 How it works", steps_h:"Ready in 3 minutes",
+    s1_h:"Create your profile", s1_p:"Name, goals and preferences in 2 minutes. AI calculates your nutritional needs.",
+    s2_h:"Talk to your coach", s2_p:"Tell what you ate, scan products or request a workout. Replies in 1 second.",
+    s3_h:"Reach your goals", s3_p:"Track your progress every day. The coach adapts and motivates you.",
+    wl_badge:"Launching soon", wl_h:"Be among the first<br>to discover FitCoach AI",
     wl_p:"Enter your email below. You'll be notified first and benefit from the 7-day free trial.",
-    perk1:"100% free · no spam",perk2:"First to be notified",perk3:"7 days free trial",perk4:"Unsubscribe in 1 click",
-    price_tag:"💰 Pricing",price_h:"Simple and transparent",price_p:"Start for free, no credit card required.",
-    free_title:"Free<span style='font-size:15px;display:block;margin-top:4px'>/7 days</span>",free_sub:"Full access, no card",
-    free_f1:"AI coach 6 messages/day",free_f2:"3 recipes/day",free_f3:"3 workouts/day",
-    free_f4:"Barcode scan",free_f5:"Meal photo scan",free_f6:"Apple Health sync",
+    perk1:"100% free · no spam", perk2:"First to be notified", perk3:"7 days free trial", perk4:"Unsubscribe in 1 click",
+    price_tag:"💰 Pricing", price_h:"Simple and transparent", price_p:"Start for free, no credit card required.",
+    free_title:"Free<span style='font-size:15px;display:block;margin-top:4px'>/7 days</span>", free_sub:"Full access, no card",
+    free_f1:"AI coach 6 messages/day", free_f2:"3 recipes/day", free_f3:"3 workouts/day",
+    free_f4:"Barcode scan", free_f5:"Meal photo scan", free_f6:"Apple Health sync",
     free_btn:"Get notified at launch",
-    pro_badge:"🔥 Most popular",pro_save:"€5.83/month · -55% vs monthly",
-    pro_f1:"AI coach 50 messages/day",pro_f2:"Unlimited recipes",pro_f3:"Unlimited workouts",
-    pro_f4:"AI multi-week program",pro_f5:"Voice coach",pro_f6:"iCloud multi-device",
-    pro_f7:"200+ illustrated exercises",pro_f8:"Priority support",
-    pro_btn:"Get notified at launch",price_note:"Monthly option €12.99/month · Cancel anytime via iOS Settings",
-    sup_h1:"Support",sup_contact_h:"📧 Contact",sup_response:"Response within 24-48h on weekdays.",
+    pro_badge:"🔥 Most popular", pro_save:"€5.83/month · -55% vs monthly",
+    pro_f1:"AI coach 50 messages/day", pro_f2:"Unlimited recipes", pro_f3:"Unlimited workouts",
+    pro_f4:"AI multi-week program", pro_f5:"Voice coach", pro_f6:"iCloud multi-device",
+    pro_f7:"200+ illustrated exercises", pro_f8:"Priority support",
+    pro_btn:"Get notified at launch", price_note:"Monthly option €12.99/month · Cancel anytime via iOS Settings",
+    sup_h1:"Support", sup_contact_h:"📧 Contact", sup_response:"Response within 24-48h on weekdays.",
     sup_faq1:"How to cancel? → iOS Settings → Apple ID → Subscriptions → FitCoach AI → Cancel.",
     sup_faq2:"Product not found when scanning? → Add info manually in the coach chat.",
-    priv_h1:"Privacy Policy",priv_h2:"Data collected",
-    priv_l1:"Profile: name, age, weight, goals (local)",priv_l2:"Meals and macros (local)",
-    priv_l3:"Coach messages (sent to Anthropic)",priv_l4:"Email waitlist (via Tally)",
-    priv_h3:"Sharing",priv_p3:"We never sell your data. Messages via Anthropic. Payments via Apple. Scan via Open Food Facts.",
-    terms_h1:"Terms of Use",terms_h2:"Service",terms_p2:"FitCoach AI is an AI coaching app. Advice is informational and does not replace medical advice.",
-    terms_h3:"Subscription",terms_l1:"7-day free trial",terms_l2:"€69.99/year or €12.99/month",terms_l3:"Cancel via iOS Settings",
-    foot_support:"Support",foot_privacy:"Privacy",foot_terms:"Terms"
-  },
-  es:{
-    badge:"Próximamente en el App Store",
-    nav_cta:"🔔 Notificarme",
-    hero_h1:"Tu coach personal de nutrición<br>& fitness <span class='grad'>impulsado por IA</span>",
-    hero_p:"FitCoach AI analiza tus comidas, escanea tus productos, genera tus entrenamientos y te motiva cada día.",
-    hero_cta1:"🔔 Ser notificado al lanzamiento",hero_cta2:"Descubrir la app",
-    stat1:"días de prueba gratis",stat2:"Por año · 5,83€/mes",stat3:"Productos escaneables",stat4:"Ejercicios ilustrados",
-    feat_tag:"✨ Funcionalidades",feat_h:"Todo lo que necesitas",feat_p:"Una sola app para nutrición, fitness y coaching IA.",
-    f1_h:"Coach IA personal",f1_p:"Un coach que te conoce por nombre y responde en 1 segundo. Disponible 24/7.",
-    f2_h:"Escaneo de código de barras",f2_p:"Escanea cualquier producto del supermercado. Calorías, proteínas, carbohidratos y Nutri-Score al instante.",
-    f3_h:"Recetas generadas por IA",f3_p:"3 recetas ultra-variadas de 15 cocinas del mundo. Adaptadas a tus alergias.",
-    f4_h:"Entrenamientos en casa",f4_p:"200+ ejercicios ilustrados en 3 pasos con flechas direccionales.",
-    f5_h:"Escaneo de foto de comida",f5_p:"Toma una foto de tu plato — la IA analiza las macros al instante.",
-    f6_h:"Sync Apple Salud",f6_p:"Pasos, calorías quemadas, frecuencia cardíaca y peso sincronizados automáticamente.",
-    f7_h:"Racha & 11 insignias",f7_p:"Gamificación completa para mantenerte motivado.",
-    f8_h:"Coach de voz durante el entrenamiento",f8_p:"Habla con tu coach mientras haces ejercicio. Responde en voz alta.",
-    f9_h:"Sync iCloud multidispositivo",f9_p:"Tus datos sincronizados en todos tus dispositivos Apple.",
-    scan_tag:"📷 Nuevo",scan_h:"Escaneo de código<br><span class='grad'>en 1 segundo</span>",
-    scan_product:"Yogur griego natural",scan_add:"✅ Añadir al diario",
-    sf1_h:"3 millones de productos",sf1_p:"Base de datos Open Food Facts.",
-    sf2_h:"Resultado en 1 segundo",sf2_p:"Escanea el código, las macros aparecen al instante.",
-    sf3_h:"Nutri-Score A a E",sf3_p:"Calidad nutricional mostrada al instante.",
-    sf4_h:"Añadir al diario en 1 tap",sf4_p:"Calorías y macros actualizados en tiempo real.",
-    steps_tag:"🚀 Cómo funciona",steps_h:"Listo en 3 minutos",
-    s1_h:"Crea tu perfil",s1_p:"Nombre, objetivos y preferencias en 2 minutos.",
-    s2_h:"Habla con tu coach",s2_p:"Di lo que comiste, escanea productos o pide un entrenamiento.",
-    s3_h:"Alcanza tus objetivos",s3_p:"Sigue tu progreso cada día. El coach se adapta y te motiva.",
-    wl_badge:"Lanzamiento próximo",wl_h:"Sé de los primeros<br>en descubrir FitCoach AI",
-    wl_p:"Ingresa tu email. Serás notificado primero y tendrás acceso a la prueba gratuita de 7 días.",
-    perk1:"100% gratis · sin spam",perk2:"Notificado primero",perk3:"7 días de prueba gratis",perk4:"Cancelar en 1 clic",
-    price_tag:"💰 Precios",price_h:"Simple y transparente",price_p:"Empieza gratis, sin tarjeta.",
-    free_title:"Gratis<span style='font-size:15px;display:block;margin-top:4px'>/7 días</span>",free_sub:"Acceso completo, sin tarjeta",
-    free_f1:"Coach IA 6 mensajes/día",free_f2:"3 recetas/día",free_f3:"3 entrenamientos/día",
-    free_f4:"Escaneo de código de barras",free_f5:"Escaneo de foto",free_f6:"Sync Apple Salud",
-    free_btn:"Ser notificado al lanzamiento",
-    pro_badge:"🔥 Más popular",pro_save:"5,83€/mes · -55% vs mensual",
-    pro_f1:"Coach IA 50 mensajes/día",pro_f2:"Recetas ilimitadas",pro_f3:"Entrenamientos ilimitados",
-    pro_f4:"Programa IA multi-semanas",pro_f5:"Coach de voz",pro_f6:"iCloud multidispositivo",
-    pro_f7:"200+ ejercicios ilustrados",pro_f8:"Soporte prioritario",
-    pro_btn:"Ser notificado al lanzamiento",price_note:"Opción mensual 12,99€/mes · Cancelar en Configuración iOS",
-    sup_h1:"Soporte",sup_contact_h:"📧 Contacto",sup_response:"Respuesta en 24-48h días hábiles.",
-    sup_faq1:"¿Cómo cancelar? → Configuración iOS → Apple ID → Suscripciones → FitCoach AI → Cancelar.",
-    sup_faq2:"¿Producto no encontrado? → Añade la info manualmente en el chat del coach.",
-    priv_h1:"Política de privacidad",priv_h2:"Datos recopilados",
-    priv_l1:"Perfil: nombre, edad, peso (local)",priv_l2:"Comidas y macros (local)",
-    priv_l3:"Mensajes del coach (enviados a Anthropic)",priv_l4:"Email lista de espera (via Tally)",
-    priv_h3:"Compartir",priv_p3:"Nunca vendemos tus datos.",
-    terms_h1:"Términos de uso",terms_h2:"Servicio",terms_p2:"FitCoach AI es una app de coaching IA. Los consejos son informativos.",
-    terms_h3:"Suscripción",terms_l1:"Prueba gratuita 7 días",terms_l2:"69,99€/año o 12,99€/mes",terms_l3:"Cancelar en Configuración iOS",
-    foot_support:"Soporte",foot_privacy:"Privacidad",foot_terms:"Términos"
+    sup_notify_h:"🔔 Get notified at launch", sup_notify_p:"Sign up to be notified first when the app launches on the App Store.",
+    sup_notify_btn:"🔔 Join the waitlist",
+    priv_h1:"Privacy Policy", priv_h2:"Data collected",
+    priv_l1:"Profile: name, age, weight, goals — stored locally on your device",
+    priv_l2:"Daily meals and macros — stored locally",
+    priv_l3:"AI coach messages — sent to Anthropic to generate responses",
+    priv_l4:"Waitlist email — collected via Tally only",
+    priv_h_store:"🔒 Storage", priv_store_p:"💡 All your health data is stored only on your iPhone. It never leaves your device.",
+    priv_h3:"Data sharing",
+    priv_share1:"Anthropic — AI coach messages only", priv_share2:"Apple — Payments via App Store",
+    priv_share3:"Open Food Facts — Product search (scan)", priv_share4:"Open-Meteo — Local weather data",
+    priv_no_sell:"🚫 We never sell your data. No advertising sharing.",
+    priv_rgpd:"Under GDPR, you have the right to access, correct and delete your data.",
+    terms_h1:"Terms of Use", terms_h2:"Service",
+    terms_p2:"FitCoach AI is an AI coaching app. Advice is informational and does not replace medical advice.",
+    terms_warning:"⚠️ Always consult a healthcare professional before significantly changing your diet or exercise program.",
+    terms_h3:"Subscription", terms_l1:"7-day free trial — full access", terms_l2:"€69.99/year (€5.83/month)",
+    terms_l3:"€12.99/month", terms_l4:"Cancel via iOS Settings → Apple ID → Subscriptions",
+    terms_h_prohibited:"🚫 Prohibited use",
+    terms_p1:"Commercial use without authorization",
+    terms_p2b:"Attempting to decompile or extract source code",
+    terms_p3:"Sharing access with third parties",
+    foot_home:"Home", foot_support:"Support", foot_privacy:"Privacy", foot_terms:"Terms"
   },
   de:{
-    badge:"Demnächst im App Store",
-    nav_cta:"🔔 Benachrichtigen",
+    badge:"Demnächst im App Store", nav_cta:"🔔 Benachrichtigen",
     hero_h1:"Dein persönlicher Ernährungs-<br>& Fitness-Coach <span class='grad'>powered by KI</span>",
     hero_p:"FitCoach AI analysiert deine Mahlzeiten, scannt deine Produkte, erstellt deine Workouts und motiviert dich täglich.",
-    hero_cta1:"🔔 Beim Launch benachrichtigen",hero_cta2:"App entdecken",
-    stat1:"Tage kostenlos testen",stat2:"Pro Jahr · 5,83€/Monat",stat3:"Scannbare Produkte",stat4:"Illustrierte Übungen",
-    feat_tag:"✨ Funktionen",feat_h:"Alles, was du brauchst",feat_p:"Eine App für Ernährung, Fitness und KI-Coaching.",
-    f1_h:"Persönlicher KI-Coach",f1_p:"Ein Coach, der dich beim Namen kennt und in 1 Sekunde antwortet. 24/7 verfügbar.",
-    f2_h:"Barcode-Scanner",f2_p:"Scanne jedes Supermarkt-Produkt. Kalorien, Protein, Kohlenhydrate und Nutri-Score sofort.",
-    f3_h:"KI-generierte Rezepte",f3_p:"3 abwechslungsreiche Rezepte aus 15 Weltküchen. Angepasst an deine Allergien.",
-    f4_h:"Maßgeschneiderte Heimworkouts",f4_p:"200+ Übungen in 3 Schritten illustriert mit Richtungspfeilen.",
-    f5_h:"Mahlzeiten-Foto-Scan",f5_p:"Foto deines Tellers — KI analysiert die Makros sofort.",
-    f6_h:"Apple Gesundheit Sync",f6_p:"Schritte, verbrannte Kalorien, Herzfrequenz und Gewicht automatisch synchronisiert.",
-    f7_h:"Streak & 11 Abzeichen",f7_p:"Vollständige Gamification, um motiviert zu bleiben.",
-    f8_h:"Sprach-Coach beim Training",f8_p:"Sprich mit deinem Coach während der Übungen. Er antwortet laut.",
-    f9_h:"iCloud Multi-Gerät Sync",f9_p:"Deine Daten auf allen Apple-Geräten synchronisiert.",
-    scan_tag:"📷 Neu",scan_h:"Barcode-Scan<br><span class='grad'>in 1 Sekunde</span>",
-    scan_product:"Griechischer Joghurt",scan_add:"✅ Zum Tagebuch hinzufügen",
-    sf1_h:"3 Millionen Produkte",sf1_p:"Open Food Facts — die größte Open-Source-Lebensmitteldatenbank.",
-    sf2_h:"Ergebnis in 1 Sekunde",sf2_p:"Barcode scannen, Makros erscheinen sofort.",
-    sf3_h:"Nutri-Score A bis E",sf3_p:"Nährwertqualität sofort für jedes gescannte Produkt angezeigt.",
-    sf4_h:"In 1 Tap zum Tagebuch",sf4_p:"Kalorien und Makros in Echtzeit aktualisiert.",
-    steps_tag:"🚀 So funktioniert es",steps_h:"In 3 Minuten bereit",
-    s1_h:"Profil erstellen",s1_p:"Name, Ziele und Vorlieben in 2 Minuten. KI berechnet deinen Nährstoffbedarf.",
-    s2_h:"Mit dem Coach sprechen",s2_p:"Sag was du gegessen hast, scanne Produkte oder fordere ein Workout an.",
-    s3_h:"Ziele erreichen",s3_p:"Verfolge deinen Fortschritt täglich. Der Coach passt sich an.",
-    wl_badge:"Start demnächst",wl_h:"Sei einer der Ersten,<br>die FitCoach AI entdecken",
+    hero_cta1:"🔔 Beim Launch benachrichtigen", hero_cta2:"App entdecken",
+    stat1:"Tage kostenlos testen", stat2:"Pro Jahr · 5,83€/Monat", stat3:"Scannbare Produkte", stat4:"Illustrierte Übungen",
+    feat_tag:"✨ Funktionen", feat_h:"Alles, was du brauchst", feat_p:"Eine App für Ernährung, Fitness und KI-Coaching.",
+    f1_h:"Persönlicher KI-Coach", f1_p:"Ein Coach, der dich beim Namen kennt und in 1 Sekunde antwortet. 24/7 verfügbar.",
+    f2_h:"Barcode-Scanner", f2_p:"Scanne jedes Supermarkt-Produkt. Kalorien, Protein, Kohlenhydrate und Nutri-Score sofort.",
+    f3_h:"KI-generierte Rezepte", f3_p:"3 abwechslungsreiche Rezepte aus 15 Weltküchen. Angepasst an deine Allergien.",
+    f4_h:"Maßgeschneiderte Heimworkouts", f4_p:"200+ Übungen in 3 Schritten illustriert mit Richtungspfeilen.",
+    f5_h:"Mahlzeiten-Foto-Scan", f5_p:"Foto deines Tellers — KI analysiert die Makros sofort.",
+    f6_h:"Apple Gesundheit Sync", f6_p:"Schritte, verbrannte Kalorien, Herzfrequenz und Gewicht automatisch synchronisiert.",
+    f7_h:"Streak & 11 Abzeichen", f7_p:"Vollständige Gamification, um motiviert zu bleiben.",
+    f8_h:"Sprach-Coach beim Training", f8_p:"Sprich mit deinem Coach während der Übungen. Er antwortet laut.",
+    f9_h:"iCloud Multi-Gerät Sync", f9_p:"Deine Daten auf allen Apple-Geräten synchronisiert.",
+    scan_tag:"📷 Neu", scan_h:"Barcode-Scan<br><span class='grad'>in 1 Sekunde</span>",
+    scan_product:"Griechischer Joghurt", scan_add:"✅ Zum Tagebuch hinzufügen",
+    sf1_h:"3 Millionen Produkte", sf1_p:"Open Food Facts — die größte Open-Source-Lebensmitteldatenbank.",
+    sf2_h:"Ergebnis in 1 Sekunde", sf2_p:"Barcode scannen, Makros erscheinen sofort.",
+    sf3_h:"Nutri-Score A bis E", sf3_p:"Nährwertqualität sofort für jedes gescannte Produkt angezeigt.",
+    sf4_h:"In 1 Tap zum Tagebuch", sf4_p:"Kalorien und Makros in Echtzeit aktualisiert.",
+    steps_tag:"🚀 So funktioniert es", steps_h:"In 3 Minuten bereit",
+    s1_h:"Profil erstellen", s1_p:"Name, Ziele und Vorlieben in 2 Minuten. KI berechnet deinen Nährstoffbedarf.",
+    s2_h:"Mit dem Coach sprechen", s2_p:"Sag was du gegessen hast, scanne Produkte oder fordere ein Workout an.",
+    s3_h:"Ziele erreichen", s3_p:"Verfolge deinen Fortschritt täglich. Der Coach passt sich an.",
+    wl_badge:"Start demnächst", wl_h:"Sei einer der Ersten,<br>die FitCoach AI entdecken",
     wl_p:"Gib deine E-Mail ein. Du wirst zuerst benachrichtigt und erhältst die kostenlose 7-Tage-Testversion.",
-    perk1:"100% kostenlos · kein Spam",perk2:"Als Erster benachrichtigt",perk3:"7 Tage gratis testen",perk4:"Abmeldung in 1 Klick",
-    price_tag:"💰 Preise",price_h:"Einfach und transparent",price_p:"Kostenlos starten, keine Kreditkarte erforderlich.",
-    free_title:"Kostenlos<span style='font-size:15px;display:block;margin-top:4px'>/7 Tage</span>",free_sub:"Voller Zugang, ohne Karte",
-    free_f1:"KI-Coach 6 Nachrichten/Tag",free_f2:"3 Rezepte/Tag",free_f3:"3 Workouts/Tag",
-    free_f4:"Barcode-Scanner",free_f5:"Mahlzeiten-Foto-Scan",free_f6:"Apple Gesundheit Sync",
+    perk1:"100% kostenlos · kein Spam", perk2:"Als Erster benachrichtigt", perk3:"7 Tage gratis testen", perk4:"Abmeldung in 1 Klick",
+    price_tag:"💰 Preise", price_h:"Einfach und transparent", price_p:"Kostenlos starten, keine Kreditkarte erforderlich.",
+    free_title:"Kostenlos<span style='font-size:15px;display:block;margin-top:4px'>/7 Tage</span>", free_sub:"Voller Zugang, ohne Karte",
+    free_f1:"KI-Coach 6 Nachrichten/Tag", free_f2:"3 Rezepte/Tag", free_f3:"3 Workouts/Tag",
+    free_f4:"Barcode-Scanner", free_f5:"Mahlzeiten-Foto-Scan", free_f6:"Apple Gesundheit Sync",
     free_btn:"Beim Launch benachrichtigen",
-    pro_badge:"🔥 Beliebteste Wahl",pro_save:"5,83€/Monat · -55% vs. monatlich",
-    pro_f1:"KI-Coach 50 Nachrichten/Tag",pro_f2:"Unbegrenzte Rezepte",pro_f3:"Unbegrenzte Workouts",
-    pro_f4:"KI Multi-Wochen-Programm",pro_f5:"Sprach-Coach",pro_f6:"iCloud Multi-Gerät",
-    pro_f7:"200+ illustrierte Übungen",pro_f8:"Prioritätssupport",
-    pro_btn:"Beim Launch benachrichtigen",price_note:"Monatsoption 12,99€/Monat · Jederzeit über iOS-Einstellungen kündigen",
-    sup_h1:"Support",sup_contact_h:"📧 Kontakt",sup_response:"Antwort innerhalb von 24-48 Stunden.",
+    pro_badge:"🔥 Beliebteste Wahl", pro_save:"5,83€/Monat · -55% vs. monatlich",
+    pro_f1:"KI-Coach 50 Nachrichten/Tag", pro_f2:"Unbegrenzte Rezepte", pro_f3:"Unbegrenzte Workouts",
+    pro_f4:"KI Multi-Wochen-Programm", pro_f5:"Sprach-Coach", pro_f6:"iCloud Multi-Gerät",
+    pro_f7:"200+ illustrierte Übungen", pro_f8:"Prioritätssupport",
+    pro_btn:"Beim Launch benachrichtigen", price_note:"Monatsoption 12,99€/Monat · Jederzeit über iOS-Einstellungen kündigen",
+    sup_h1:"Support", sup_contact_h:"📧 Kontakt", sup_response:"Antwort innerhalb von 24-48 Stunden.",
     sup_faq1:"Wie kündigen? → iOS-Einstellungen → Apple ID → Abonnements → FitCoach AI → Kündigen.",
     sup_faq2:"Produkt nicht gefunden? → Infos manuell im Coach-Chat eingeben.",
-    priv_h1:"Datenschutzrichtlinie",priv_h2:"Gesammelte Daten",
-    priv_l1:"Profil: Name, Alter, Gewicht (lokal)",priv_l2:"Mahlzeiten und Makros (lokal)",
-    priv_l3:"Coach-Nachrichten (an Anthropic übermittelt)",priv_l4:"E-Mail Warteliste (via Tally)",
-    priv_h3:"Weitergabe",priv_p3:"Wir verkaufen deine Daten niemals.",
-    terms_h1:"Nutzungsbedingungen",terms_h2:"Dienst",terms_p2:"FitCoach AI ist eine KI-Coaching-App. Die Ratschläge sind informativ und ersetzen keinen medizinischen Rat.",
-    terms_h3:"Abonnement",terms_l1:"7 Tage kostenlos testen",terms_l2:"69,99€/Jahr oder 12,99€/Monat",terms_l3:"Kündigung über iOS-Einstellungen",
-    foot_support:"Support",foot_privacy:"Datenschutz",foot_terms:"AGB",
+    sup_notify_h:"🔔 Beim Launch benachrichtigt werden", sup_notify_p:"Melde dich an, um als Erster benachrichtigt zu werden.",
+    sup_notify_btn:"🔔 Warteliste beitreten",
+    priv_h1:"Datenschutzrichtlinie", priv_h2:"Gesammelte Daten",
+    priv_l1:"Profil: Name, Alter, Gewicht — lokal gespeichert",
+    priv_l2:"Mahlzeiten und Makros — lokal gespeichert",
+    priv_l3:"KI-Coach-Nachrichten — an Anthropic übermittelt",
+    priv_l4:"Wartelisten-E-Mail — über Tally gesammelt",
+    priv_h_store:"🔒 Speicherung", priv_store_p:"💡 Alle Gesundheitsdaten werden nur auf deinem iPhone gespeichert.",
+    priv_h3:"Datenweitergabe",
+    priv_share1:"Anthropic — Nur KI-Coach-Nachrichten", priv_share2:"Apple — App Store Zahlungen",
+    priv_share3:"Open Food Facts — Produktsuche", priv_share4:"Open-Meteo — Wetterdaten",
+    priv_no_sell:"🚫 Wir verkaufen deine Daten niemals.",
+    priv_rgpd:"Gemäß DSGVO hast du das Recht auf Zugang, Berichtigung und Löschung deiner Daten.",
+    terms_h1:"Nutzungsbedingungen", terms_h2:"Dienst",
+    terms_p2:"FitCoach AI ist eine KI-Coaching-App. Die Ratschläge sind informativ.",
+    terms_warning:"⚠️ Konsultiere immer einen Arzt, bevor du deine Ernährung oder dein Training wesentlich änderst.",
+    terms_h3:"Abonnement", terms_l1:"7 Tage kostenlos — voller Zugang", terms_l2:"69,99€/Jahr (5,83€/Monat)",
+    terms_l3:"12,99€/Monat", terms_l4:"Kündigung über iOS-Einstellungen → Apple ID → Abonnements",
+    terms_h_prohibited:"🚫 Verbotene Nutzung",
+    terms_p1:"Kommerzielle Nutzung ohne Genehmigung",
+    terms_p2b:"Versuche zur Dekompilierung des Quellcodes",
+    terms_p3:"Weitergabe des Zugangs an Dritte",
+    foot_home:"Startseite", foot_support:"Support", foot_privacy:"Datenschutz", foot_terms:"AGB"
+  },
+  es:{
+    badge:"Próximamente en el App Store", nav_cta:"🔔 Notificarme",
+    hero_h1:"Tu coach personal de nutrición<br>& fitness <span class='grad'>impulsado por IA</span>",
+    hero_p:"FitCoach AI analiza tus comidas, escanea tus productos, genera tus entrenamientos y te motiva cada día.",
+    hero_cta1:"🔔 Ser notificado al lanzamiento", hero_cta2:"Descubrir la app",
+    stat1:"días de prueba gratis", stat2:"Por año · 5,83€/mes", stat3:"Productos escaneables", stat4:"Ejercicios ilustrados",
+    feat_tag:"✨ Funcionalidades", feat_h:"Todo lo que necesitas", feat_p:"Una sola app para nutrición, fitness y coaching IA.",
+    f1_h:"Coach IA personal", f1_p:"Un coach que te conoce por nombre y responde en 1 segundo. Disponible 24/7.",
+    f2_h:"Escaneo de código de barras", f2_p:"Escanea cualquier producto. Calorías, proteínas, carbohidratos y Nutri-Score al instante.",
+    f3_h:"Recetas generadas por IA", f3_p:"3 recetas ultra-variadas de 15 cocinas del mundo. Adaptadas a tus alergias.",
+    f4_h:"Entrenamientos en casa", f4_p:"200+ ejercicios ilustrados en 3 pasos con flechas direccionales.",
+    f5_h:"Escaneo de foto de comida", f5_p:"Toma una foto de tu plato — la IA analiza las macros al instante.",
+    f6_h:"Sync Apple Salud", f6_p:"Pasos, calorías y peso sincronizados automáticamente.",
+    f7_h:"Racha & 11 insignias", f7_p:"Gamificación completa para mantenerte motivado.",
+    f8_h:"Coach de voz durante el entrenamiento", f8_p:"Habla con tu coach mientras haces ejercicio.",
+    f9_h:"Sync iCloud multidispositivo", f9_p:"Tus datos sincronizados en todos tus dispositivos Apple.",
+    scan_tag:"📷 Nuevo", scan_h:"Escaneo de código<br><span class='grad'>en 1 segundo</span>",
+    scan_product:"Yogur griego natural", scan_add:"✅ Añadir al diario",
+    sf1_h:"3 millones de productos", sf1_p:"Base de datos Open Food Facts.",
+    sf2_h:"Resultado en 1 segundo", sf2_p:"Escanea el código, las macros aparecen al instante.",
+    sf3_h:"Nutri-Score A a E", sf3_p:"Calidad nutricional mostrada al instante.",
+    sf4_h:"Añadir al diario en 1 tap", sf4_p:"Calorías y macros actualizados en tiempo real.",
+    steps_tag:"🚀 Cómo funciona", steps_h:"Listo en 3 minutos",
+    s1_h:"Crea tu perfil", s1_p:"Nombre, objetivos y preferencias en 2 minutos.",
+    s2_h:"Habla con tu coach", s2_p:"Di lo que comiste, escanea productos o pide un entrenamiento.",
+    s3_h:"Alcanza tus objetivos", s3_p:"Sigue tu progreso cada día. El coach se adapta y te motiva.",
+    wl_badge:"Lanzamiento próximo", wl_h:"Sé de los primeros<br>en descubrir FitCoach AI",
+    wl_p:"Ingresa tu email. Serás notificado primero y tendrás acceso a la prueba gratuita de 7 días.",
+    perk1:"100% gratis · sin spam", perk2:"Notificado primero", perk3:"7 días de prueba gratis", perk4:"Cancelar en 1 clic",
+    price_tag:"💰 Precios", price_h:"Simple y transparente", price_p:"Empieza gratis, sin tarjeta.",
+    free_title:"Gratis<span style='font-size:15px;display:block;margin-top:4px'>/7 días</span>", free_sub:"Acceso completo, sin tarjeta",
+    free_f1:"Coach IA 6 mensajes/día", free_f2:"3 recetas/día", free_f3:"3 entrenamientos/día",
+    free_f4:"Escaneo de código de barras", free_f5:"Escaneo de foto", free_f6:"Sync Apple Salud",
+    free_btn:"Ser notificado al lanzamiento",
+    pro_badge:"🔥 Más popular", pro_save:"5,83€/mes · -55% vs mensual",
+    pro_f1:"Coach IA 50 mensajes/día", pro_f2:"Recetas ilimitadas", pro_f3:"Entrenamientos ilimitados",
+    pro_f4:"Programa IA multi-semanas", pro_f5:"Coach de voz", pro_f6:"iCloud multidispositivo",
+    pro_f7:"200+ ejercicios ilustrados", pro_f8:"Soporte prioritario",
+    pro_btn:"Ser notificado al lanzamiento", price_note:"Opción mensual 12,99€/mes · Cancelar en Configuración iOS",
+    sup_h1:"Soporte", sup_contact_h:"📧 Contacto", sup_response:"Respuesta en 24-48h días hábiles.",
+    sup_faq1:"¿Cómo cancelar? → Configuración iOS → Apple ID → Suscripciones → FitCoach AI → Cancelar.",
+    sup_faq2:"¿Producto no encontrado? → Añade la info manualmente en el chat del coach.",
+    sup_notify_h:"🔔 Ser notificado al lanzamiento", sup_notify_p:"Regístrate para ser notificado primero cuando la app salga en el App Store.",
+    sup_notify_btn:"🔔 Unirse a la lista de espera",
+    priv_h1:"Política de privacidad", priv_h2:"Datos recopilados",
+    priv_l1:"Perfil: nombre, edad, peso — almacenados localmente",
+    priv_l2:"Comidas y macros diarios — almacenados localmente",
+    priv_l3:"Mensajes del coach IA — enviados a Anthropic",
+    priv_l4:"Email lista de espera — recopilado via Tally",
+    priv_h_store:"🔒 Almacenamiento", priv_store_p:"💡 Todos tus datos de salud se almacenan solo en tu iPhone.",
+    priv_h3:"Compartir datos",
+    priv_share1:"Anthropic — Solo mensajes del coach IA", priv_share2:"Apple — Pagos via App Store",
+    priv_share3:"Open Food Facts — Búsqueda de productos", priv_share4:"Open-Meteo — Datos meteorológicos",
+    priv_no_sell:"🚫 Nunca vendemos tus datos.",
+    priv_rgpd:"Bajo RGPD, tienes derecho a acceder, corregir y eliminar tus datos.",
+    terms_h1:"Términos de uso", terms_h2:"Servicio",
+    terms_p2:"FitCoach AI es una app de coaching IA. Los consejos son informativos.",
+    terms_warning:"⚠️ Consulta siempre a un profesional de salud antes de cambiar significativamente tu dieta.",
+    terms_h3:"Suscripción", terms_l1:"7 días de prueba gratuita — acceso completo", terms_l2:"69,99€/año (5,83€/mes)",
+    terms_l3:"12,99€/mes", terms_l4:"Cancelar en Configuración iOS → Apple ID → Suscripciones",
+    terms_h_prohibited:"🚫 Uso prohibido",
+    terms_p1:"Uso comercial sin autorización",
+    terms_p2b:"Intentos de descompilar el código fuente",
+    terms_p3:"Compartir el acceso con terceros",
+    foot_home:"Inicio", foot_support:"Soporte", foot_privacy:"Privacidad", foot_terms:"Términos"
+  },
   it:{
-    badge:"Presto sull'App Store",
-    nav_cta:"🔔 Avvisami",
+    badge:"Presto sull'App Store", nav_cta:"🔔 Avvisami",
     hero_h1:"Il tuo coach personale nutrizione<br>& fitness <span class='grad'>alimentato da IA</span>",
     hero_p:"FitCoach AI analizza i tuoi pasti, scansiona i tuoi prodotti, genera i tuoi allenamenti e ti motiva ogni giorno.",
-    hero_cta1:"🔔 Essere avvisato al lancio",hero_cta2:"Scopri l'app",
-    stat1:"giorni prova gratuita",stat2:"All'anno · 5,83€/mese",stat3:"Prodotti scansionabili",stat4:"Esercizi illustrati",
-    feat_tag:"✨ Funzionalità",feat_h:"Tutto ciò di cui hai bisogno",feat_p:"Un'unica app per nutrizione, fitness e coaching IA.",
-    f1_h:"Coach IA personale",f1_p:"Un coach che ti conosce per nome e risponde in 1 secondo. Disponibile 24/7.",
-    f2_h:"Scansione codice a barre",f2_p:"Scansiona qualsiasi prodotto del supermercato. Calorie, proteine, carboidrati e Nutri-Score istantaneamente.",
-    f3_h:"Ricette generate dall'IA",f3_p:"3 ricette ultra-variate da 15 cucine del mondo. Adattate alle tue allergie.",
-    f4_h:"Allenamenti a casa su misura",f4_p:"200+ esercizi illustrati in 3 passi con frecce direzionali.",
-    f5_h:"Scansione foto del pasto",f5_p:"Scatta una foto del tuo piatto — l'IA analizza le macro istantaneamente.",
-    f6_h:"Sync Apple Salute",f6_p:"Passi, calorie bruciate, frequenza cardiaca e peso sincronizzati automaticamente.",
-    f7_h:"Streak & 11 badge",f7_p:"Gamification completa per rimanere motivato. Streak quotidiano e badge sbloccabili.",
-    f8_h:"Coach vocale durante l'allenamento",f8_p:"Parla con il tuo coach mentre fai esercizio. Risponde ad alta voce.",
-    f9_h:"Sync iCloud multi-dispositivo",f9_p:"I tuoi dati sincronizzati su tutti i tuoi dispositivi Apple.",
-    scan_tag:"📷 Nuovo",scan_h:"Scansione codice a barre<br><span class='grad'>in 1 secondo</span>",
-    scan_product:"Yogurt greco naturale",scan_add:"✅ Aggiungi al diario",
-    sf1_h:"3 milioni di prodotti",sf1_p:"Database Open Food Facts — il più grande database alimentare open source al mondo.",
-    sf2_h:"Risultato in 1 secondo",sf2_p:"Scansiona il codice a barre, le macro appaiono immediatamente.",
-    sf3_h:"Nutri-Score da A a E",sf3_p:"Qualità nutrizionale mostrata istantaneamente per ogni prodotto scansionato.",
-    sf4_h:"Aggiungi al diario in 1 tap",sf4_p:"Calorie e macro aggiornate in tempo reale nel tuo diario.",
-    steps_tag:"🚀 Come funziona",steps_h:"Pronto in 3 minuti",
-    s1_h:"Crea il tuo profilo",s1_p:"Nome, obiettivi e preferenze in 2 minuti. L'IA calcola il tuo fabbisogno nutrizionale.",
-    s2_h:"Parla con il tuo coach",s2_p:"Digli cosa hai mangiato, scansiona prodotti o chiedi un allenamento. Risponde in 1 secondo.",
-    s3_h:"Raggiungi i tuoi obiettivi",s3_p:"Monitora i tuoi progressi ogni giorno. Il coach si adatta e ti motiva.",
-    wl_badge:"Lancio presto",wl_h:"Sii tra i primi<br>a scoprire FitCoach AI",
+    hero_cta1:"🔔 Essere avvisato al lancio", hero_cta2:"Scopri l'app",
+    stat1:"giorni prova gratuita", stat2:"All'anno · 5,83€/mese", stat3:"Prodotti scansionabili", stat4:"Esercizi illustrati",
+    feat_tag:"✨ Funzionalità", feat_h:"Tutto ciò di cui hai bisogno", feat_p:"Un'unica app per nutrizione, fitness e coaching IA.",
+    f1_h:"Coach IA personale", f1_p:"Un coach che ti conosce per nome e risponde in 1 secondo. Disponibile 24/7.",
+    f2_h:"Scansione codice a barre", f2_p:"Scansiona qualsiasi prodotto. Calorie, proteine, carboidrati e Nutri-Score istantaneamente.",
+    f3_h:"Ricette generate dall'IA", f3_p:"3 ricette ultra-variate da 15 cucine del mondo. Adattate alle tue allergie.",
+    f4_h:"Allenamenti a casa su misura", f4_p:"200+ esercizi illustrati in 3 passi con frecce direzionali.",
+    f5_h:"Scansione foto del pasto", f5_p:"Scatta una foto del tuo piatto — l'IA analizza le macro istantaneamente.",
+    f6_h:"Sync Apple Salute", f6_p:"Passi, calorie e peso sincronizzati automaticamente.",
+    f7_h:"Streak & 11 badge", f7_p:"Gamification completa per rimanere motivato.",
+    f8_h:"Coach vocale durante l'allenamento", f8_p:"Parla con il tuo coach mentre fai esercizio.",
+    f9_h:"Sync iCloud multi-dispositivo", f9_p:"I tuoi dati sincronizzati su tutti i tuoi dispositivi Apple.",
+    scan_tag:"📷 Nuovo", scan_h:"Scansione codice a barre<br><span class='grad'>in 1 secondo</span>",
+    scan_product:"Yogurt greco naturale", scan_add:"✅ Aggiungi al diario",
+    sf1_h:"3 milioni di prodotti", sf1_p:"Database Open Food Facts — il più grande database alimentare open source.",
+    sf2_h:"Risultato in 1 secondo", sf2_p:"Scansiona il codice, le macro appaiono immediatamente.",
+    sf3_h:"Nutri-Score da A a E", sf3_p:"Qualità nutrizionale mostrata istantaneamente.",
+    sf4_h:"Aggiungi al diario in 1 tap", sf4_p:"Calorie e macro aggiornate in tempo reale.",
+    steps_tag:"🚀 Come funziona", steps_h:"Pronto in 3 minuti",
+    s1_h:"Crea il tuo profilo", s1_p:"Nome, obiettivi e preferenze in 2 minuti.",
+    s2_h:"Parla con il tuo coach", s2_p:"Digli cosa hai mangiato, scansiona prodotti o chiedi un allenamento.",
+    s3_h:"Raggiungi i tuoi obiettivi", s3_p:"Monitora i tuoi progressi ogni giorno. Il coach si adatta e ti motiva.",
+    wl_badge:"Lancio presto", wl_h:"Sii tra i primi<br>a scoprire FitCoach AI",
     wl_p:"Inserisci la tua email. Sarai avvisato in anteprima e avrai accesso alla prova gratuita di 7 giorni.",
-    perk1:"100% gratuito · niente spam",perk2:"Avvisato in anteprima",perk3:"7 giorni di prova gratuiti",perk4:"Cancellazione in 1 click",
-    price_tag:"💰 Prezzi",price_h:"Semplice e trasparente",price_p:"Inizia gratuitamente, senza carta di credito.",
-    free_title:"Gratis<span style='font-size:15px;display:block;margin-top:4px'>/7 giorni</span>",free_sub:"Accesso completo, senza carta",
-    free_f1:"Coach IA 6 messaggi/giorno",free_f2:"3 ricette/giorno",free_f3:"3 allenamenti/giorno",
-    free_f4:"Scansione codice a barre",free_f5:"Scansione foto pasto",free_f6:"Sync Apple Salute",
+    perk1:"100% gratuito · niente spam", perk2:"Avvisato in anteprima", perk3:"7 giorni di prova gratuiti", perk4:"Cancellazione in 1 click",
+    price_tag:"💰 Prezzi", price_h:"Semplice e trasparente", price_p:"Inizia gratuitamente, senza carta di credito.",
+    free_title:"Gratis<span style='font-size:15px;display:block;margin-top:4px'>/7 giorni</span>", free_sub:"Accesso completo, senza carta",
+    free_f1:"Coach IA 6 messaggi/giorno", free_f2:"3 ricette/giorno", free_f3:"3 allenamenti/giorno",
+    free_f4:"Scansione codice a barre", free_f5:"Scansione foto pasto", free_f6:"Sync Apple Salute",
     free_btn:"Essere avvisato al lancio",
-    pro_badge:"🔥 Il più popolare",pro_save:"5,83€/mese · -55% vs mensile",
-    pro_f1:"Coach IA 50 messaggi/giorno",pro_f2:"Ricette illimitate",pro_f3:"Allenamenti illimitati",
-    pro_f4:"Programma IA multi-settimane",pro_f5:"Coach vocale",pro_f6:"iCloud multi-dispositivo",
-    pro_f7:"200+ esercizi illustrati",pro_f8:"Supporto prioritario",
-    pro_btn:"Essere avvisato al lancio",price_note:"Opzione mensile 12,99€/mese · Cancella in qualsiasi momento dalle Impostazioni iOS",
-    sup_h1:"Supporto",sup_contact_h:"📧 Contatto",sup_response:"Risposta entro 24-48 ore nei giorni feriali.",
+    pro_badge:"🔥 Il più popolare", pro_save:"5,83€/mese · -55% vs mensile",
+    pro_f1:"Coach IA 50 messaggi/giorno", pro_f2:"Ricette illimitate", pro_f3:"Allenamenti illimitati",
+    pro_f4:"Programma IA multi-settimane", pro_f5:"Coach vocale", pro_f6:"iCloud multi-dispositivo",
+    pro_f7:"200+ esercizi illustrati", pro_f8:"Supporto prioritario",
+    pro_btn:"Essere avvisato al lancio", price_note:"Opzione mensile 12,99€/mese · Cancella dalle Impostazioni iOS",
+    sup_h1:"Supporto", sup_contact_h:"📧 Contatto", sup_response:"Risposta entro 24-48 ore nei giorni feriali.",
     sup_faq1:"Come cancellare? → Impostazioni iOS → Apple ID → Abbonamenti → FitCoach AI → Cancella.",
     sup_faq2:"Prodotto non trovato? → Aggiungi le informazioni manualmente nella chat del coach.",
-    priv_h1:"Informativa sulla privacy",priv_h2:"Dati raccolti",
-    priv_l1:"Profilo: nome, età, peso (locale)",priv_l2:"Pasti e macro (locale)",
-    priv_l3:"Messaggi coach (inviati ad Anthropic)",priv_l4:"Email lista d'attesa (via Tally)",
-    priv_h3:"Condivisione",priv_p3:"Non vendiamo mai i tuoi dati.",
-    terms_h1:"Termini di utilizzo",terms_h2:"Servizio",terms_p2:"FitCoach AI è un'app di coaching IA. I consigli sono informativi e non sostituiscono un parere medico.",
-    terms_h3:"Abbonamento",terms_l1:"7 giorni di prova gratuita",terms_l2:"69,99€/anno o 12,99€/mese",terms_l3:"Cancella dalle Impostazioni iOS",
-    foot_support:"Supporto",foot_privacy:"Privacy",foot_terms:"Termini"
-  }
+    sup_notify_h:"🔔 Essere avvisato al lancio", sup_notify_p:"Iscriviti per essere avvisato in anteprima quando l'app sarà disponibile.",
+    sup_notify_btn:"🔔 Unisciti alla lista d'attesa",
+    priv_h1:"Informativa sulla privacy", priv_h2:"Dati raccolti",
+    priv_l1:"Profilo: nome, età, peso — archiviati localmente",
+    priv_l2:"Pasti e macro giornalieri — archiviati localmente",
+    priv_l3:"Messaggi coach IA — inviati ad Anthropic",
+    priv_l4:"Email lista d'attesa — raccolta via Tally",
+    priv_h_store:"🔒 Archiviazione", priv_store_p:"💡 Tutti i dati sanitari sono archiviati solo sul tuo iPhone.",
+    priv_h3:"Condivisione dei dati",
+    priv_share1:"Anthropic — Solo messaggi del coach IA", priv_share2:"Apple — Pagamenti via App Store",
+    priv_share3:"Open Food Facts — Ricerca prodotti", priv_share4:"Open-Meteo — Dati meteo locali",
+    priv_no_sell:"🚫 Non vendiamo mai i tuoi dati.",
+    priv_rgpd:"In base al GDPR, hai il diritto di accedere, correggere ed eliminare i tuoi dati.",
+    terms_h1:"Termini di utilizzo", terms_h2:"Servizio",
+    terms_p2:"FitCoach AI è un'app di coaching IA. I consigli sono informativi.",
+    terms_warning:"⚠️ Consulta sempre un professionista della salute prima di modificare significativamente la tua dieta.",
+    terms_h3:"Abbonamento", terms_l1:"7 giorni di prova gratuita — accesso completo", terms_l2:"69,99€/anno (5,83€/mese)",
+    terms_l3:"12,99€/mese", terms_l4:"Cancella da Impostazioni iOS → Apple ID → Abbonamenti",
+    terms_h_prohibited:"🚫 Utilizzo vietato",
+    terms_p1:"Uso commerciale senza autorizzazione",
+    terms_p2b:"Tentativi di decompilare il codice sorgente",
+    terms_p3:"Condivisione dell'accesso con terzi",
+    foot_home:"Home", foot_support:"Supporto", foot_privacy:"Privacy", foot_terms:"Termini"
   }
 };
 
 const FLAGS = {fr:'🇫🇷',en:'🇬🇧',es:'🇪🇸',de:'🇩🇪',it:'🇮🇹'};
 let currentLang = navigator.language.startsWith('en')?'en':navigator.language.startsWith('es')?'es':navigator.language.startsWith('de')?'de':navigator.language.startsWith('it')?'it':'fr';
 
-function applyLang(l){
+function applyLang(l) {
   currentLang = l;
   const t = T[l];
   document.documentElement.lang = l;
   document.getElementById('langFlag').textContent = FLAGS[l];
   document.getElementById('langCode').textContent = l.toUpperCase();
-  // Update all [data-t] elements
-  document.querySelectorAll('[data-t]').forEach(el=>{
+  document.querySelectorAll('[data-t]').forEach(el => {
     const key = el.getAttribute('data-t');
-    if(t[key] !== undefined) el.innerHTML = t[key];
+    if (t[key] !== undefined) el.innerHTML = t[key];
   });
-  // Update lang options
-  document.querySelectorAll('.lang-option').forEach(el=>{
+  document.querySelectorAll('.lang-option').forEach(el => {
     const names = {fr:'français',en:'english',es:'español',de:'deutsch',it:'italiano'};
     el.classList.toggle('active', el.textContent.toLowerCase().includes(names[l]||'français'));
   });
-  // Update meta
   const metas = {fr:"FitCoach AI — Ton coach nutrition & fitness IA",en:"FitCoach AI — Your AI nutrition & fitness coach",es:"FitCoach AI — Tu coach de nutrición & fitness IA",de:"FitCoach AI — Dein KI Ernährungs- & Fitness-Coach",it:"FitCoach AI — Il tuo coach nutrizione & fitness IA"};
   document.title = metas[l];
 }
 
-function setLang(l){ applyLang(l); toggleLang(); }
-function toggleLang(){
+function setLang(l) { applyLang(l); toggleLang(); }
+
+function toggleLang() {
   document.getElementById('langSel').classList.toggle('open');
 }
-document.addEventListener('click',function(e){
-  if(!document.getElementById('langSel').contains(e.target))
+document.addEventListener('click', function(e) {
+  if (!document.getElementById('langSel').contains(e.target))
     document.getElementById('langSel').classList.remove('open');
 });
 
-function scrollTo(id){
-  showPage('home');
-  setTimeout(function(){ var el=document.getElementById(id); if(el)el.scrollIntoView({behavior:'smooth'}); },120);
-}
-function goHome(){ showPage('home'); window.scrollTo(0,0); }
-function showPage(name){
-  ['home','support','privacy','terms'].forEach(function(p){
-    var el=document.getElementById('page-'+p);
-    if(el)el.style.display='none';
+// Navigation
+function showPage(name) {
+  ['home','support','privacy','terms'].forEach(function(p) {
+    var el = document.getElementById('page-'+p);
+    if (el) el.style.display = 'none';
   });
-  var el=document.getElementById('page-'+name);
-  if(el){el.style.display='block';window.scrollTo(0,0);}
+  var el = document.getElementById('page-'+name);
+  if (el) { el.style.display = 'block'; window.scrollTo(0,0); }
+  history.pushState(null, '', name === 'home' ? window.location.pathname : '#' + name);
+  applyLang(currentLang);
+}
+
+function goHome() { showPage('home'); }
+
+function goToPage(name) { showPage(name); }
+
+function goToWaitlist() {
+  showPage('home');
+  setTimeout(function() {
+    var el = document.getElementById('waitlist');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 120);
+}
+
+function goToFeatures() {
+  showPage('home');
+  setTimeout(function() {
+    var el = document.getElementById('features');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 120);
 }
 
 // Tally
 var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function(e){e.src=e.dataset.tallySrc})};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w;s.onload=v;s.onerror=v;d.body.appendChild(s);}
 
-// Init
+// Init — détecter le hash dans l'URL
 applyLang(currentLang);
+(function() {
+  var hash = window.location.hash.replace('#', '');
+  var pages = ['support','privacy','terms'];
+  if (pages.includes(hash)) {
+    showPage(hash);
+  } else if (hash === 'waitlist' || hash === 'features' || hash === 'beta' || hash === 'pricing') {
+    setTimeout(function() {
+      var el = document.getElementById(hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 300);
+  }
+})();
+
+window.addEventListener('popstate', function() {
+  var hash = window.location.hash.replace('#', '');
+  var pages = ['support','privacy','terms'];
+  if (pages.includes(hash)) { showPage(hash); }
+  else { showPage('home'); }
+});
 </script>
 </body>
 </html>
