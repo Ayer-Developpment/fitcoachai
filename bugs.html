@@ -154,6 +154,14 @@ footer{text-align:center;font-size:11px;color:#2A2A3A;margin-top:32px}
     <p id="lbl-sub">Mis à jour en temps réel · Signale un bug si tu en trouves un</p>
   </div>
 
+  <!-- LOADING -->
+  <div id="loading-indicator" style="display:none;text-align:center;padding:20px;color:#7878A0;font-size:13px">
+    🔄 Chargement depuis GitHub...
+  </div>
+  <div id="gh-error" style="display:none;text-align:center;padding:12px;background:rgba(255,80,80,.08);border:1px solid rgba(255,80,80,.2);border-radius:12px;color:#FF5050;font-size:12px;margin-bottom:16px">
+    ⚠️ Impossible de charger les bugs depuis GitHub. Vérifie ta connexion.
+  </div>
+
   <!-- LANG -->
   <div class="lang-bar">
     <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">🇫🇷 FR</button>
@@ -269,10 +277,17 @@ footer{text-align:center;font-size:11px;color:#2A2A3A;margin-top:32px}
 <script>
 // ── CONFIG ────────────────────────────────────────────────
 var ANTHROPIC_KEY = 'sk-ant-api03-5jIDffcEXEiQs3R29QUA5KNL0b8_pq4m2PXWVOtZqUdl-8vpWP1-sDLnN_MurGfqMkLNlVQWBVkV7jdmLSkduw-W_3AKAAA'; // clé API
-var ADMIN_PWD = 'FitCoachAdmin2026'; // ← change avant déploiement !
-var STORE_KEY = 'fitcoachai_bugs_v3';
-var TALLY_URL = 'https://tally.so/r/kdp641';
-// ─────────────────────────────────────────────────────────
+var ADMIN_PWD    = 'FitCoachAdmin2026';
+var TALLY_URL    = 'https://tally.so/r/kdp641';
+var ANTHROPIC_KEY = 'sk-ant-api03-5jIDffcEXEiQs3R29QUA5KNL0b8_pq4m2PXWVOtZqUdl-8vpWP1-sDLnN_MurGfqMkLNlVQWBVkV7jdmLSkduw-W_3AKAAA';
+
+// ── GITHUB CONFIG ─────────────────────────────────────────
+// Issues publiques du repo → visibles par tous sans token
+var GH_OWNER  = 'ayer-developpment';
+var GH_REPO   = 'fitcoachai';
+var GH_API    = 'https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/issues';
+// Token admin pour créer/modifier les issues (optionnel, stocké localement)
+var GH_TOKEN  = localStorage.getItem('gh_admin_token') || '';
 
 var lang = 'fr';
 var bugs = [];
@@ -388,11 +403,108 @@ var T = {
 };
 
 // ── STORAGE ───────────────────────────────────────────────
-function saveBugs(){ localStorage.setItem(STORE_KEY, JSON.stringify(bugs)); }
-function loadBugs(){
-  var d = localStorage.getItem(STORE_KEY);
-  bugs = d ? JSON.parse(d) : [];
+function // ── GITHUB ISSUES — LECTURE PUBLIQUE ────────────────────
+async function loadBugs() {
+  try {
+    document.getElementById('loading-indicator').style.display = 'block';
+    // Récupérer toutes les issues (open + closed) — 100 max
+    var resp = await fetch(GH_API + '?state=all&per_page=100&labels=bug', {
+      headers: { 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (!resp.ok) throw new Error('GitHub API ' + resp.status);
+    var issues = await resp.json();
+    bugs = issues.map(function(issue) {
+      // Parser le body JSON si disponible (format structuré)
+      var parsed = {};
+      try { parsed = JSON.parse(issue.body || '{}'); } catch(e) { parsed = {}; }
+      // Statut depuis les labels GitHub
+      var status = 'open';
+      issue.labels.forEach(function(l) {
+        if (l.name === 'in-progress') status = 'prog';
+        if (l.name === 'fixed' || issue.state === 'closed') status = 'fixed';
+      });
+      // Sévérité depuis les labels
+      var sev = 'medium';
+      issue.labels.forEach(function(l) {
+        if (l.name === 'high' || l.name === 'critical') sev = 'high';
+        if (l.name === 'low') sev = 'low';
+      });
+      return {
+        id:      issue.number,
+        ghNum:   issue.number,
+        titles:  parsed.titles  || { fr: issue.title, en: issue.title, de: issue.title, es: issue.title, it: issue.title },
+        descs:   parsed.descs   || { fr: parsed.desc || issue.body || '', en: parsed.desc || '', de: '', es: '', it: '' },
+        works:   parsed.works   || { fr: parsed.work || '', en: '', de: '', es: '', it: '' },
+        title:   issue.title,
+        desc:    parsed.desc || '',
+        work:    parsed.work || '',
+        sev:     parsed.sev || sev,
+        status:  status,
+        ver:     parsed.ver || '',
+        bta:     parsed.bta || '',
+        date:    issue.created_at
+      };
+    });
+  } catch(e) {
+    console.warn('GitHub load failed:', e);
+    bugs = [];
+    document.getElementById('gh-error').style.display = 'block';
+  }
+  document.getElementById('loading-indicator').style.display = 'none';
+  render();
 }
+
+// ── GITHUB ISSUES — ÉCRITURE (admin avec token) ──────────
+async function saveBugToGitHub(bug) {
+  if (!GH_TOKEN) {
+    alert('Token GitHub requis pour publier. Configure-le dans l\'espace admin.');
+    return false;
+  }
+  var body = JSON.stringify({
+    titles: bug.titles, descs: bug.descs, works: bug.works,
+    desc: bug.desc, work: bug.work, sev: bug.sev, ver: bug.ver, bta: bug.bta
+  }, null, 2);
+  var labels = [bug.sev === 'high' ? 'high' : (bug.sev === 'low' ? 'low' : 'medium'), 'bug'];
+  if (bug.status === 'prog')  labels.push('in-progress');
+  if (bug.status === 'fixed') labels.push('fixed');
+  var resp = await fetch(GH_API, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'token ' + GH_TOKEN,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ title: bug.title, body: body, labels: labels })
+  });
+  return resp.ok;
+}
+
+async function updateIssueStatus(ghNum, status) {
+  if (!GH_TOKEN) return;
+  var labels = bugs.find(function(b){ return b.ghNum === ghNum; });
+  var sev = labels ? labels.sev : 'medium';
+  var newLabels = [sev, 'bug'];
+  if (status === 'prog')  newLabels.push('in-progress');
+  if (status === 'fixed') newLabels.push('fixed');
+  var state = status === 'fixed' ? 'closed' : 'open';
+  await fetch(GH_API.replace('/issues', '/issues/' + ghNum), {
+    method: 'PATCH',
+    headers: { 'Authorization': 'token ' + GH_TOKEN, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ state: state, labels: newLabels })
+  });
+}
+
+async function deleteIssue(ghNum) {
+  // GitHub ne permet pas de supprimer les issues via API — on les ferme
+  if (!GH_TOKEN) return;
+  await fetch(GH_API.replace('/issues', '/issues/' + ghNum), {
+    method: 'PATCH',
+    headers: { 'Authorization': 'token ' + GH_TOKEN, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ state: 'closed', labels: ['deleted'] })
+  });
+}
+
+function saveBugs() { /* plus utilisé — GitHub est la source de vérité */ }
 
 // ── RENDER ────────────────────────────────────────────────
 function render(){
@@ -496,10 +608,18 @@ async function addBug(){
     }
   } catch(e){ console.warn('Translation failed, using original', e); }
 
-  bugs.unshift({ id:Date.now(), titles, descs, works,
-    title, desc, work, // fallback legacy
-    sev, status, ver, date:new Date().toISOString() });
-  saveBugs(); render();
+  var newBug = { id:Date.now(), titles, descs, works,
+    title, desc, work, sev, status, ver, date:new Date().toISOString() };
+  // Publier sur GitHub Issues
+  var ok = await saveBugToGitHub(newBug);
+  if (ok) {
+    btn.textContent = '✅ Publié !';
+    setTimeout(function(){ loadBugs(); }, 1500); // Recharger depuis GitHub
+  } else {
+    // Fallback localStorage si pas de token
+    bugs.unshift(newBug);
+    render();
+  }
 
   btn.disabled = false;
   btn.textContent = '+ ' + (document.documentElement.lang === 'fr' ? 'Ajouter' : 'Add');
@@ -509,16 +629,18 @@ async function addBug(){
   document.getElementById('fVer').value   = '';
 }
 
-function changeStatus(i, val){
+async function changeStatus(i, val){
   bugs[i].status = val;
-  saveBugs(); render();
+  if (bugs[i].ghNum) await updateIssueStatus(bugs[i].ghNum, val);
+  await loadBugs(); // Recharger depuis GitHub
 }
 
-function delBug(i){
+async function delBug(i){
   var t = T[lang];
   if(!confirm(t.del+' ?')) return;
+  if (bugs[i].ghNum) await deleteIssue(bugs[i].ghNum);
   bugs.splice(i,1);
-  saveBugs(); render();
+  render();
 }
 
 // ── ADMIN ─────────────────────────────────────────────────
@@ -535,6 +657,15 @@ function login(){
     setTimeout(function(){ document.getElementById('pwErr').style.display='none'; }, 2000);
   }
 }
+function saveGHToken(){
+  var token = document.getElementById('ghTokenInput').value.trim();
+  if (token) {
+    localStorage.setItem('gh_admin_token', token);
+    GH_TOKEN = token;
+    alert('✅ Token sauvegardé !');
+  }
+}
+
 function logout(){
   document.getElementById('loginArea').style.display = 'block';
   document.getElementById('adminForm').classList.remove('visible');
@@ -581,10 +712,10 @@ function setLang(l){
 }
 
 // ── INIT ─────────────────────────────────────────────────
-loadBugs();
 var det = navigator.language.slice(0,2);
 lang = ['fr','en','de','es','it'].includes(det) ? det : 'fr';
 setLang(lang);
+loadBugs(); // Async — charge depuis GitHub Issues
 </script>
 </body>
 </html>
