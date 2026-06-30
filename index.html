@@ -426,8 +426,26 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
   <p data-t="terms_p2"></p>
   <div class="highlight"><p data-t="terms_warning"></p></div>
 
+  <h2 data-t="terms_h_health"></h2>
+  <div class="highlight"><p data-t="terms_health_warning"></p></div>
+  <p data-t="terms_health_p1"></p>
+  <p data-t="terms_health_p2"></p>
+  <ul>
+    <li data-t="terms_health_l1"></li>
+    <li data-t="terms_health_l2"></li>
+    <li data-t="terms_health_l3"></li>
+    <li data-t="terms_health_l4"></li>
+  </ul>
+
   <h2 data-t="terms_h_ai"></h2>
   <p data-t="terms_ai_p"></p>
+  <p data-t="terms_ai_p2"></p>
+  <ul>
+    <li data-t="terms_ai_l1"></li>
+    <li data-t="terms_ai_l2"></li>
+    <li data-t="terms_ai_l3"></li>
+    <li data-t="terms_ai_l4"></li>
+  </ul>
 
   <h2 data-t="terms_h3"></h2>
   <ul>
@@ -447,10 +465,19 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
     <li data-t="terms_p2b"></li>
     <li data-t="terms_p3"></li>
     <li data-t="terms_p4"></li>
+    <li data-t="terms_p5"></li>
   </ul>
 
   <h2 data-t="terms_h_liability"></h2>
   <p data-t="terms_liability_p"></p>
+  <p data-t="terms_liability_p2"></p>
+  <div class="highlight"><p data-t="terms_liability_cap"></p></div>
+
+  <h2 data-t="terms_h_indemnity"></h2>
+  <p data-t="terms_indemnity_p"></p>
+
+  <h2 data-t="terms_h_governing"></h2>
+  <p data-t="terms_governing_p"></p>
 
   <h2 data-t="terms_h_changes"></h2>
   <p data-t="terms_changes_p"></p>
@@ -536,12 +563,28 @@ const T = {
     terms_h1:"Conditions d'utilisation", terms_h2:"Service",
     terms_p2:"FitCoach AI est une application de coaching IA. Les conseils sont informatifs et ne remplacent pas un avis médical.",
     terms_warning:"⚠️ Consultez toujours un professionnel de santé avant de modifier significativement votre alimentation ou programme d'exercice.",
+    terms_h_health:"🏥 Avertissement santé important",
+    terms_health_warning:"⚠️ FitCoach AI n'est pas un dispositif médical, ne pose aucun diagnostic et ne remplace en aucun cas une consultation médicale, un avis diététique professionnel ou un suivi par un kinésithérapeute/coach sportif qualifié.",
+    terms_health_p1:"Les recommandations nutritionnelles et sportives générées par l'application sont fournies à titre purement informatif et général. Elles ne tiennent pas compte de l'ensemble de ta situation médicale personnelle (pathologies, traitements en cours, antécédents, grossesse, allergies non déclarées, etc.).",
+    terms_health_p2:"Avant de commencer tout nouveau programme alimentaire ou sportif, en particulier si tu présentes une condition médicale préexistante, es enceinte, allaite, es mineur, ou as plus de 65 ans, consulte impérativement un professionnel de santé qualifié.",
+    terms_health_l1:"Arrête immédiatement toute activité physique en cas de douleur, malaise, vertige ou essoufflement anormal",
+    terms_health_l2:"Les calculs caloriques et de macronutriments sont des estimations et peuvent comporter des marges d'erreur",
+    terms_health_l3:"L'application ne doit jamais être utilisée pour gérer une pathologie (diabète, troubles alimentaires, maladies cardiaques, etc.) sans supervision médicale",
+    terms_health_l4:"Tu es seul responsable de l'usage que tu fais des recommandations fournies par l'application",
+    terms_h_ai:"🤖 Limites de l'intelligence artificielle",
+    terms_ai_p:"Les réponses de l'IA sont générées par Claude (Anthropic). Elles peuvent contenir des erreurs, des approximations ou des informations incorrectes ('hallucinations').",
+    terms_ai_p2:"L'intelligence artificielle, aussi avancée soit-elle, ne possède pas de jugement clinique, ne connaît pas ton dossier médical complet et peut se tromper. Tu dois faire preuve d'esprit critique face à toute réponse générée par l'IA.",
+    terms_ai_l1:"L'IA ne pose jamais de diagnostic médical et ne doit jamais être interprétée comme tel",
+    terms_ai_l2:"FitCoach AI ne garantit pas l'exactitude, la complétude ou la fiabilité des réponses générées",
+    terms_ai_l3:"Les décisions prises sur la base des réponses de l'IA le sont à tes propres risques et sous ta seule responsabilité",
+    terms_ai_l4:"En cas de doute sur une réponse de l'IA, vérifie l'information auprès d'une source fiable ou d'un professionnel",
     terms_h3:"Abonnement", terms_l1:"Essai gratuit 7 jours — accès complet", terms_l2:"69,99€/an (5,83€/mois)",
     terms_l3:"12,99€/mois", terms_l4:"Annulation via Réglages iOS → Apple ID → Abonnements",
     terms_h_prohibited:"🚫 Utilisation interdite",
     terms_p1:"Utilisation à des fins commerciales sans autorisation",
     terms_p2b:"Tentative de décompilation ou extraction du code source",
     terms_p3:"Partage de l'accès avec des tiers",
+    terms_p5:"Utilisation de l'app comme substitut à un suivi médical en cas de pathologie diagnostiquée",
     foot_home:"Accueil", foot_support:"Support", foot_privacy:"Confidentialité", foot_terms:"Conditions",
     priv_date:"Dernière mise à jour : Juin 2026",
     priv_store_detail:"Tes données ne sont jamais envoyées sur nos serveurs. Seuls les messages au coach IA transitent par l'API Anthropic.",
@@ -556,14 +599,18 @@ const T = {
     priv_right3:"Droit à l'effacement — demander la suppression de tes données",
     priv_right4:"Droit d'opposition — t'opposer au traitement de tes données",
     terms_date:"Dernière mise à jour : Juin 2026",
-    terms_h_ai:"🤖 Intelligence artificielle",
-    terms_ai_p:"Les réponses de l'IA sont générées par Claude (Anthropic). Elles peuvent contenir des erreurs. FitCoach AI ne garantit pas l'exactitude des informations nutritionnelles ou sportives.",
     terms_l5:"Annulation 24h avant la fin de la période en cours pour éviter le renouvellement",
     terms_h_trial:"🎁 Essai gratuit",
     terms_trial_p:"L'essai gratuit 7 jours donne accès à toutes les fonctionnalités. Aucune facturation pendant l'essai. L'abonnement démarre automatiquement après l'essai sauf annulation.",
     terms_p4:"Utilisation de l'app pour générer des contenus trompeurs, nuisibles ou illégaux",
     terms_h_liability:"⚖️ Limitation de responsabilité",
-    terms_liability_p:"FitCoach AI est fourni 'en l'état'. Ayer-Developpment ne peut être tenu responsable des décisions médicales ou sportives prises sur la base des recommandations de l'IA.",
+    terms_liability_p:"FitCoach AI est fourni 'en l'état' et 'selon disponibilité', sans garantie d'aucune sorte, expresse ou implicite, notamment de qualité marchande ou d'adéquation à un usage particulier.",
+    terms_liability_p2:"Ayer-Developpment ne peut être tenu responsable des décisions médicales, alimentaires ou sportives prises sur la base des recommandations de l'IA, ni des conséquences directes ou indirectes (blessure, aggravation d'une condition existante, dommage corporel ou matériel) résultant de l'utilisation de l'application.",
+    terms_liability_cap:"Dans toute la mesure permise par la loi applicable, la responsabilité totale d'Ayer-Developpment envers toi, pour quelque cause que ce soit liée à l'application, ne pourra excéder le montant que tu as payé au cours des 12 derniers mois, le cas échéant.",
+    terms_h_indemnity:"🛡️ Indemnisation",
+    terms_indemnity_p:"Tu acceptes de défendre, indemniser et tenir Ayer-Developpment indemne de toute réclamation, perte, responsabilité ou dépense (y compris les frais d'avocat raisonnables) découlant de ton utilisation de l'application ou de ta violation des présentes conditions.",
+    terms_h_governing:"📜 Droit applicable",
+    terms_governing_p:"Les présentes conditions sont régies par le droit suisse, sans préjudice des dispositions impératives de protection des consommateurs applicables dans ton pays de résidence.",
     terms_h_changes:"🔄 Modifications",
     terms_changes_p:"Nous pouvons modifier ces conditions à tout moment. Les utilisateurs seront informés via l'app. L'utilisation continue vaut acceptation."
   },
@@ -625,12 +672,28 @@ const T = {
     terms_h1:"Terms of Use", terms_h2:"Service",
     terms_p2:"FitCoach AI is an AI coaching app. Advice is informational and does not replace medical advice.",
     terms_warning:"⚠️ Always consult a healthcare professional before significantly changing your diet or exercise program.",
+    terms_h_health:"🏥 Important health disclaimer",
+    terms_health_warning:"⚠️ FitCoach AI is not a medical device, does not provide any diagnosis, and is in no way a substitute for a medical consultation, professional dietary advice, or supervision by a qualified physiotherapist or sports coach.",
+    terms_health_p1:"The nutritional and fitness recommendations generated by the app are provided for general informational purposes only. They do not account for your complete personal medical situation (conditions, ongoing treatments, medical history, pregnancy, undisclosed allergies, etc.).",
+    terms_health_p2:"Before starting any new diet or exercise program, especially if you have a pre-existing medical condition, are pregnant, breastfeeding, a minor, or over 65, you must consult a qualified healthcare professional.",
+    terms_health_l1:"Stop any physical activity immediately if you experience pain, discomfort, dizziness or unusual shortness of breath",
+    terms_health_l2:"Calorie and macronutrient calculations are estimates and may contain margins of error",
+    terms_health_l3:"The app must never be used to manage a medical condition (diabetes, eating disorders, heart conditions, etc.) without medical supervision",
+    terms_health_l4:"You are solely responsible for how you use the recommendations provided by the app",
+    terms_h_ai:"🤖 Limitations of artificial intelligence",
+    terms_ai_p:"AI responses are generated by Claude (Anthropic). They may contain errors, approximations, or incorrect information ('hallucinations').",
+    terms_ai_p2:"Artificial intelligence, however advanced, does not possess clinical judgment, does not know your complete medical history, and can be wrong. You must apply critical thinking to any AI-generated response.",
+    terms_ai_l1:"The AI never provides a medical diagnosis and must never be interpreted as such",
+    terms_ai_l2:"FitCoach AI does not guarantee the accuracy, completeness or reliability of generated responses",
+    terms_ai_l3:"Decisions made based on AI responses are made at your own risk and under your sole responsibility",
+    terms_ai_l4:"If in doubt about an AI response, verify the information with a reliable source or a professional",
     terms_h3:"Subscription", terms_l1:"7-day free trial — full access", terms_l2:"€69.99/year (€5.83/month)",
     terms_l3:"€12.99/month", terms_l4:"Cancel via iOS Settings → Apple ID → Subscriptions",
     terms_h_prohibited:"🚫 Prohibited use",
     terms_p1:"Commercial use without authorization",
     terms_p2b:"Attempting to decompile or extract source code",
     terms_p3:"Sharing access with third parties",
+    terms_p5:"Using the app as a substitute for medical follow-up in case of a diagnosed condition",
     foot_home:"Home", foot_support:"Support", foot_privacy:"Privacy", foot_terms:"Terms",
     priv_date:"Last updated: June 2026",
     priv_store_detail:"Your data is never sent to our servers. Only AI coach messages are processed via the Anthropic API.",
@@ -645,14 +708,18 @@ const T = {
     priv_right3:"Right to erasure — request deletion of your data",
     priv_right4:"Right to object — object to processing of your data",
     terms_date:"Last updated: June 2026",
-    terms_h_ai:"🤖 Artificial intelligence",
-    terms_ai_p:"AI responses are generated by Claude (Anthropic). They may contain errors. FitCoach AI does not guarantee the accuracy of nutritional or fitness information.",
     terms_l5:"Cancel 24h before end of current period to avoid renewal",
     terms_h_trial:"🎁 Free trial",
     terms_trial_p:"The 7-day free trial gives full access. No charge during trial. Subscription starts automatically after trial unless cancelled.",
     terms_p4:"Using the app to generate misleading, harmful or illegal content",
     terms_h_liability:"⚖️ Limitation of liability",
-    terms_liability_p:"FitCoach AI is provided as-is. Ayer-Developpment cannot be held liable for medical or fitness decisions made based on AI recommendations.",
+    terms_liability_p:"FitCoach AI is provided 'as is' and 'as available', without warranty of any kind, express or implied, including merchantability or fitness for a particular purpose.",
+    terms_liability_p2:"Ayer-Developpment cannot be held liable for medical, dietary or fitness decisions made based on AI recommendations, nor for direct or indirect consequences (injury, aggravation of an existing condition, bodily or material damage) resulting from use of the app.",
+    terms_liability_cap:"To the fullest extent permitted by applicable law, Ayer-Developpment's total liability to you, for any cause related to the app, shall not exceed the amount you paid in the preceding 12 months, if any.",
+    terms_h_indemnity:"🛡️ Indemnification",
+    terms_indemnity_p:"You agree to defend, indemnify and hold Ayer-Developpment harmless from any claim, loss, liability or expense (including reasonable attorney fees) arising from your use of the app or your violation of these terms.",
+    terms_h_governing:"📜 Governing law",
+    terms_governing_p:"These terms are governed by Swiss law, without prejudice to mandatory consumer protection provisions applicable in your country of residence.",
     terms_h_changes:"🔄 Changes",
     terms_changes_p:"We may update these terms at any time. Users will be notified in-app. Continued use constitutes acceptance."
   },
@@ -714,12 +781,28 @@ const T = {
     terms_h1:"Nutzungsbedingungen", terms_h2:"Dienst",
     terms_p2:"FitCoach AI ist eine KI-Coaching-App. Die Ratschläge sind informativ.",
     terms_warning:"⚠️ Konsultiere immer einen Arzt, bevor du deine Ernährung oder dein Training wesentlich änderst.",
+    terms_h_health:"🏥 Wichtiger Gesundheitshinweis",
+    terms_health_warning:"⚠️ FitCoach AI ist kein Medizinprodukt, stellt keine Diagnose und ersetzt in keiner Weise eine ärztliche Konsultation, professionelle Ernährungsberatung oder Betreuung durch einen qualifizierten Physiotherapeuten oder Sportcoach.",
+    terms_health_p1:"Die von der App generierten Ernährungs- und Trainingsempfehlungen dienen ausschließlich allgemeinen Informationszwecken. Sie berücksichtigen nicht deine vollständige persönliche medizinische Situation (Erkrankungen, laufende Behandlungen, Vorgeschichte, Schwangerschaft, nicht angegebene Allergien usw.).",
+    terms_health_p2:"Bevor du ein neues Ernährungs- oder Trainingsprogramm beginnst, insbesondere bei einer bestehenden Erkrankung, Schwangerschaft, Stillzeit, Minderjährigkeit oder über 65 Jahren, musst du unbedingt einen qualifizierten Arzt konsultieren.",
+    terms_health_l1:"Beende sofort jede körperliche Aktivität bei Schmerzen, Unwohlsein, Schwindel oder ungewöhnlicher Atemnot",
+    terms_health_l2:"Kalorien- und Makronährstoffberechnungen sind Schätzungen und können Fehlerquoten enthalten",
+    terms_health_l3:"Die App darf niemals ohne ärztliche Aufsicht zur Behandlung einer Erkrankung (Diabetes, Essstörungen, Herzerkrankungen usw.) verwendet werden",
+    terms_health_l4:"Du bist allein verantwortlich für die Nutzung der von der App bereitgestellten Empfehlungen",
+    terms_h_ai:"🤖 Grenzen der künstlichen Intelligenz",
+    terms_ai_p:"KI-Antworten werden von Claude (Anthropic) generiert. Sie können Fehler, Ungenauigkeiten oder falsche Informationen ('Halluzinationen') enthalten.",
+    terms_ai_p2:"Künstliche Intelligenz, so fortschrittlich sie auch sein mag, besitzt kein klinisches Urteilsvermögen, kennt deine vollständige Krankengeschichte nicht und kann sich irren. Du musst jeder KI-generierten Antwort kritisch gegenüberstehen.",
+    terms_ai_l1:"Die KI stellt niemals eine medizinische Diagnose und darf niemals als solche interpretiert werden",
+    terms_ai_l2:"FitCoach AI garantiert nicht die Richtigkeit, Vollständigkeit oder Zuverlässigkeit der generierten Antworten",
+    terms_ai_l3:"Entscheidungen auf Basis von KI-Antworten erfolgen auf eigenes Risiko und in alleiniger Verantwortung",
+    terms_ai_l4:"Bei Zweifeln an einer KI-Antwort überprüfe die Information bei einer zuverlässigen Quelle oder einem Fachmann",
     terms_h3:"Abonnement", terms_l1:"7 Tage kostenlos — voller Zugang", terms_l2:"69,99€/Jahr (5,83€/Monat)",
     terms_l3:"12,99€/Monat", terms_l4:"Kündigung über iOS-Einstellungen → Apple ID → Abonnements",
     terms_h_prohibited:"🚫 Verbotene Nutzung",
     terms_p1:"Kommerzielle Nutzung ohne Genehmigung",
     terms_p2b:"Versuche zur Dekompilierung des Quellcodes",
     terms_p3:"Weitergabe des Zugangs an Dritte",
+    terms_p5:"Nutzung der App als Ersatz für ärztliche Betreuung bei einer diagnostizierten Erkrankung",
     foot_home:"Startseite", foot_support:"Support", foot_privacy:"Datenschutz", foot_terms:"AGB",
     priv_date:"Zuletzt aktualisiert: Juni 2026",
     priv_store_detail:"Deine Daten werden nie an unsere Server gesendet. Nur KI-Coach-Nachrichten werden über die Anthropic API verarbeitet.",
@@ -734,14 +817,18 @@ const T = {
     priv_right3:"Löschungsrecht — Löschung deiner Daten beantragen",
     priv_right4:"Widerspruchsrecht — der Datenverarbeitung widersprechen",
     terms_date:"Zuletzt aktualisiert: Juni 2026",
-    terms_h_ai:"🤖 Künstliche Intelligenz",
-    terms_ai_p:"KI-Antworten werden von Claude (Anthropic) generiert. Sie können Fehler enthalten.",
     terms_l5:"Kündigung 24h vor Ende des Zeitraums, um Verlängerung zu vermeiden",
     terms_h_trial:"🎁 Kostenlose Testversion",
     terms_trial_p:"7 Tage kostenlose Testversion mit vollem Zugang. Keine Gebühren während der Testphase. Abo beginnt automatisch danach, sofern nicht gekündigt.",
     terms_p4:"Nutzung der App zur Erstellung schädlicher oder illegaler Inhalte",
     terms_h_liability:"⚖️ Haftungsbeschränkung",
-    terms_liability_p:"FitCoach AI wird ohne Gewähr bereitgestellt. Ayer-Developpment haftet nicht für Entscheidungen auf Basis von KI-Empfehlungen.",
+    terms_liability_p:"FitCoach AI wird 'wie besehen' und 'wie verfügbar' bereitgestellt, ohne Gewährleistung jeglicher Art, weder ausdrücklich noch stillschweigend, einschließlich Marktgängigkeit oder Eignung für einen bestimmten Zweck.",
+    terms_liability_p2:"Ayer-Developpment haftet nicht für medizinische, ernährungsbezogene oder sportliche Entscheidungen auf Basis von KI-Empfehlungen, noch für direkte oder indirekte Folgen (Verletzung, Verschlimmerung einer bestehenden Erkrankung, Personen- oder Sachschäden) aus der Nutzung der App.",
+    terms_liability_cap:"Im gesetzlich maximal zulässigen Umfang übersteigt die Gesamthaftung von Ayer-Developpment dir gegenüber, aus jeglichem mit der App zusammenhängenden Grund, nicht den Betrag, den du in den letzten 12 Monaten gegebenenfalls bezahlt hast.",
+    terms_h_indemnity:"🛡️ Freistellung",
+    terms_indemnity_p:"Du stimmst zu, Ayer-Developpment von jeglichen Ansprüchen, Verlusten, Haftungen oder Kosten (einschließlich angemessener Anwaltskosten) freizustellen, die sich aus deiner Nutzung der App oder einem Verstoß gegen diese Bedingungen ergeben.",
+    terms_h_governing:"📜 Anwendbares Recht",
+    terms_governing_p:"Diese Bedingungen unterliegen Schweizer Recht, unbeschadet zwingender Verbraucherschutzbestimmungen in deinem Wohnsitzland.",
     terms_h_changes:"🔄 Änderungen",
     terms_changes_p:"Wir können diese Bedingungen jederzeit ändern. Nutzer werden per In-App-Benachrichtigung informiert."
   },
@@ -803,12 +890,28 @@ const T = {
     terms_h1:"Términos de uso", terms_h2:"Servicio",
     terms_p2:"FitCoach AI es una app de coaching IA. Los consejos son informativos.",
     terms_warning:"⚠️ Consulta siempre a un profesional de salud antes de cambiar significativamente tu dieta.",
+    terms_h_health:"🏥 Aviso de salud importante",
+    terms_health_warning:"⚠️ FitCoach AI no es un dispositivo médico, no proporciona ningún diagnóstico y no sustituye en ningún caso una consulta médica, un asesoramiento dietético profesional o la supervisión de un fisioterapeuta o entrenador deportivo cualificado.",
+    terms_health_p1:"Las recomendaciones nutricionales y deportivas generadas por la aplicación se proporcionan únicamente con fines informativos generales. No tienen en cuenta tu situación médica personal completa (patologías, tratamientos en curso, antecedentes, embarazo, alergias no declaradas, etc.).",
+    terms_health_p2:"Antes de comenzar cualquier nuevo programa alimenticio o deportivo, especialmente si tienes una condición médica preexistente, estás embarazada, en periodo de lactancia, eres menor de edad o tienes más de 65 años, debes consultar obligatoriamente a un profesional de la salud cualificado.",
+    terms_health_l1:"Detén inmediatamente cualquier actividad física en caso de dolor, malestar, mareo o falta de aire anormal",
+    terms_health_l2:"Los cálculos de calorías y macronutrientes son estimaciones y pueden contener márgenes de error",
+    terms_health_l3:"La aplicación nunca debe utilizarse para gestionar una patología (diabetes, trastornos alimentarios, enfermedades cardíacas, etc.) sin supervisión médica",
+    terms_health_l4:"Eres el único responsable del uso que hagas de las recomendaciones proporcionadas por la aplicación",
+    terms_h_ai:"🤖 Límites de la inteligencia artificial",
+    terms_ai_p:"Las respuestas de IA son generadas por Claude (Anthropic). Pueden contener errores, aproximaciones o información incorrecta ('alucinaciones').",
+    terms_ai_p2:"La inteligencia artificial, por avanzada que sea, no posee juicio clínico, no conoce tu historial médico completo y puede equivocarse. Debes aplicar pensamiento crítico ante cualquier respuesta generada por la IA.",
+    terms_ai_l1:"La IA nunca proporciona un diagnóstico médico y nunca debe interpretarse como tal",
+    terms_ai_l2:"FitCoach AI no garantiza la exactitud, integridad o fiabilidad de las respuestas generadas",
+    terms_ai_l3:"Las decisiones tomadas en base a las respuestas de la IA se toman bajo tu propio riesgo y responsabilidad exclusiva",
+    terms_ai_l4:"En caso de duda sobre una respuesta de la IA, verifica la información con una fuente fiable o un profesional",
     terms_h3:"Suscripción", terms_l1:"7 días de prueba gratuita — acceso completo", terms_l2:"69,99€/año (5,83€/mes)",
     terms_l3:"12,99€/mes", terms_l4:"Cancelar en Configuración iOS → Apple ID → Suscripciones",
     terms_h_prohibited:"🚫 Uso prohibido",
     terms_p1:"Uso comercial sin autorización",
     terms_p2b:"Intentos de descompilar el código fuente",
     terms_p3:"Compartir el acceso con terceros",
+    terms_p5:"Usar la aplicación como sustituto del seguimiento médico en caso de patología diagnosticada",
     foot_home:"Inicio", foot_support:"Soporte", foot_privacy:"Privacidad", foot_terms:"Términos",
     priv_date:"Última actualización: Junio 2026",
     priv_store_detail:"Tus datos nunca se envían a nuestros servidores. Solo los mensajes al coach IA se procesan por la API de Anthropic.",
@@ -823,14 +926,18 @@ const T = {
     priv_right3:"Derecho al olvido — solicitar eliminación de tus datos",
     priv_right4:"Derecho de oposición — oponerte al tratamiento",
     terms_date:"Última actualización: Junio 2026",
-    terms_h_ai:"🤖 Inteligencia artificial",
-    terms_ai_p:"Las respuestas de IA son generadas por Claude (Anthropic). Pueden contener errores.",
     terms_l5:"Cancelar 24h antes del final del período para evitar renovación",
     terms_h_trial:"🎁 Prueba gratuita",
     terms_trial_p:"7 días de prueba gratuita con acceso completo. Sin cobro durante la prueba. La suscripción comienza automáticamente después salvo cancelación.",
     terms_p4:"Uso de la app para generar contenidos engañosos o ilegales",
     terms_h_liability:"⚖️ Limitación de responsabilidad",
-    terms_liability_p:"FitCoach AI se proporciona tal como está. Ayer-Developpment no responde por decisiones basadas en recomendaciones de la IA.",
+    terms_liability_p:"FitCoach AI se proporciona 'tal cual' y 'según disponibilidad', sin garantía de ningún tipo, expresa o implícita, incluyendo comerciabilidad o idoneidad para un propósito particular.",
+    terms_liability_p2:"Ayer-Developpment no puede ser responsable de decisiones médicas, alimenticias o deportivas tomadas en base a las recomendaciones de la IA, ni de las consecuencias directas o indirectas (lesión, agravamiento de una condición existente, daño corporal o material) derivadas del uso de la aplicación.",
+    terms_liability_cap:"En la máxima medida permitida por la ley aplicable, la responsabilidad total de Ayer-Developpment hacia ti, por cualquier causa relacionada con la aplicación, no excederá el monto que hayas pagado en los últimos 12 meses, en su caso.",
+    terms_h_indemnity:"🛡️ Indemnización",
+    terms_indemnity_p:"Aceptas defender, indemnizar y eximir de responsabilidad a Ayer-Developpment de cualquier reclamación, pérdida, responsabilidad o gasto (incluidos honorarios razonables de abogados) derivados de tu uso de la aplicación o de tu incumplimiento de estos términos.",
+    terms_h_governing:"📜 Ley aplicable",
+    terms_governing_p:"Estos términos se rigen por la ley suiza, sin perjuicio de las disposiciones imperativas de protección al consumidor aplicables en tu país de residencia.",
     terms_h_changes:"🔄 Cambios",
     terms_changes_p:"Podemos modificar estos términos en cualquier momento. Los usuarios serán notificados en la app."
   },
@@ -892,12 +999,28 @@ const T = {
     terms_h1:"Termini di utilizzo", terms_h2:"Servizio",
     terms_p2:"FitCoach AI è un'app di coaching IA. I consigli sono informativi.",
     terms_warning:"⚠️ Consulta sempre un professionista della salute prima di modificare significativamente la tua dieta.",
+    terms_h_health:"🏥 Avviso sanitario importante",
+    terms_health_warning:"⚠️ FitCoach AI non è un dispositivo medico, non fornisce alcuna diagnosi e non sostituisce in alcun modo una consultazione medica, una consulenza dietetica professionale o la supervisione di un fisioterapista o personal trainer qualificato.",
+    terms_health_p1:"Le raccomandazioni nutrizionali e sportive generate dall'app sono fornite esclusivamente a scopo informativo generale. Non tengono conto della tua situazione medica personale completa (patologie, trattamenti in corso, anamnesi, gravidanza, allergie non dichiarate, ecc.).",
+    terms_health_p2:"Prima di iniziare qualsiasi nuovo programma alimentare o sportivo, in particolare se hai una condizione medica preesistente, sei incinta, allatti, sei minorenne o hai più di 65 anni, devi obbligatoriamente consultare un professionista sanitario qualificato.",
+    terms_health_l1:"Interrompi immediatamente qualsiasi attività fisica in caso di dolore, malessere, vertigini o respiro anomalo",
+    terms_health_l2:"I calcoli di calorie e macronutrienti sono stime e possono contenere margini di errore",
+    terms_health_l3:"L'app non deve mai essere utilizzata per gestire una patologia (diabete, disturbi alimentari, malattie cardiache, ecc.) senza supervisione medica",
+    terms_health_l4:"Sei l'unico responsabile dell'uso che fai delle raccomandazioni fornite dall'app",
+    terms_h_ai:"🤖 Limiti dell'intelligenza artificiale",
+    terms_ai_p:"Le risposte dell'IA sono generate da Claude (Anthropic). Possono contenere errori, approssimazioni o informazioni errate ('allucinazioni').",
+    terms_ai_p2:"L'intelligenza artificiale, per quanto avanzata, non possiede giudizio clinico, non conosce la tua storia medica completa e può sbagliare. Devi applicare il pensiero critico a qualsiasi risposta generata dall'IA.",
+    terms_ai_l1:"L'IA non fornisce mai una diagnosi medica e non deve mai essere interpretata come tale",
+    terms_ai_l2:"FitCoach AI non garantisce l'accuratezza, la completezza o l'affidabilità delle risposte generate",
+    terms_ai_l3:"Le decisioni prese in base alle risposte dell'IA sono prese a tuo rischio e sotto la tua esclusiva responsabilità",
+    terms_ai_l4:"In caso di dubbio su una risposta dell'IA, verifica le informazioni con una fonte affidabile o un professionista",
     terms_h3:"Abbonamento", terms_l1:"7 giorni di prova gratuita — accesso completo", terms_l2:"69,99€/anno (5,83€/mese)",
     terms_l3:"12,99€/mese", terms_l4:"Cancella da Impostazioni iOS → Apple ID → Abbonamenti",
     terms_h_prohibited:"🚫 Utilizzo vietato",
     terms_p1:"Uso commerciale senza autorizzazione",
     terms_p2b:"Tentativi di decompilare il codice sorgente",
     terms_p3:"Condivisione dell'accesso con terzi",
+    terms_p5:"Utilizzare l'app come sostituto del follow-up medico in caso di patologia diagnosticata",
     foot_home:"Home", foot_support:"Supporto", foot_privacy:"Privacy", foot_terms:"Termini",
     priv_date:"Ultimo aggiornamento: Giugno 2026",
     priv_store_detail:"I tuoi dati non vengono mai inviati ai nostri server. Solo i messaggi al coach IA vengono elaborati tramite l'API Anthropic.",
@@ -912,14 +1035,18 @@ const T = {
     priv_right3:"Diritto alla cancellazione — richiedere eliminazione dei dati",
     priv_right4:"Diritto di opposizione — opporsi al trattamento",
     terms_date:"Ultimo aggiornamento: Giugno 2026",
-    terms_h_ai:"🤖 Intelligenza artificiale",
-    terms_ai_p:"Le risposte dell'IA sono generate da Claude (Anthropic). Possono contenere errori.",
     terms_l5:"Cancellare 24h prima della fine del periodo per evitare il rinnovo",
     terms_h_trial:"🎁 Prova gratuita",
     terms_trial_p:"7 giorni di prova gratuita con accesso completo. Nessun addebito durante la prova. L'abbonamento inizia automaticamente dopo la prova salvo cancellazione.",
     terms_p4:"Utilizzo dell'app per generare contenuti fuorvianti o illegali",
     terms_h_liability:"⚖️ Limitazione di responsabilità",
-    terms_liability_p:"FitCoach AI è fornito così com'è. Ayer-Developpment non è responsabile per decisioni basate su raccomandazioni dell'IA.",
+    terms_liability_p:"FitCoach AI è fornito 'così com'è' e 'secondo disponibilità', senza garanzia di alcun tipo, espressa o implicita, inclusa la commerciabilità o l'idoneità per uno scopo particolare.",
+    terms_liability_p2:"Ayer-Developpment non può essere ritenuto responsabile per decisioni mediche, alimentari o sportive prese in base alle raccomandazioni dell'IA, né per conseguenze dirette o indirette (lesioni, aggravamento di una condizione esistente, danni fisici o materiali) derivanti dall'uso dell'app.",
+    terms_liability_cap:"Nella misura massima consentita dalla legge applicabile, la responsabilità totale di Ayer-Developpment nei tuoi confronti, per qualsiasi causa legata all'app, non supererà l'importo che hai pagato negli ultimi 12 mesi, se presente.",
+    terms_h_indemnity:"🛡️ Manleva",
+    terms_indemnity_p:"Accetti di difendere, manlevare e tenere indenne Ayer-Developpment da qualsiasi reclamo, perdita, responsabilità o spesa (incluse le spese legali ragionevoli) derivanti dal tuo utilizzo dell'app o dalla tua violazione di questi termini.",
+    terms_h_governing:"📜 Legge applicabile",
+    terms_governing_p:"Questi termini sono regolati dalla legge svizzera, fatte salve le disposizioni imperative di tutela dei consumatori applicabili nel tuo paese di residenza.",
     terms_h_changes:"🔄 Modifiche",
     terms_changes_p:"Possiamo modificare questi termini in qualsiasi momento. Gli utenti saranno informati tramite notifica nell'app."
   }
@@ -956,7 +1083,6 @@ document.addEventListener('click', function(e) {
     document.getElementById('langSel').classList.remove('open');
 });
 
-// Navigation
 function showPage(name) {
   ['home','support','privacy','terms'].forEach(function(p) {
     var el = document.getElementById('page-'+p);
@@ -969,9 +1095,7 @@ function showPage(name) {
 }
 
 function goHome() { showPage('home'); }
-
 function goToPage(name) { showPage(name); }
-
 function goToWaitlist() {
   showPage('home');
   setTimeout(function() {
@@ -979,7 +1103,6 @@ function goToWaitlist() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   }, 120);
 }
-
 function goToFeatures() {
   showPage('home');
   setTimeout(function() {
@@ -988,10 +1111,8 @@ function goToFeatures() {
   }, 120);
 }
 
-// Tally
 var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function(e){e.src=e.dataset.tallySrc})};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w;s.onload=v;s.onerror=v;d.body.appendChild(s);}
 
-// Init — détecter le hash dans l'URL
 applyLang(currentLang);
 (function() {
   var hash = window.location.hash.replace('#', '');
