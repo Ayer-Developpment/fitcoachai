@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitCoachAI — Bêta</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #07070d;
+    --bg-2: #0e0e1a;
+    --card: #13131f;
+    --card-2: #181826;
+    --accent: #6c63ff;
+    --accent-light: #8b85ff;
+    --green: #00d4a4;
+    --orange: #ff7a3d;
+    --red: #ff4d6d;
+    --text: #f4f3fb;
+    --text-dim: #9d9bb5;
+    --border: #232336;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    background: var(--bg);
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ---------- AUTO-SCROLL VIEWPORT ---------- */
+  .viewport {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh; /* hauteur réelle visible sur Safari iOS, barre d'adresse repliée ou non */
+    overflow: hidden;
+  }
+
+  .reel {
+    width: 100%;
+    will-change: transform;
+  }
+
+  .glow {
+    position: fixed;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(108,99,255,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow-1 { top: -200px; left: -200px; }
+  .glow-2 { top: 1400px; right: -250px; background: radial-gradient(circle, rgba(0,212,164,0.18) 0%, transparent 70%); }
+  .glow-3 { top: 3200px; left: -200px; background: radial-gradient(circle, rgba(255,122,61,0.18) 0%, transparent 70%); }
+  .glow-4 { top: 5400px; right: -200px; background: radial-gradient(circle, rgba(108,99,255,0.22) 0%, transparent 70%); }
+
+  section {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 90px 28px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(108,99,255,0.18), rgba(0,212,164,0.12));
+    border: 1px solid rgba(108,99,255,0.4);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 36px;
+  }
+  .badge .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 12px var(--green);
+  }
+
+  .hero-icon {
+    width: 92px; height: 92px;
+    border-radius: 26px;
+    background: linear-gradient(135deg, var(--accent), var(--green));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 44px;
+    margin-bottom: 32px;
+    box-shadow: 0 20px 60px rgba(108,99,255,0.45);
+  }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    max-width: 680px;
+  }
+  h1 .accent { color: var(--accent-light); }
+  h1 .accent-green { color: var(--green); }
+
+  .hero-sub {
+    margin-top: 26px;
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--text-dim);
+    max-width: 460px;
+    font-weight: 500;
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 44px;
+    padding: 20px 40px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: white;
+    font-size: 19px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 16px 50px rgba(108,99,255,0.5);
+  }
+  .cta-arrow { font-size: 22px; }
+
+  .cta-note {
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+  .cta-note .green-text { color: var(--green); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .scroll-hint .chevron {
+    font-size: 18px;
+    animation: bounce 1.6s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); opacity: 0.5; }
+    50% { transform: translateY(8px); opacity: 1; }
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section-eyebrow {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.12;
+    margin-bottom: 16px;
+  }
+  .section-desc {
+    font-size: 17px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    max-width: 480px;
+    font-weight: 500;
+  }
+
+  /* ---------- PROBLEM ---------- */
+  .problem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .problem-grid {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 480px;
+  }
+  .problem-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+  }
+  .problem-card .x {
+    font-size: 20px;
+    color: var(--red);
+    flex-shrink: 0;
+  }
+  .problem-card p {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* ---------- FEATURE BLOCKS ---------- */
+  .feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .feature-icon-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .feature-icon {
+    width: 64px; height: 64px;
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px;
+  }
+
+  .phone-mock {
+    margin-top: 44px;
+    width: 100%;
+    max-width: 340px;
+    border-radius: 32px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  .phone-mock-header {
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .phone-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .phone-mock-header .name { font-size: 15px; font-weight: 700; text-align: left; }
+  .phone-mock-header .status { font-size: 12px; color: var(--green); font-weight: 600; text-align: left; }
+  .phone-mock-body { padding: 20px; text-align: left; }
+
+  .chat-bubble {
+    background: var(--card-2);
+    border-radius: 4px 16px 16px 16px;
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    max-width: 88%;
+  }
+  .chat-bubble-user {
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    border-radius: 16px 4px 16px 16px;
+    margin-left: auto;
+    color: white;
+    font-weight: 600;
+  }
+  .macro-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .macro-chip {
+    background: var(--bg-2);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    flex: 1;
+    min-width: 60px;
+  }
+
+  .meal-card-mock {
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--card-2);
+  }
+  .meal-card-mock .img {
+    height: 130px;
+    background: linear-gradient(135deg, rgba(108,99,255,0.35), rgba(0,212,164,0.15));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 50px;
+    position: relative;
+  }
+  .meal-card-mock .tag {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: var(--accent);
+    font-size: 10px;
+    font-weight: 800;
+    padding: 5px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .meal-card-mock .info { padding: 16px; }
+  .meal-card-mock .info h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .meal-card-mock .info p { font-size: 12.5px; color: var(--text-dim); margin-bottom: 12px; }
+
+  .mode-pills {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .mode-pill {
+    flex: 1;
+    text-align: center;
+    padding: 9px 0;
+    border-radius: 10px;
+    font-size: 11.5px;
+    font-weight: 700;
+    background: var(--bg-2);
+    color: var(--text-dim);
+  }
+  .mode-pill.active { background: var(--accent); color: white; }
+
+  .workout-pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  .workout-pill {
+    padding: 9px 14px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 700;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+  }
+  .workout-pill.selected { background: var(--orange); border-color: var(--orange); color: white; }
+
+  /* ---------- WHY BETA ---------- */
+  .why-beta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .perks {
+    margin-top: 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    max-width: 480px;
+  }
+  .perk {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px 22px;
+    text-align: left;
+  }
+  .perk-num {
+    width: 38px; height: 38px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--green));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .perk-text strong { display: block; font-size: 15.5px; font-weight: 700; margin-bottom: 2px; }
+  .perk-text span { font-size: 13.5px; color: var(--text-dim); }
+
+  /* ---------- URGENCY ---------- */
+  .urgency {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .spots-card {
+    margin-top: 40px;
+    background: linear-gradient(160deg, rgba(108,99,255,0.15), rgba(255,77,109,0.08));
+    border: 1px solid rgba(108,99,255,0.4);
+    border-radius: 24px;
+    padding: 40px 32px;
+    width: 100%;
+    max-width: 460px;
+  }
+  .spots-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--accent-light), var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .spots-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-dim);
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .spots-bar {
+    margin-top: 24px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--bg-2);
+    overflow: hidden;
+  }
+  .spots-bar-fill {
+    height: 100%;
+    width: 22%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--red));
+  }
+  .spots-sub {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta {
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .final-cta h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    max-width: 540px;
+  }
+  .final-cta .sub {
+    margin-top: 20px;
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 420px;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .cta-primary.big {
+    margin-top: 40px;
+    padding: 24px 48px;
+    font-size: 21px;
+    border-radius: 20px;
+  }
+
+  .socials {
+    margin-top: 52px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .social-pill {
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dim);
+  }
+
+  footer {
+    padding: 50px 28px 70px;
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--text-dim);
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+  }
+  footer .heart { color: var(--red); }
+
+  @media (max-width: 380px) {
+    h1 { font-size: 44px; }
+    .section-title { font-size: 30px; }
+    .final-cta h2 { font-size: 34px; }
+    .spots-number { font-size: 58px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="viewport"><div class="reel" id="reel">
+
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="glow glow-3"></div>
+  <div class="glow glow-4"></div>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="badge"><span class="dot"></span>Bêta fermée · Places limitées</div>
+    <div class="hero-icon">💪</div>
+    <h1>Ton coach <span class="accent">IA</span> qui connaît vraiment ta <span class="accent-green">cuisine</span> et ton <span class="accent">salon</span>.</h1>
+    <p class="hero-sub">FitCoachAI génère tes repas et tes séances maison en quelques secondes — et s'adapte à toi, pas l'inverse.</p>
+    <a href="https://tally.so/r/Bzgare" class="cta-primary">Rejoindre la bêta <span class="cta-arrow">→</span></a>
+    <p class="cta-note">Gratuit pendant la bêta · <span class="green-text">aucune CB demandée</span></p>
+  </section>
+
+  <!-- ============ PROBLEM ============ -->
+  <section class="problem">
+    <div class="section-eyebrow">Le constat</div>
+    <h2 class="section-title">Manger sain et bouger,<br>ça finit toujours en charge mentale.</h2>
+    <p class="section-desc">Entre "qu'est-ce que je mange ce soir", les calculs de macros, et les séances qu'on improvise mal — la motivation part vite.</p>
+    <div class="problem-grid">
+      <div class="problem-card"><span class="x">✕</span><p>Toujours les mêmes 5 recettes par manque d'idées</p></div>
+      <div class="problem-card"><span class="x">✕</span><p>Pas le temps de calculer calories et protéines</p></div>
+      <div class="problem-card"><span class="x">✕</span><p>Aucune salle de sport ou équipement à la maison</p></div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURE: MAX ============ -->
+  <section class="feature">
+    <div class="section-eyebrow">Fonctionnalité 01</div>
+    <h2 class="section-title">Max, ton coach qui répond <span class="accent">en vrai</span>.</h2>
+    <p class="section-desc">Dis-lui ce que tu manges, comment tu te sens, ou demande une séance — il note tout et s'adapte à ton objectif.</p>
+    <div class="phone-mock">
+      <div class="phone-mock-header">
+        <div class="phone-avatar" style="background:linear-gradient(135deg,var(--accent),var(--green))">🤖</div>
+        <div>
+          <div class="name">Max</div>
+          <div class="status">Coach IA · En ligne</div>
+        </div>
+      </div>
+      <div class="phone-mock-body">
+        <div class="chat-bubble">Dis-moi ce que t'as mangé, comment tu te sens, ou demande-moi une séance maison 💪</div>
+        <div class="chat-bubble chat-bubble-user">Bu 2 cafés ce matin</div>
+        <div class="chat-bubble">✅ Noté ! <strong>Café (2 tasses)</strong> — 10 kcal
+          <div class="macro-row">
+            <div class="macro-chip">🥩 0g</div>
+            <div class="macro-chip">🍞 2g</div>
+            <div class="macro-chip">🧈 0g</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURE: PLATS ============ -->
+  <section class="feature">
+    <div class="section-eyebrow">Fonctionnalité 02</div>
+    <h2 class="section-title">3 façons de manger <span class="accent-green">sans réfléchir</span>.</h2>
+    <p class="section-desc">Des idées tendance, des classiques simples à faire ce soir, ou des recettes avec ce qu'il y a déjà dans ton frigo.</p>
+    <div class="phone-mock">
+      <div class="phone-mock-body" style="padding-top:24px">
+        <div class="mode-pills">
+          <div class="mode-pill active">✨ Tendance</div>
+          <div class="mode-pill">🥗 Simple</div>
+          <div class="mode-pill">🧊 Mon frigo</div>
+        </div>
+        <div class="meal-card-mock">
+          <div class="img"><span class="tag">Petit-déj</span>🍳</div>
+          <div class="info">
+            <h4>Omelette moelleuse au chèvre</h4>
+            <p>Garnie de fromage de chèvre fondant et ciboulette fraîche</p>
+            <div class="macro-row">
+              <div class="macro-chip">🥩 28g</div>
+              <div class="macro-chip">🍞 8g</div>
+              <div class="macro-chip">🧈 30g</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURE: BOUGE ============ -->
+  <section class="feature">
+    <div class="section-eyebrow">Fonctionnalité 03</div>
+    <h2 class="section-title">Une séance <span class="accent">maison</span>, sur-mesure, en 10 secondes.</h2>
+    <p class="section-desc">Humeur, temps dispo, objectif — l'IA construit une séance adaptée à ce que tu as vraiment envie de faire aujourd'hui.</p>
+    <div class="phone-mock">
+      <div class="phone-mock-body" style="padding-top:24px">
+        <p style="font-size:13px;font-weight:700;color:var(--text-dim);margin-bottom:10px;text-align:left">⏱ Temps dispo</p>
+        <div class="workout-pill-row">
+          <div class="workout-pill">10 min</div>
+          <div class="workout-pill selected">20 min</div>
+          <div class="workout-pill">30 min</div>
+        </div>
+        <p style="font-size:13px;font-weight:700;color:var(--text-dim);margin:18px 0 10px;text-align:left">🎯 Objectif</p>
+        <div class="workout-pill-row">
+          <div class="workout-pill selected">Brûler des cal</div>
+          <div class="workout-pill">Prendre du muscle</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY JOIN BETA ============ -->
+  <section class="why-beta">
+    <div class="section-eyebrow">Pourquoi rejoindre maintenant</div>
+    <h2 class="section-title">Les bêta-testeurs façonnent <span class="accent">vraiment</span> l'app.</h2>
+    <div class="perks">
+      <div class="perk">
+        <div class="perk-num">1</div>
+        <div class="perk-text"><strong>Accès gratuit total</strong><span>Toutes les fonctionnalités premium débloquées pendant la bêta</span></div>
+      </div>
+      <div class="perk">
+        <div class="perk-num">2</div>
+        <div class="perk-text"><strong>Ton avis change l'app</strong><span>Chaque retour est lu et beaucoup sont intégrés sous 48h</span></div>
+      </div>
+      <div class="perk">
+        <div class="perk-num">3</div>
+        <div class="perk-text"><strong>Avantage early adopter</strong><span>Les premiers testeurs gardent des bénéfices au lancement public</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ URGENCY ============ -->
+  <section class="urgency">
+    <div class="section-eyebrow">Places limitées</div>
+    <h2 class="section-title">On garde la bêta <span class="accent">petite</span>, exprès.</h2>
+    <p class="section-desc">Moins de testeurs = plus d'attention sur chaque retour. Une fois les places prises, il faudra attendre le lancement public.</p>
+    <div class="spots-card">
+      <div class="spots-number">12</div>
+      <div class="spots-label">Places restantes</div>
+      <div class="spots-bar"><div class="spots-bar-fill"></div></div>
+      <p class="spots-sub">Les invitations partent par ordre d'inscription</p>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="final-cta">
+    <div class="hero-icon">🚀</div>
+    <h2>Prêt à tester FitCoachAI avant tout le monde ?</h2>
+    <p class="sub">2 minutes pour t'inscrire. On t'envoie ton accès dès qu'une place se libère.</p>
+    <a href="https://tally.so/r/Bzgare" class="cta-primary big">Je rejoins la bêta <span class="cta-arrow">→</span></a>
+    <div class="socials">
+      <div class="social-pill">📸 Instagram</div>
+      <div class="social-pill">🎵 TikTok</div>
+      <div class="social-pill">👤 Facebook</div>
+    </div>
+  </section>
+
+  <footer>
+    Fait avec <span class="heart">♥</span> par un développeur indé · ayer-developpment.github.io/fitcoachai
+  </footer>
+
+</div></div>
+
+<script>
+  // Pilote l'auto-scroll en fonction de la hauteur réelle du contenu.
+  // Approche simple et robuste : on découpe le trajet total en segments
+  // (un par section), chaque segment a un temps de "lecture" (lent/quasi figé)
+  // suivi d'un temps de transition vers la section suivante.
+  (function () {
+    const reel = document.getElementById('reel');
+    const sections = Array.from(reel.querySelectorAll('section'));
+
+    const TOTAL_DURATION = 26000; // durée totale d'un cycle, en ms
+    const READ_SHARE = 0.62;      // proportion du temps passée "à lire" (quasi figé) vs en transition
+
+    let rafId = null;
+    let cycleStart = null;
+    let segments = []; // [{from, to, readMs, transMs}]
+
+    // Sur Safari iOS, window.innerHeight peut être instable tant que la
+    // barre d'adresse n'a pas fini de se replier/déplier. visualViewport.height
+    // donne la hauteur réellement visible à l'instant T, plus fiable ici.
+    function currentViewportHeight() {
+      if (window.visualViewport && window.visualViewport.height) {
+        return window.visualViewport.height;
+      }
+      return window.innerHeight;
+    }
+
+    function computeSegments() {
+      const viewportH = currentViewportHeight();
+      const dist = Math.max(0, reel.scrollHeight - viewportH);
+      // Positions cibles : départ (0), puis le haut de chaque section suivante, puis la fin (dist)
+      const tops = sections.map(s => Math.min(s.offsetTop, dist));
+      const stops = [0, ...tops.slice(1), dist].filter((v, i, arr) => i === 0 || v > arr[i - 1]);
+      if (stops[stops.length - 1] !== dist) stops.push(dist);
+
+      const n = stops.length - 1;
+      if (n <= 0) return [{ from: 0, to: 0, readMs: TOTAL_DURATION, transMs: 0 }];
+
+      const perSegment = TOTAL_DURATION / n;
+      const readMs = perSegment * READ_SHARE;
+      const transMs = perSegment - readMs;
+
+      const segs = [];
+      for (let i = 0; i < n; i++) {
+        segs.push({ from: stops[i], to: stops[i + 1], readMs, transMs });
+      }
+      return segs;
+    }
+
+    function easeInOut(p) {
+      return p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+    }
+
+    function frame(ts) {
+      if (cycleStart === null) cycleStart = ts;
+      let elapsed = ts - cycleStart;
+
+      // Trouve dans quel segment on se trouve
+      let acc = 0;
+      let y = 0;
+      for (const seg of segments) {
+        const segTotal = seg.readMs + seg.transMs;
+        if (elapsed <= acc + segTotal || seg === segments[segments.length - 1]) {
+          const local = elapsed - acc;
+          if (local <= seg.readMs) {
+            y = seg.from; // phase de lecture : reste sur place
+          } else {
+            const p = Math.min(1, (local - seg.readMs) / Math.max(1, seg.transMs));
+            y = seg.from + (seg.to - seg.from) * easeInOut(p);
+          }
+          break;
+        }
+        acc += segTotal;
+      }
+
+      reel.style.transform = `translateY(${-y}px)`;
+
+      if (elapsed >= TOTAL_DURATION) {
+        cycleStart = ts; // boucle
+      }
+      rafId = requestAnimationFrame(frame);
+    }
+
+    function recompute() {
+      // Recalcule les segments sans casser la progression en cours :
+      // on garde le cycle en cours, seules les bornes from/to changent
+      // (utile quand Safari finit de replier sa barre d'adresse après coup).
+      segments = computeSegments();
+    }
+
+    function start() {
+      segments = computeSegments();
+      cycleStart = null;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(frame);
+    }
+
+    // On attend que les polices/images soient chargées ET qu'on ait laissé
+    // deux frames s'écouler, pour que Safari ait fini de stabiliser sa UI
+    // (barre d'adresse) avant de mesurer le viewport une première fois.
+    function waitStableThenStart() {
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        start();
+        // Une resynchro de sécurité un peu plus tard, au cas où la barre
+        // d'adresse change encore une fois après le démarrage.
+        setTimeout(recompute, 600);
+      }));
+    }
+
+    window.addEventListener('load', () => setTimeout(waitStableThenStart, 200));
+    window.addEventListener('resize', recompute);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', recompute);
+    }
+  })();
+</script>
+
+</body>
+</html>
