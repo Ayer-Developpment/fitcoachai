@@ -43,14 +43,12 @@ h1{font-size:24px;font-weight:900;margin-bottom:6px}
 .workaround{display:inline-flex;align-items:center;gap:5px;background:rgba(0,212,164,.06);border:1px solid rgba(0,212,164,.2);border-radius:8px;padding:4px 10px;font-size:11px;color:#00D4A4}
 .empty{text-align:center;padding:28px;color:#4A4A6A;font-size:13px}
 .loading{text-align:center;padding:28px;color:#7878A0;font-size:13px}
-/* REPORT BTN */
 .report-section{background:linear-gradient(135deg,rgba(108,99,255,.08),rgba(0,212,164,.04));border:1px solid rgba(108,99,255,.25);border-radius:20px;padding:24px;margin-top:28px;text-align:center}
 .report-section h3{font-size:17px;font-weight:900;margin-bottom:6px}
 .report-section p{font-size:13px;color:#9090B0;margin-bottom:18px;line-height:1.5}
 .report-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#6C63FF,#00D4A4);color:#fff;padding:13px 26px;border-radius:12px;font-size:14px;font-weight:800;text-decoration:none;transition:transform .2s}
 .report-btn:hover{transform:translateY(-2px)}
 .report-note{font-size:11px;color:#4A4A6A;margin-top:10px}
-/* ADMIN */
 .admin-toggle{display:flex;justify-content:center;margin:28px 0 0}
 .admin-btn{background:transparent;border:1px solid #1E1E32;border-radius:10px;color:#4A4A6A;font-size:12px;padding:8px 18px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px}
 .admin-btn:hover{border-color:#6C63FF;color:#6C63FF}
@@ -115,7 +113,6 @@ footer{text-align:center;font-size:11px;color:#2A2A3A;margin-top:28px}
   <div class="sec-title" id="lbl-s-fixed">✅ Récemment corrigés</div>
   <div class="bug-list" id="list-fixed"></div>
 
-  <!-- SIGNALER -->
   <div class="report-section">
     <h3 id="lbl-rep-title">🐛 Tu as trouvé un bug ?</h3>
     <p id="lbl-rep-sub">Signale-le via le formulaire — l'équipe le traitera rapidement.</p>
@@ -125,7 +122,6 @@ footer{text-align:center;font-size:11px;color:#2A2A3A;margin-top:28px}
     <p class="report-note" id="lbl-rep-note">🔒 Formulaire confidentiel · Traité sous 48h</p>
   </div>
 
-  <!-- ADMIN -->
   <div class="admin-toggle">
     <button class="admin-btn" onclick="toggleAdmin()">⚙️ <span id="lbl-admin-btn">Espace administrateur</span></button>
   </div>
@@ -183,13 +179,16 @@ var STORE_KEY = 'fitcoachai_bugs_v4';
 var TALLY_URL = 'https://tally.so/r/kdp641';
 
 // GitHub — lecture publique uniquement (pas de CORS sur GET)
-var GH_API = 'https://api.github.com/repos/ayer-developpment/fitcoachai/issues?state=all&labels=bug&per_page=100';
+// IMPORTANT : pas de filtre &labels=... ici — on veut TOUTES les issues
+// du repo (ouvertes ET fermées), peu importe leurs labels. C'est le statut
+// dérivé (open/closed + labels fixed/in-progress) qui range chaque issue
+// dans la bonne colonne, pas le fait qu'elle ait ou non le label "bug".
+var GH_API = 'https://api.github.com/repos/ayer-developpment/fitcoachai/issues?state=all&per_page=100';
 
 var lang = 'fr';
 var bugs = [];
 var isLogged = false;
 
-// ── TRADUCTIONS ───────────────────────────────────────────
 var T = {
   fr:{
     badge:'🐛 Bugs Connus · Bêta', title:'Problèmes en cours de traitement',
@@ -293,14 +292,12 @@ var T = {
   }
 };
 
-// ── STORAGE LOCAL ─────────────────────────────────────────
 function saveBugs(){ localStorage.setItem(STORE_KEY, JSON.stringify(bugs)); }
 function loadLocalBugs(){
   var d = localStorage.getItem(STORE_KEY);
   return d ? JSON.parse(d) : [];
 }
 
-// ── GITHUB ISSUES (lecture publique, pas de CORS) ─────────
 async function loadGitHubIssues(){
   try {
     var resp = await fetch(GH_API, {
@@ -308,18 +305,16 @@ async function loadGitHubIssues(){
     });
     if(!resp.ok) return [];
     var issues = await resp.json();
+    issues = issues.filter(function(issue){ return !issue.pull_request; });
     return issues.map(function(issue){
       var parsed = {};
       var bodyText = issue.body || '';
-      // Extraire le JSON s'il est présent dans le body
       var jsonMatch = bodyText.match(/\{[^{}]*"sev"[^{}]*\}/);
       if (jsonMatch) {
         try { parsed = JSON.parse(jsonMatch[0]); } catch(e){}
-        // Le texte avant le JSON = description
         var descText = bodyText.replace(jsonMatch[0], '').trim();
         if (!parsed.desc && descText) parsed.desc = descText;
       } else {
-        // Pas de JSON — tout le body est la description
         if (bodyText) parsed.desc = bodyText;
       }
       var status = issue.state === 'closed' ? 'fixed' : 'open';
@@ -347,12 +342,10 @@ async function loadGitHubIssues(){
   } catch(e){ return []; }
 }
 
-// ── INIT : fusionner local + GitHub ──────────────────────
 async function init(){
   document.getElementById('loading').style.display = 'block';
   var local = loadLocalBugs();
   var gh    = await loadGitHubIssues();
-  // Fusionner : GitHub en premier, puis les bugs locaux qui n'ont pas d'équivalent GH
   var ghTitles = gh.map(function(b){ return b.title.toLowerCase(); });
   var localOnly = local.filter(function(b){
     return !ghTitles.includes(b.title.toLowerCase());
@@ -362,7 +355,6 @@ async function init(){
   render();
 }
 
-// ── RENDER ────────────────────────────────────────────────
 function render(){
   var t = T[lang];
   var open  = bugs.filter(function(b){ return b.status==='open'; });
@@ -414,7 +406,6 @@ function renderAdminList(t){
   }).join('');
 }
 
-// ── ACTIONS ADMIN ─────────────────────────────────────────
 function addBug(){
   var title  = document.getElementById('fTitle').value.trim();
   var sev    = document.getElementById('fSev').value;
@@ -431,7 +422,6 @@ function addBug(){
   document.getElementById('fDesc').value='';
   document.getElementById('fWork').value='';
   document.getElementById('fVer').value='';
-  // Rappel de publier sur GitHub aussi
   var t = T[lang];
   document.getElementById('gh-info-box').innerHTML = t['gh-info'];
 }
@@ -447,7 +437,6 @@ function delBug(i){
   saveBugs(); render();
 }
 
-// ── LOGIN ─────────────────────────────────────────────────
 function toggleAdmin(){ document.getElementById('adminPanel').classList.toggle('open'); }
 function checkPw(){
   if(document.getElementById('pwInput').value===ADMIN_PWD){
@@ -466,7 +455,6 @@ function logout(){
   isLogged=false;
 }
 
-// ── LANG ──────────────────────────────────────────────────
 function setLang(l){
   lang=l;
   var t=T[l];
@@ -493,7 +481,6 @@ function setLang(l){
   render();
 }
 
-// ── START ─────────────────────────────────────────────────
 var det=navigator.language.slice(0,2);
 lang=['fr','en','de','es','it'].includes(det)?det:'fr';
 setLang(lang);
