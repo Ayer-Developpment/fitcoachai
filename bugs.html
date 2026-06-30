@@ -298,6 +298,87 @@ function loadLocalBugs(){
   return d ? JSON.parse(d) : [];
 }
 
+// ── TRADUCTION AUTOMATIQUE (MyMemory, sans clé) ───────────
+// Les bugs sont saisis en français. Pour les autres langues, on traduit
+// à la volée via l'API publique MyMemory (CORS ok, pas de clé requise),
+// avec un cache localStorage pour ne pas re-traduire à chaque visite et
+// rester sous la limite gratuite de 5000 caractères/jour.
+var TR_CACHE_KEY = 'fitcoachai_bug_translations_v1';
+var trCache = JSON.parse(localStorage.getItem(TR_CACHE_KEY) || '{}');
+
+function trKey(bugId, field, targetLang){ return bugId + '::' + field + '::' + targetLang; }
+
+function saveTrCache(){ localStorage.setItem(TR_CACHE_KEY, JSON.stringify(trCache)); }
+
+// Retourne la traduction en cache si dispo, sinon le texte original (FR)
+// en attendant que la traduction arrive en tâche de fond.
+function translatedOrOriginal(bugId, field, original){
+  if (lang === 'fr' || !original) return escapeHtml(original);
+  var cached = trCache[trKey(bugId, field, lang)];
+  return escapeHtml(cached || original);
+}
+
+function escapeHtml(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+async function translateText(text, targetLang){
+  if (!text) return '';
+  var langPair = 'fr|' + targetLang;
+  var url = 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=' + langPair;
+  try {
+    var resp = await fetch(url);
+    if (!resp.ok) return null;
+    var data = await resp.json();
+    var translated = data && data.responseData && data.responseData.translatedText;
+    // MyMemory renvoie parfois le texte source inchangé en cas d'échec silencieux —
+    // dans ce cas on considère que la traduction a échoué.
+    if (!translated || translated.trim().toLowerCase() === text.trim().toLowerCase()) return null;
+    return translated;
+  } catch(e){ return null; }
+}
+
+// Traduit en tâche de fond les champs (titre/description/contournement)
+// qui ne sont pas encore en cache pour la langue active, puis met à jour
+// le DOM en place (pas de re-render complet, pour ne pas perdre le scroll).
+async function translateMissingFields(){
+  if (lang === 'fr') return;
+  var jobs = [];
+  bugs.forEach(function(b){
+    ['title','desc','work'].forEach(function(field){
+      var text = b[field];
+      if (!text) return;
+      var key = trKey(b.id, field, lang);
+      if (trCache[key] !== undefined) return;
+      jobs.push({ bugId:b.id, field:field, text:text });
+    });
+  });
+  if (!jobs.length) return;
+
+  // Séquentiel et limité, pour rester raisonnable vis-à-vis du quota gratuit
+  // (pas plus utile de paralléliser ici : volume de bugs en bêta très faible).
+  for (var i = 0; i < jobs.length; i++) {
+    var job = jobs[i];
+    var translated = await translateText(job.text, lang);
+    trCache[trKey(job.bugId, job.field, lang)] = translated || job.text;
+    saveTrCache();
+    updateFieldInDom(job.bugId, job.field, translated || job.text);
+  }
+}
+
+function updateFieldInDom(bugId, field, value){
+  var card = document.querySelector('[data-bug-id="'+CSS.escape(String(bugId))+'"]');
+  if (!card) return;
+  if (field === 'title' || field === 'desc') {
+    var node = card.querySelector('[data-field="'+field+'"]');
+    if (node) node.textContent = value;
+  }
+  // "work" (contournement) est inline dans bug-footer ; pas de re-render
+  // ciblé simple pour ce champ, il sera à jour au prochain render() complet
+  // (changement de langue déclenche déjà un render()).
+}
+
 async function loadGitHubIssues(){
   try {
     var resp = await fetch(GH_API, {
@@ -353,6 +434,7 @@ async function init(){
   bugs = gh.concat(localOnly);
   document.getElementById('loading').style.display = 'none';
   render();
+  translateMissingFields();
 }
 
 function render(){
@@ -375,13 +457,13 @@ function renderList(id, list, t){
   el.innerHTML = list.map(function(b){
     var sc  = b.status==='fixed'?'sev-fixed':'sev-'+b.sev;
     var sl  = b.status==='fixed'?t.sev.fixed:(t.sev[b.sev]||b.sev);
-    var w   = b.work?'<span class="workaround">'+t.wa+' : '+b.work+'</span>':'';
+    var w   = b.work?'<span class="workaround">'+t.wa+' : '+translatedOrOriginal(b.id,'work',b.work)+'</span>':'';
     var ver = b.ver?'<span class="bug-meta">v'+b.ver+'</span>':'';
     var dt  = b.date?'<span class="bug-meta">'+new Date(b.date).toLocaleDateString()+'</span>':'';
     var gh  = b.fromGH?'<span style="font-size:9px;color:#4A4A6A;background:rgba(255,255,255,.05);padding:2px 6px;border-radius:4px">GitHub</span>':'';
-    return '<div class="bug-card '+sc+'">'+
-      '<div class="bug-top"><span class="sev-badge">'+sl+'</span><span class="bug-title">'+b.title+'</span></div>'+
-      (b.desc?'<div class="bug-desc">'+b.desc+'</div>':'')+
+    return '<div class="bug-card '+sc+'" data-bug-id="'+b.id+'">'+
+      '<div class="bug-top"><span class="sev-badge">'+sl+'</span><span class="bug-title" data-field="title">'+translatedOrOriginal(b.id,'title',b.title)+'</span></div>'+
+      (b.desc?'<div class="bug-desc" data-field="desc">'+translatedOrOriginal(b.id,'desc',b.desc)+'</div>':'')+
       '<div class="bug-footer"><div style="display:flex;gap:6px;flex-wrap:wrap">'+w+'</div>'+
       '<div style="display:flex;gap:5px;align-items:center">'+gh+ver+dt+'</div></div>'+
     '</div>';
@@ -479,6 +561,7 @@ function setLang(l){
   document.getElementById('gh-info-box').innerHTML=t['gh-info'];
   document.documentElement.lang=l;
   render();
+  translateMissingFields();
 }
 
 var det=navigator.language.slice(0,2);
