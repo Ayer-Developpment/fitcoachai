@@ -219,17 +219,19 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
   <div class="sec-h" data-t="feat_h"></div>
   <div class="sec-p" data-t="feat_p"></div>
   <div class="grid">
+    <div class="feat"><div class="feat-icon" style="background:rgba(0,212,164,.12)">📷</div><h3 data-t="f2_h"></h3><p data-t="f2_p"></p></div>
+    <div class="feat"><div class="feat-icon" style="background:rgba(255,140,60,.12)">📸</div><h3 data-t="f5_h"></h3><p data-t="f5_p"></p></div>
     <div class="feat"><div class="feat-icon" style="background:rgba(108,99,255,.12)">🤖</div><h3 data-t="f1_h"></h3><p data-t="f1_p"></p></div>
-    <div class="feat"><div class="feat-icon" style="background:rgba(0,212,164,.12)">📷</div><div class="feat-new">NEW</div><h3 data-t="f2_h"></h3><p data-t="f2_p"></p></div>
     <div class="feat"><div class="feat-icon" style="background:rgba(255,140,60,.12)">🍽️</div><h3 data-t="f3_h"></h3><p data-t="f3_p"></p></div>
     <div class="feat"><div class="feat-icon" style="background:rgba(108,99,255,.12)">💪</div><h3 data-t="f4_h"></h3><p data-t="f4_p"></p></div>
-    <div class="feat"><div class="feat-icon" style="background:rgba(255,140,60,.12)">📸</div><h3 data-t="f5_h"></h3><p data-t="f5_p"></p></div>
     <div class="feat"><div class="feat-icon" style="background:rgba(255,80,80,.12)">❤️</div><h3 data-t="f6_h"></h3><p data-t="f6_p"></p></div>
     <div class="feat"><div class="feat-icon" style="background:rgba(255,80,80,.12)">🔥</div><h3 data-t="f7_h"></h3><p data-t="f7_p"></p></div>
     <div class="feat"><div class="feat-icon" style="background:rgba(0,212,164,.12)">🎙️</div><h3 data-t="f8_h"></h3><p data-t="f8_p"></p></div>
     <div class="feat"><div class="feat-icon" style="background:rgba(108,99,255,.12)">☁️</div><h3 data-t="f9_h"></h3><p data-t="f9_p"></p></div>
     <div class="feat"><div class="feat-icon" style="background:rgba(0,212,164,.12)">🎵</div><h3 data-t="f10_h"></h3><p data-t="f10_p"></p></div>
     <div class="feat"><div class="feat-icon" style="background:rgba(255,140,60,.12)">📤</div><h3 data-t="f11_h"></h3><p data-t="f11_p"></p></div>
+    <div class="feat"><div class="feat-icon" style="background:rgba(108,99,255,.12)">📄</div><h3 data-t="f12_h"></h3><p data-t="f12_p"></p></div>
+    <div class="feat"><div class="feat-icon" style="background:rgba(255,80,80,.12)">🌤️</div><h3 data-t="f13_h"></h3><p data-t="f13_p"></p></div>
   </div>
 </section>
 
@@ -312,12 +314,13 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:36px 24
       <p style="color:var(--muted);font-size:13px;margin:8px 0 18px" data-t="free_sub"></p>
       <ul><li data-t="free_f1"></li><li data-t="free_f2"></li><li data-t="free_f3"></li><li data-t="free_f4"></li><li data-t="free_f5"></li><li data-t="free_f6"></li></ul>
       <a class="btn btn-g" style="width:100%;justify-content:center;font-size:14px" href="mailto:help.fitcoachai@bluewin.ch?subject=FitCoach%20AI%20-%20Inscription%20newsletter&body=Bonjour%2C%0A%0AJe%20souhaite%20%C3%AAtre%20inform%C3%A9(e)%20du%20lancement%20de%20FitCoach%20AI%20sur%20l'App%20Store.%0A%0AMerci%20!" data-t="free_btn"></a>
+      <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:12px" data-t="free_after"></p>
     </div>
     <div class="price-card featured">
       <div class="price-badge" data-t="pro_badge"></div>
       <div class="price-amount" style="color:var(--v)">69.90 CHF<span>/an</span></div>
       <div class="price-save" data-t="pro_save"></div>
-      <ul><li data-t="pro_f1"></li><li data-t="pro_f2"></li><li data-t="pro_f3"></li><li data-t="pro_f4"></li><li data-t="pro_f5"></li><li data-t="pro_f6"></li><li data-t="pro_f7"></li><li data-t="pro_f8"></li></ul>
+      <ul><li data-t="pro_f1"></li><li data-t="pro_f2"></li><li data-t="pro_f3"></li><li data-t="pro_f4"></li><li data-t="pro_f6"></li><li data-t="pro_f7"></li><li data-t="pro_f8"></li></ul>
       <a class="btn btn-p" style="width:100%;justify-content:center;font-size:14px" href="mailto:help.fitcoachai@bluewin.ch?subject=FitCoach%20AI%20-%20Inscription%20newsletter&body=Bonjour%2C%0A%0AJe%20souhaite%20%C3%AAtre%20inform%C3%A9(e)%20du%20lancement%20de%20FitCoach%20AI%20sur%20l'App%20Store.%0A%0AMerci%20!" data-t="pro_btn"></a>
     </div>
   </div>
@@ -490,6 +493,8 @@ const T = {
     f9_h:"Sync iCloud multi-appareils", f9_p:"Tes données synchronisées sur tous tes appareils Apple.",
     f10_h:"Musique intégrée pendant l'entraînement", f10_p:"Lance ta playlist directement depuis l'app pendant tes séances, sans changer d'application.",
     f11_h:"Partage tes résultats", f11_p:"Partage tes séances et tes progrès sur tes réseaux en un tap.",
+    f12_h:"Journal hebdomadaire PDF", f12_p:"Génère et partage un bilan PDF de ta semaine (repas, calories, macros) en un tap.",
+    f13_h:"Séances adaptées à la météo", f13_p:"Le coach ajuste ses suggestions selon la météo de ta ville — canicule, pluie, etc.",
     scan_tag:"📷 Nouveau", scan_h:"Scan code-barres<br><span class='grad'>en 1 seconde</span>",
     scan_product:"Yaourt grec nature", scan_add:"✅ Ajouter au journal",
     sf1_h:"3 millions de produits", sf1_p:"Base Open Food Facts — la plus grande base alimentaire open source au monde.",
@@ -507,7 +512,7 @@ const T = {
     free_title:"Gratuit<span style='font-size:15px;display:block;margin-top:4px'>/7 jours</span>", free_sub:"Essai complet, sans engagement",
     free_f1:"Coach IA 6 messages/jour", free_f2:"3 recettes/jour", free_f3:"3 séances/jour",
     free_f4:"Scan code-barres", free_f5:"Scan photo repas", free_f6:"Sync Apple Santé",
-    free_btn:"Être notifié au lancement",
+    free_btn:"Être notifié au lancement", free_after:"Après l'essai, sans abonnement : 1 message, 1 recette et 1 séance/jour",
     pro_badge:"🔥 Le plus populaire", pro_save:"5.80 CHF/mois · -55% vs mensuel",
     pro_f1:"Coach IA 50 messages/jour", pro_f2:"20 recettes/jour", pro_f3:"20 séances/jour",
     pro_f4:"Programme multi-semaines IA", pro_f5:"Coach vocal", pro_f6:"iCloud multi-appareils",
@@ -601,6 +606,8 @@ const T = {
     f9_h:"iCloud multi-device sync", f9_p:"Your data synced across all your Apple devices.",
     f10_h:"Built-in music during workouts", f10_p:"Play your playlist directly from the app during your sessions, no need to switch apps.",
     f11_h:"Share your results", f11_p:"Share your workouts and progress on social media in one tap.",
+    f12_h:"Weekly PDF journal", f12_p:"Generate and share a PDF summary of your week (meals, calories, macros) in one tap.",
+    f13_h:"Weather-adapted workouts", f13_p:"The coach adjusts its workout suggestions based on your local weather — heat, rain, etc.",
     scan_tag:"📷 New", scan_h:"Barcode scan<br><span class='grad'>in 1 second</span>",
     scan_product:"Greek yogurt", scan_add:"✅ Add to journal",
     sf1_h:"3 million products", sf1_p:"Open Food Facts — the world's largest open food database.",
@@ -618,7 +625,7 @@ const T = {
     free_title:"Free<span style='font-size:15px;display:block;margin-top:4px'>/7 days</span>", free_sub:"Full access, cancel anytime",
     free_f1:"AI coach 6 messages/day", free_f2:"3 recipes/day", free_f3:"3 workouts/day",
     free_f4:"Barcode scan", free_f5:"Meal photo scan", free_f6:"Apple Health sync",
-    free_btn:"Get notified at launch",
+    free_btn:"Get notified at launch", free_after:"After the trial, without a subscription: 1 message, 1 recipe and 1 workout/day",
     pro_badge:"🔥 Most popular", pro_save:"5.80 CHF/month · -55% vs monthly",
     pro_f1:"AI coach 50 messages/day", pro_f2:"20 recipes/day", pro_f3:"20 workouts/day",
     pro_f4:"AI multi-week program", pro_f5:"Voice coach", pro_f6:"iCloud multi-device",
@@ -712,6 +719,8 @@ const T = {
     f9_h:"iCloud Multi-Gerät Sync", f9_p:"Deine Daten auf allen Apple-Geräten synchronisiert.",
     f10_h:"Integrierte Musik beim Training", f10_p:"Starte deine Playlist direkt aus der App während deiner Einheiten, ohne die App zu wechseln.",
     f11_h:"Teile deine Ergebnisse", f11_p:"Teile deine Workouts und Fortschritte mit einem Tap auf deinen sozialen Netzwerken.",
+    f12_h:"Wöchentliches PDF-Journal", f12_p:"Erstelle und teile eine PDF-Zusammenfassung deiner Woche (Mahlzeiten, Kalorien, Makros) mit einem Tap.",
+    f13_h:"Wetterangepasste Workouts", f13_p:"Der Coach passt seine Vorschläge an das lokale Wetter an — Hitze, Regen usw.",
     scan_tag:"📷 Neu", scan_h:"Barcode-Scan<br><span class='grad'>in 1 Sekunde</span>",
     scan_product:"Griechischer Joghurt", scan_add:"✅ Zum Tagebuch hinzufügen",
     sf1_h:"3 Millionen Produkte", sf1_p:"Open Food Facts — die größte Open-Source-Lebensmitteldatenbank.",
@@ -729,7 +738,7 @@ const T = {
     free_title:"Kostenlos<span style='font-size:15px;display:block;margin-top:4px'>/7 Tage</span>", free_sub:"Voller Zugang, jederzeit kündbar",
     free_f1:"KI-Coach 6 Nachrichten/Tag", free_f2:"3 Rezepte/Tag", free_f3:"3 Workouts/Tag",
     free_f4:"Barcode-Scanner", free_f5:"Mahlzeiten-Foto-Scan", free_f6:"Apple Gesundheit Sync",
-    free_btn:"Beim Launch benachrichtigen",
+    free_btn:"Beim Launch benachrichtigen", free_after:"Nach dem Test, ohne Abo: 1 Nachricht, 1 Rezept und 1 Workout/Tag",
     pro_badge:"🔥 Beliebteste Wahl", pro_save:"5.80 CHF/Monat · -55% vs. monatlich",
     pro_f1:"KI-Coach 50 Nachrichten/Tag", pro_f2:"20 Rezepte/Tag", pro_f3:"20 Workouts/Tag",
     pro_f4:"KI Multi-Wochen-Programm", pro_f5:"Sprach-Coach", pro_f6:"iCloud Multi-Gerät",
@@ -823,6 +832,8 @@ const T = {
     f9_h:"Sync iCloud multidispositivo", f9_p:"Tus datos sincronizados en todos tus dispositivos Apple.",
     f10_h:"Música integrada durante el entrenamiento", f10_p:"Reproduce tu lista de música directamente desde la app durante tus sesiones, sin cambiar de app.",
     f11_h:"Comparte tus resultados", f11_p:"Comparte tus entrenamientos y progresos en tus redes sociales con un toque.",
+    f12_h:"Diario semanal en PDF", f12_p:"Genera y comparte un resumen PDF de tu semana (comidas, calorías, macros) con un toque.",
+    f13_h:"Entrenamientos según el clima", f13_p:"El coach ajusta sus sugerencias según el clima de tu ciudad — calor, lluvia, etc.",
     scan_tag:"📷 Nuevo", scan_h:"Escaneo de código<br><span class='grad'>en 1 segundo</span>",
     scan_product:"Yogur griego natural", scan_add:"✅ Añadir al diario",
     sf1_h:"3 millones de productos", sf1_p:"Base de datos Open Food Facts.",
@@ -840,7 +851,7 @@ const T = {
     free_title:"Gratis<span style='font-size:15px;display:block;margin-top:4px'>/7 días</span>", free_sub:"Acceso completo, cancela cuando quieras",
     free_f1:"Coach IA 6 mensajes/día", free_f2:"3 recetas/día", free_f3:"3 entrenamientos/día",
     free_f4:"Escaneo de código de barras", free_f5:"Escaneo de foto", free_f6:"Sync Apple Salud",
-    free_btn:"Ser notificado al lanzamiento",
+    free_btn:"Ser notificado al lanzamiento", free_after:"Después de la prueba, sin suscripción: 1 mensaje, 1 receta y 1 entrenamiento/día",
     pro_badge:"🔥 Más popular", pro_save:"5.80 CHF/mes · -55% vs mensual",
     pro_f1:"Coach IA 50 mensajes/día", pro_f2:"20 recetas/día", pro_f3:"20 entrenamientos/día",
     pro_f4:"Programa IA multi-semanas", pro_f5:"Coach de voz", pro_f6:"iCloud multidispositivo",
@@ -934,6 +945,8 @@ const T = {
     f9_h:"Sync iCloud multi-dispositivo", f9_p:"I tuoi dati sincronizzati su tutti i tuoi dispositivi Apple.",
     f10_h:"Musica integrata durante l'allenamento", f10_p:"Riproduci la tua playlist direttamente dall'app durante le sessioni, senza cambiare app.",
     f11_h:"Condividi i tuoi risultati", f11_p:"Condividi i tuoi allenamenti e progressi sui social in un tap.",
+    f12_h:"Diario settimanale PDF", f12_p:"Genera e condividi un riepilogo PDF della tua settimana (pasti, calorie, macro) in un tap.",
+    f13_h:"Allenamenti adattati al meteo", f13_p:"Il coach adatta i suoi suggerimenti al meteo locale — caldo, pioggia, ecc.",
     scan_tag:"📷 Nuovo", scan_h:"Scansione codice a barre<br><span class='grad'>in 1 secondo</span>",
     scan_product:"Yogurt greco naturale", scan_add:"✅ Aggiungi al diario",
     sf1_h:"3 milioni di prodotti", sf1_p:"Database Open Food Facts — il più grande database alimentare open source.",
@@ -951,7 +964,7 @@ const T = {
     free_title:"Gratis<span style='font-size:15px;display:block;margin-top:4px'>/7 giorni</span>", free_sub:"Accesso completo, cancellabile in qualsiasi momento",
     free_f1:"Coach IA 6 messaggi/giorno", free_f2:"3 ricette/giorno", free_f3:"3 allenamenti/giorno",
     free_f4:"Scansione codice a barre", free_f5:"Scansione foto pasto", free_f6:"Sync Apple Salute",
-    free_btn:"Essere avvisato al lancio",
+    free_btn:"Essere avvisato al lancio", free_after:"Dopo la prova, senza abbonamento: 1 messaggio, 1 ricetta e 1 allenamento/giorno",
     pro_badge:"🔥 Il più popolare", pro_save:"5.80 CHF/mese · -55% vs mensile",
     pro_f1:"Coach IA 50 messaggi/giorno", pro_f2:"20 ricette/giorno", pro_f3:"20 allenamenti/giorno",
     pro_f4:"Programma IA multi-settimane", pro_f5:"Coach vocale", pro_f6:"iCloud multi-dispositivo",
